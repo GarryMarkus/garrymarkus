@@ -5,38 +5,50 @@ interface WindowChromeProps {
   title: string;
   children: React.ReactNode;
   className?: string;
+  bodyClassName?: string;
   timestamp?: string;
+  promptPath?: string;
+  hideDots?: boolean;
 }
 
-export function WindowChrome({ title, children, className, timestamp }: WindowChromeProps) {
+export function WindowChrome({
+  title,
+  children,
+  className,
+  bodyClassName,
+  timestamp,
+  hideDots = false,
+}: WindowChromeProps) {
   return (
     <div
       className={clsx(
-        "rounded-[10px] bg-[var(--bg-surface)] border border-[var(--bg-border)] overflow-hidden",
-        "shadow-[0_20px_60px_rgba(0,0,0,0.5),0_0_0_1px_rgba(255,255,255,0.03)] mb-6",
+        "border-2 border-black bg-[var(--bg-surface)] rounded-[20px] shadow-brutal overflow-hidden",
         className
       )}
     >
-      <div className="h-[32px] border-b border-[var(--bg-border)] flex items-center justify-between px-3 relative bg-[var(--bg-base)] bg-opacity-40">
-        {/* Left: Window Dots */}
-        <div className="flex items-center gap-[7px]">
-          <div className="w-[10px] h-[10px] rounded-full bg-[var(--window-dot-red)]" />
-          <div className="w-[10px] h-[10px] rounded-full bg-[var(--window-dot-yellow)]" />
-          <div className="w-[10px] h-[10px] rounded-full bg-[var(--window-dot-green)]" />
+      {/* Header bar */}
+      <div className="h-[36px] flex-shrink-0 border-b-2 border-black flex items-center justify-between px-3 bg-[var(--bg-surface)] relative select-none">
+        {!hideDots ? (
+          <div className="flex items-center gap-[6px]">
+            <div className="w-[10px] h-[10px] rounded-full bg-[var(--window-dot-red)] border border-black" />
+            <div className="w-[10px] h-[10px] rounded-full bg-[var(--window-dot-yellow)] border border-black" />
+            <div className="w-[10px] h-[10px] rounded-full bg-[var(--window-dot-green)] border border-black" />
+          </div>
+        ) : (
+          <div className="w-[42px]" />
+        )}
+
+        <div className="text-[11px] font-headings font-bold text-[var(--text-secondary)] absolute left-1/2 -translate-x-1/2 hidden sm:block truncate px-4 max-w-[60%]">
+          {title.toUpperCase()}
         </div>
 
-        {/* Center: Title */}
-        <div className="text-[11px] italic text-[var(--text-muted)] absolute left-1/2 transform -translate-x-1/2 hidden sm:block">
-          {title}
-        </div>
-
-        {/* Right: Timestamp/Breadcrumb (optional) */}
-        <div className="text-[11px] text-[var(--text-muted)] w-[40px] text-right">
-          {timestamp || ""}
+        <div className="text-[11px] font-mono text-[var(--text-muted)] min-w-[42px] text-right">
+          {timestamp ?? ""}
         </div>
       </div>
-      
-      <div className="p-4 sm:p-6 text-[var(--text-secondary)]">
+
+      {/* Card body */}
+      <div className={clsx("p-4 sm:p-5 text-white", bodyClassName)}>
         {children}
       </div>
     </div>

@@ -1,5 +1,7 @@
 import React from "react";
 import { AsciiArt } from "./AsciiArt";
+import { siteConfig } from "@/lib/config";
+import { ExternalLink } from "lucide-react";
 
 const ASCII_LOGO = `
  ██████╗  █████╗ ██████╗ ██████╗ ██╗   ██╗
@@ -10,49 +12,52 @@ const ASCII_LOGO = `
  ╚═════╝ ╚═╝  ╚═╝╚═╝  ╚═╝╚═╝  ╚═╝   ╚═╝   
 `;
 
-const AVATAR_BLOCK = `
-■ ■ ■ ■ ■ ■ ■ ■
-■ ■ □ □ □ □ ■ ■
-■ □ ■ ■ ■ ■ □ ■
-■ □ ■ □ □ ■ □ ■
-■ □ ■ ■ ■ ■ □ ■
-■ □ □ □ □ □ □ ■
-■ ■ ■ ■ ■ ■ ■ ■
-`;
+
 
 export function Neofetch() {
   const info = [
-    { key: "name", value: "Garry Markus" },
-    { key: "role", value: "Software Engineer" },
-    { key: "location", value: "Earth" },
+    { key: "name", value: siteConfig.name },
+    { key: "role", value: siteConfig.role },
+    { key: "location", value: siteConfig.location },
     { key: "os", value: "Arch Linux x86_64" },
     { key: "wm", value: "Hyprland" },
     { key: "shell", value: "zsh 5.9" },
     { key: "editor", value: "neovim (btw)" },
-    { key: "terminal", value: "kitty" },
+    { key: "terminal", value: "kitty / alacritty" },
     { key: "theme", value: "Dracula + Nord" },
-    { key: "focus", value: "React, Next.js, TypeScript", highlight: true },
+    { key: "focus", value: siteConfig.focus, highlight: true },
     { key: "uptime", value: "always building", success: true },
-    { key: "status", value: "open to work", success: true },
+    { key: "status", value: siteConfig.status, success: true },
   ];
 
   const colors = [
-    "#44475a", "#ff5555", "#50fa7b", "#f1fa8c",
-    "#bd93f9", "#ff79c6", "#8be9fd", "#f8f8f2"
+    "#44475a",
+    "#ff5555",
+    "#50fa7b",
+    "#f1fa8c",
+    "#bd93f9",
+    "#ff79c6",
+    "#8be9fd",
+    "#f8f8f2",
   ];
 
   return (
     <div className="flex flex-col md:flex-row gap-6 md:gap-10">
-      {/* Left Column */}
-      <div className="md:w-[40%] flex flex-col items-center md:items-end justify-start text-[var(--accent-purple)]">
-        <AsciiArt art={ASCII_LOGO.replace(/^\\n/, "")} />
-        <div className="mt-4 text-[var(--accent-cyan)] opacity-70">
-          <AsciiArt art={AVATAR_BLOCK.replace(/^\\n/, "")} />
+      <div className="md:w-[45%] flex flex-col items-center md:items-end justify-start text-[var(--accent-purple)]">
+        <AsciiArt art={ASCII_LOGO.trim()} />
+        <div className="mt-6">
+          <a
+            href={siteConfig.resumePath}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center gap-2 px-4 py-2 bg-transparent border border-[var(--accent-purple)] text-[var(--accent-purple)] text-[12px] tracking-[0.1em] rounded-sm transition-all duration-150 hover:bg-[rgba(189,147,249,0.1)] hover:shadow-[0_0_12px_rgba(189,147,249,0.2)] no-underline font-mono"
+          >
+            [ cat resume.pdf ] <ExternalLink size={12} />
+          </a>
         </div>
       </div>
 
-      {/* Right Column */}
-      <div className="md:w-[60%] flex flex-col justify-center">
+      <div className="md:w-[55%] flex flex-col justify-center">
         <div className="flex flex-col gap-[4px] text-[13px] sm:text-[14px]">
           {info.map((item) => (
             <div key={item.key} className="flex">
@@ -75,14 +80,9 @@ export function Neofetch() {
           ))}
         </div>
 
-        {/* Color Palette Row */}
         <div className="mt-6 flex gap-1">
           {colors.map((c) => (
-            <div
-              key={c}
-              className="w-[14px] h-[14px] rounded-[3px]"
-              style={{ backgroundColor: c }}
-            />
+            <div key={c} className="w-[14px] h-[14px] rounded-[3px]" style={{ backgroundColor: c }} />
           ))}
         </div>
       </div>

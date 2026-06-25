@@ -1,23 +1,41 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect, Suspense } from "react";
+import { useSearchParams } from "next/navigation";
 import { motion } from "framer-motion";
-import Link from "next/link";
 import { WindowChrome } from "@/components/WindowChrome";
+import { BlogCard } from "@/components/BlogCard";
 import { PostMetadata } from "@/lib/posts";
+import { PageTransition } from "@/components/PageTransition";
+import { Search, Terminal } from "lucide-react";
+
+const PAGE_SIZE = 6;
 
 interface BlogListClientProps {
   posts: PostMetadata[];
 }
 
-export function BlogListClient({ posts }: BlogListClientProps) {
-  const [filter, setFilter] = useState("");
+function BlogListContent({ posts }: BlogListClientProps) {
+  const searchParams = useSearchParams();
+  const initialQuery = searchParams ? (searchParams.get("search") || "") : "";
+  const [filter, setFilter] = useState(initialQuery);
+  const [visibleCount, setVisibleCount] = useState(PAGE_SIZE);
+
+  // Sync state if URL changes
+  useEffect(() => {
+    if (searchParams) {
+      setFilter(searchParams.get("search") || "");
+    }
+  }, [searchParams]);
 
   const filteredPosts = posts.filter(
     (post) =>
       post.title.toLowerCase().includes(filter.toLowerCase()) ||
       post.tags.some((tag) => tag.toLowerCase().includes(filter.toLowerCase()))
   );
+
+  const visiblePosts = filteredPosts.slice(0, visibleCount);
+  const hasMore = visibleCount < filteredPosts.length;
 
   const containerVariants = {
     hidden: { opacity: 0, y: 12 },
@@ -26,7 +44,7 @@ export function BlogListClient({ posts }: BlogListClientProps) {
       y: 0,
       transition: {
         duration: 0.35,
-        ease: [0.22, 1, 0.36, 1],
+        ease: [0.22, 1, 0.36, 1] as [number, number, number, number],
         staggerChildren: 0.04,
       },
     },
@@ -38,106 +56,126 @@ export function BlogListClient({ posts }: BlogListClientProps) {
   };
 
   return (
-    <motion.div
-      variants={containerVariants}
-      initial="hidden"
-      animate="visible"
-      className="flex flex-col gap-6"
-    >
-      <WindowChrome title="user@portfolio: ~/blog">
-        <div className="mb-6 font-mono text-[13px] text-[var(--text-secondary)] overflow-x-auto custom-scrollbar">
-          <div className="text-[var(--text-muted)]">
-            <span className="text-[var(--accent-purple)]">❯</span> ls -la ./blog/
-          </div>
-          <div>total {posts.length} posts</div>
-          <div className="flex gap-4">
-            <span className="w-[80px]">drwxr-xr-x</span>
-            <span>user</span>
-            <span>{new Date().toISOString().split("T")[0]}</span>
-            <span className="text-[var(--accent-cyan)]">./</span>
-          </div>
-          <div className="flex gap-4 mb-4">
-            <span className="w-[80px]">drwxr-xr-x</span>
-            <span>user</span>
-            <span>{new Date().toISOString().split("T")[0]}</span>
-            <span className="text-[var(--accent-cyan)]">../</span>
-          </div>
-
-          <div className="text-[var(--text-muted)] mt-6 whitespace-nowrap">
-            <span className="text-[var(--accent-purple)]">❯</span> grep --tags &quot;[
-            <input
-              type="text"
-              value={filter}
-              onChange={(e) => setFilter(e.target.value)}
-              className="bg-transparent border-b border-[var(--bg-border)] text-[var(--text-primary)] focus:border-[var(--accent-purple)] focus:shadow-[0_2px_0_0_rgba(189,147,249,0.3)] w-[150px] sm:w-[200px] outline-none transition-all px-1 ml-1"
-            />
-            ]&quot;
-          </div>
+    <div className="w-full text-white">
+      {/* 1. Header welcome banner */}
+      <header className="mb-6">
+        <div className="flex items-center gap-2 text-[var(--accent-cyan)] text-[11px] font-bold uppercase tracking-widest font-mono">
+          <Terminal size={14} className="stroke-[2.5]" />
+          <span>INDEX: DIRECTORY LISTING</span>
         </div>
+        <h1 className="font-headings font-extrabold text-2xl md:text-4xl tracking-tight text-white mt-2">
+          Library
+        </h1>
+      </header>
 
-        <motion.div
-          variants={containerVariants}
-          initial="hidden"
-          animate="visible"
-          className="flex flex-col gap-3"
-        >
-          {filteredPosts.map((post, index) => (
-            <motion.div key={post.slug} variants={itemVariants}>
-              <Link href={`/blog/${post.slug}`} className="block no-underline group">
-                <div className="bg-[var(--bg-base)] border border-[var(--bg-border)] rounded-[6px] p-[14px_16px] transition-all duration-150 group-hover:bg-[var(--bg-elevated)] group-hover:border-[var(--bg-border)] border-l-[3px] border-l-transparent group-hover:border-l-[var(--accent-purple)] font-mono">
-                  
-                  <div className="flex flex-col xl:flex-row xl:items-center justify-between mb-2 text-[12px] sm:text-[13px] text-[var(--text-muted)] gap-1">
-                    <div className="flex gap-3 sm:gap-4 overflow-hidden">
-                      <span className="hidden sm:inline w-[80px] flex-shrink-0">-rw-r--r--</span>
-                      <span className="flex-shrink-0">{post.date}</span>
-                      <span className="text-[var(--text-primary)] truncate">{post.slug}/README.md</span>
-                    </div>
-                    <span className="flex-shrink-0">{post.readTime} min read</span>
-                  </div>
+      {/* 2. Prominent Search Input Panel */}
+      <div className="mb-8 max-w-xl bg-[var(--bg-surface)] border-2 border-black rounded-2xl p-3 flex items-center gap-2.5 shadow-brutal focus-within:translate-x-[-1px] focus-within:translate-y-[-1px] focus-within:shadow-[6px_6px_0px_#000000] transition-all">
+        <Search size={18} className="text-[var(--text-secondary)] stroke-[2.5] ml-1" />
+        <input
+          type="text"
+          value={filter}
+          placeholder="Filter by title, tag, or tools..."
+          onChange={(e) => {
+            setFilter(e.target.value);
+            setVisibleCount(PAGE_SIZE);
+          }}
+          className="bg-transparent border-none text-white font-semibold outline-none w-full text-[13px] sm:text-[14px] caret-white"
+        />
+        {filter && (
+          <button
+            onClick={() => setFilter("")}
+            className="text-[10px] font-bold uppercase tracking-wider bg-[var(--bg-elevated)] border border-white/10 rounded-lg px-2.5 py-1 hover:bg-neutral-800 transition-colors cursor-pointer text-white"
+          >
+            Clear
+          </button>
+        )}
+      </div>
 
-                  <div className="text-[var(--accent-purple)] text-[14px] sm:text-[15px] font-medium mb-1 group-hover:underline decoration-dashed underline-offset-4">
-                    {post.title}
-                  </div>
-                  
-                  <div className="text-[var(--text-secondary)] text-[12px] mb-3 leading-[1.6]">
-                    {post.description}
-                  </div>
-
-                  <div className="flex flex-wrap gap-2">
-                    {post.tags.map((tag) => (
-                      <span
-                        key={tag}
-                        className="bg-[rgba(189,147,249,0.12)] text-[var(--accent-purple)] border border-[rgba(189,147,249,0.25)] rounded-[3px] px-[7px] py-[2px] text-[10px] font-medium"
-                      >
-                        {tag}
-                      </span>
-                    ))}
-                  </div>
-                </div>
-              </Link>
-            </motion.div>
-          ))}
-          
-          {filteredPosts.length === 0 && (
-            <div className="text-[var(--accent-red)] text-[13px] mt-4">
-              grep: no matches found for &quot;{filter}&quot;
+      <motion.div
+        variants={containerVariants}
+        initial="hidden"
+        animate="visible"
+        className="w-full"
+      >
+        <WindowChrome title="user@portfolio: ~/blog" className="border-2 border-black bg-[var(--bg-surface)]">
+          <div className="mb-6 font-mono text-[13px] text-white overflow-x-auto custom-scrollbar">
+            <div className="text-[var(--text-muted)] font-semibold">
+              <span>❯</span> ls -la ./blog/
             </div>
-          )}
-        </motion.div>
+            <div className="font-bold my-1">total {posts.length} posts</div>
+            <div className="flex gap-4">
+              <span className="w-[80px] text-[var(--text-muted)]">drwxr-xr-x</span>
+              <span>user</span>
+              <span>{new Date().toISOString().split("T")[0]}</span>
+              <span className="text-[var(--accent-cyan)] font-bold">./</span>
+            </div>
+            <div className="flex gap-4 mb-4">
+              <span className="w-[80px] text-[var(--text-muted)]">drwxr-xr-x</span>
+              <span>user</span>
+              <span>{new Date().toISOString().split("T")[0]}</span>
+              <span className="text-[var(--accent-cyan)] font-bold">../</span>
+            </div>
+
+            {filter && (
+              <div className="mt-4 pt-4 border-t border-dashed border-white/10">
+                <div className="text-[var(--text-muted)] font-semibold">
+                  <span>❯</span> grep -r -i "{filter}" ./blog/
+                </div>
+                <div className="text-[var(--accent-lime)] font-bold mt-1">
+                  grep: found {filteredPosts.length} match{filteredPosts.length === 1 ? "" : "es"}
+                </div>
+              </div>
+            )}
+          </div>
+
+          <motion.div className="flex flex-col gap-[12px] pt-4" variants={containerVariants}>
+            {visiblePosts.map((post) => (
+              <motion.div key={post.slug} variants={itemVariants}>
+                <BlogCard post={post} />
+              </motion.div>
+            ))}
+
+            {filteredPosts.length === 0 && (
+              <div className="text-[var(--accent-red)] font-semibold text-[13px] mt-4 font-mono">
+                grep: no matches found for "{filter}"
+              </div>
+            )}
+          </motion.div>
 
         {filteredPosts.length > 0 && (
-          <div className="mt-8 pt-4 border-t border-[var(--bg-border)] font-mono text-[13px] flex flex-col gap-3">
-            <div className="text-[var(--text-muted)]">
-              <span className="text-[var(--accent-purple)]">❯</span> cat --more (showing {filteredPosts.length} of {posts.length} posts)
+          <div className="mt-8 pt-6 border-t-2 border-black font-mono text-[13px] flex flex-col gap-3">
+            <div className="text-[var(--text-muted)] font-semibold">
+              <span>❯</span> cat --more (showing {visiblePosts.length} of {filteredPosts.length} posts)
             </div>
-            <div>
-              <button className="inline-flex items-center gap-2 px-4 py-2 bg-transparent border border-[var(--accent-cyan)] text-[var(--accent-cyan)] text-[12px] tracking-[0.1em] rounded-sm transition-all hover:bg-[rgba(139,233,253,0.1)] hover:shadow-[0_0_12px_rgba(139,233,253,0.2)] cursor-pointer">
-                [ load more → ]
-              </button>
-            </div>
+            {hasMore && (
+              <div className="mt-2">
+                <button
+                  type="button"
+                  onClick={() => setVisibleCount((c) => c + PAGE_SIZE)}
+                  className="btn-brutal btn-brutal-cyan text-[11px] font-bold tracking-wider py-2 px-5 text-black border-2 border-black rounded shadow-[2px_2px_0px_#000000] hover:translate-y-[-1px] hover:shadow-brutal transition-all"
+                >
+                  Load More Posts
+                </button>
+              </div>
+            )}
           </div>
         )}
       </WindowChrome>
     </motion.div>
+  </div>
+);
+}
+
+export function BlogListClient({ posts }: BlogListClientProps) {
+  return (
+    <PageTransition>
+      <Suspense fallback={
+        <div className="flex items-center justify-center min-h-[50vh] font-mono text-[14px]">
+          [ loading blog posts... ]
+        </div>
+      }>
+        <BlogListContent posts={posts} />
+      </Suspense>
+    </PageTransition>
   );
 }

@@ -23,18 +23,20 @@ export function getPostSlugs() {
 export function getPostBySlug(slug: string) {
   const fullPath = path.join(postsDirectory, slug, "README.md");
   if (!fs.existsSync(fullPath)) return null;
-  
+
   const fileContents = fs.readFileSync(fullPath, "utf8");
   const { data, content } = matter(fileContents);
 
-  return {
+  const meta: PostMetadata = {
+    title: data.title ?? slug,
+    date: data.date ?? "1970-01-01",
+    tags: data.tags ?? [],
+    description: data.description ?? "",
+    readTime: data.readTime ?? Math.max(3, Math.ceil(content.split(/\s+/).length / 200)),
     slug,
-    meta: {
-      ...data,
-      slug,
-    } as PostMetadata,
-    content,
   };
+
+  return { slug, meta, content };
 }
 
 export function getAllPosts() {

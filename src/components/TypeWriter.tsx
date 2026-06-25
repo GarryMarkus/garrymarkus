@@ -25,9 +25,7 @@ export function TypeWriter({
   const [completed, setCompleted] = useState(false);
 
   useEffect(() => {
-    const timeout = setTimeout(() => {
-      setStarted(true);
-    }, delayMs);
+    const timeout = setTimeout(() => setStarted(true), delayMs);
     return () => clearTimeout(timeout);
   }, [delayMs]);
 
@@ -39,17 +37,17 @@ export function TypeWriter({
         setDisplayed(text.slice(0, displayed.length + 1));
       }, speedMs);
       return () => clearTimeout(timer);
-    } else {
-      setCompleted(true);
-      if (onComplete) onComplete();
     }
+
+    setCompleted(true);
+    onComplete?.();
   }, [started, displayed, text, speedMs, completed, onComplete]);
 
   return (
     <span className={className}>
       {displayed}
-      {showCursor && (!completed || true) && (
-        <span className={clsx("inline-block w-[8px] h-[1em] align-middle bg-current ml-[2px]", "cursor-blink")} />
+      {showCursor && !completed && (
+        <span className="inline-block w-[8px] h-[1em] align-middle bg-current ml-[2px] cursor-blink" />
       )}
     </span>
   );

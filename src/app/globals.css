@@ -1,0 +1,226 @@
+@import "tailwindcss";
+
+@theme {
+  --color-bg-base: var(--bg-base);
+  --color-bg-surface: var(--bg-surface);
+  --color-bg-elevated: var(--bg-elevated);
+  --color-bg-border: var(--bg-border);
+  --color-bg-selection: var(--bg-selection);
+
+  --color-text-primary: var(--text-primary);
+  --color-text-secondary: var(--text-secondary);
+  --color-text-muted: var(--text-muted);
+
+  --color-accent-purple: var(--accent-purple);
+  --color-accent-cyan: var(--accent-cyan);
+  --color-accent-green: var(--accent-green);
+  --color-accent-pink: var(--accent-pink);
+  --color-accent-yellow: var(--accent-yellow);
+  --color-accent-red: var(--accent-red);
+
+  --color-window-dot-red: var(--window-dot-red);
+  --color-window-dot-yellow: var(--window-dot-yellow);
+  --color-window-dot-green: var(--window-dot-green);
+}
+
+:root {
+  --bg-base:      #0d0f14;
+  --bg-surface:   #111420;
+  --bg-elevated:  #161926;
+  --bg-border:    #1e2130;
+  --bg-selection: #282a3a;
+
+  --text-primary:   #f8f8f2;
+  --text-secondary: #a0a8cc;
+  --text-muted:     #4a5270;
+
+  --accent-purple: #bd93f9;
+  --accent-cyan:   #8be9fd;
+  --accent-green:  #50fa7b;
+  --accent-pink:   #ff79c6;
+  --accent-yellow: #f1fa8c;
+  --accent-red:    #ff5555;
+
+  --window-dot-red:    #ff5f57;
+  --window-dot-yellow: #febc2e;
+  --window-dot-green:  #28c840;
+}
+
+html, body {
+  background-color: var(--bg-base);
+  color: var(--text-primary);
+  font-family: var(--font-jetbrains), "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  font-size: 13px; /* mobile base */
+  line-height: 1.7;
+  letter-spacing: 0.01em;
+  margin: 0;
+  padding: 0;
+  scroll-behavior: smooth;
+}
+
+@media (min-width: 768px) {
+  html, body {
+    font-size: 14px; /* desktop base */
+  }
+}
+
+/* Ensure no sans-serif anywhere */
+* {
+  font-family: inherit;
+  box-sizing: border-box;
+}
+
+::selection {
+  background: var(--bg-selection);
+  color: var(--accent-purple);
+}
+
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: var(--bg-base);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--bg-border);
+  border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--accent-purple);
+}
+
+*:focus-visible {
+  outline: 1px dashed var(--accent-purple);
+  outline-offset: 3px;
+}
+input:focus {
+  outline: none;
+}
+
+/* Links and Cursor */
+a, button, [role="button"] {
+  cursor: pointer;
+}
+code, pre {
+  cursor: text;
+}
+
+/* Typography Hierarchy */
+h1 {
+  font-size: 1.4rem;
+  font-weight: 500;
+  color: var(--accent-purple);
+}
+h2 {
+  font-size: 1.1rem;
+  font-weight: 500;
+  color: var(--text-primary);
+}
+h3 {
+  font-size: 0.95rem;
+  font-weight: 400;
+  color: var(--accent-cyan);
+}
+.label-text {
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--text-muted);
+}
+
+/* Animations */
+@keyframes float-up {
+  0%   { transform: translate(var(--x), 100vh) scale(0); opacity: 0; }
+  5%   { opacity: var(--opacity, 0.2); transform: scale(1); }
+  95%  { opacity: var(--opacity, 0.2); }
+  100% { transform: translate(calc(var(--x) + var(--drift-x)), -50px) scale(0.5); opacity: 0; }
+}
+
+@keyframes blink {
+  50% { opacity: 0; }
+}
+.cursor-blink {
+  animation: blink 1s step-end infinite;
+}
+
+/* Scanline */
+.scanline-overlay {
+  pointer-events: none;
+  z-index: 9999;
+  position: fixed;
+  inset: 0;
+  background: repeating-linear-gradient(
+    to bottom,
+    transparent,
+    transparent 2px,
+    rgba(0, 0, 0, 0.03) 2px,
+    rgba(0, 0, 0, 0.03) 4px
+  );
+  opacity: 0.3; /* very subtle */
+}
+
+/* Vignette */
+.vignette-overlay {
+  pointer-events: none;
+  z-index: 9998;
+  position: fixed;
+  inset: 0;
+  background: radial-gradient(circle at center, transparent 40%, rgba(0, 0, 0, 0.4) 100%);
+}
+
+/* 
+  Dracula Highlight.js Theme (for rehype-highlight)
+  Adapted for the specific custom palette 
+*/
+.hljs {
+  color: #f8f8f2;
+  background: #0a0c10;
+}
+.hljs-doctag, .hljs-keyword, .hljs-meta .hljs-keyword, .hljs-template-tag, .hljs-template-variable, .hljs-type, .hljs-variable.language_ {
+  color: #ff79c6;
+}
+.hljs-title, .hljs-title.class_, .hljs-title.class_.inherited__, .hljs-title.function_ {
+  color: #50fa7b;
+}
+.hljs-attr, .hljs-attribute, .hljs-literal, .hljs-meta, .hljs-number, .hljs-operator, .hljs-selector-attr, .hljs-selector-class, .hljs-selector-id, .hljs-variable {
+  color: #bd93f9;
+}
+.hljs-meta .hljs-string, .hljs-regexp, .hljs-string {
+  color: #f1fa8c;
+}
+.hljs-built_in, .hljs-symbol {
+  color: #8be9fd;
+}
+.hljs-code, .hljs-comment, .hljs-formula {
+  color: #6272a4;
+}
+.hljs-name, .hljs-quote, .hljs-selector-pseudo, .hljs-selector-tag {
+  color: #8be9fd;
+}
+.hljs-subst {
+  color: #f8f8f2;
+}
+.hljs-section {
+  color: #bd93f9;
+  font-weight: 700;
+}
+.hljs-bullet {
+  color: #f1fa8c;
+}
+.hljs-emphasis {
+  color: #f8f8f2;
+  font-style: italic;
+}
+.hljs-strong {
+  color: #f8f8f2;
+  font-weight: 700;
+}
+.hljs-addition {
+  color: #f8f8f2;
+  background-color: #468458;
+}
+.hljs-deletion {
+  color: #f8f8f2;
+  background-color: #d03d3d;
+}

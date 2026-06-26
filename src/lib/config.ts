@@ -6,5 +6,5 @@ export const siteConfig = {
     linkedin: "https://linkedin.com/in/prem-singh-88662130a",
     x: "https://x.com/GarryMarkus",
   },
-  resumePath: "/resume.pdf",
+  resumePath: "/Prem_Singh_Resume.pdf",
 } as const;

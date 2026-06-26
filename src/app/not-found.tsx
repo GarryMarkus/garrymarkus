@@ -1,43 +1,41 @@
 import Link from "next/link";
-import { WindowChrome } from "@/components/WindowChrome";
-import { AsciiArt } from "@/components/AsciiArt";
-import { PageTransition } from "@/components/PageTransition";
-
-const SAD_ROBOT = `
-    .---.
-  .'     '.
- /         \\
-|  O     O  |
-|    ___    |
- \\         /
-  '._____.'
-`;
 
 export default function NotFound() {
   return (
-    <PageTransition>
-      <div className="flex flex-col items-center justify-center min-h-[60vh] px-4">
-        <WindowChrome title="user@portfolio: ~/404" promptPath="~/404">
-          <div className="flex flex-col items-center text-center gap-6 py-8">
-            <div className="text-[var(--accent-red)]">
-              <AsciiArt art={SAD_ROBOT.trim()} />
-            </div>
-
-            <div className="font-mono text-[13px] flex flex-col gap-4 w-full">
-              <div className="text-[var(--text-primary)]">bash: page: command not found</div>
-
-              <div className="text-left mt-4 border-t border-[var(--bg-border)] pt-4">
-                <Link
-                  href="/"
-                  className="text-[var(--accent-cyan)] hover:text-[var(--accent-purple)] no-underline flex items-center gap-2 transition-colors duration-150"
-                >
-                  <span className="text-[var(--accent-purple)]">❯</span> cd ~
-                </Link>
-              </div>
-            </div>
-          </div>
-        </WindowChrome>
-      </div>
-    </PageTransition>
+    <div
+      style={{
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+        justifyContent: "center",
+        height: "100vh",
+        fontFamily: "var(--font-mono)",
+        color: "var(--muted)",
+        gap: "16px",
+      }}
+    >
+      <span style={{ fontSize: "0.58rem", textTransform: "uppercase", letterSpacing: "0.1em" }}>
+        404
+      </span>
+      <span style={{ fontSize: "0.72rem", color: "var(--secondary)" }}>
+        Page not found.
+      </span>
+      <Link
+        href="/"
+        style={{
+          marginTop: "12px",
+          fontSize: "0.62rem",
+          textTransform: "uppercase",
+          letterSpacing: "0.06em",
+          color: "var(--muted)",
+          border: "1px solid var(--border)",
+          padding: "8px 20px",
+          borderRadius: "0",
+          transition: "color 0.2s ease, border-color 0.2s ease",
+        }}
+      >
+        ← Home
+      </Link>
+    </div>
   );
 }

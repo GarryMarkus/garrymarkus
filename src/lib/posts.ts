@@ -1,49 +1,11 @@
-import fs from "fs";
-import path from "path";
-import matter from "gray-matter";
+import { posts as genPosts, GeneratedPost } from "./posts.gen";
 
-const postsDirectory = path.join(process.cwd(), "content/blog");
+export interface Post extends GeneratedPost {}
 
-export interface PostMetadata {
-  title: string;
-  date: string;
-  tags: string[];
-  description: string;
-  readTime: number;
-  slug: string;
+export function getAllPosts(): Post[] {
+  return genPosts;
 }
 
-export function getPostSlugs() {
-  if (!fs.existsSync(postsDirectory)) return [];
-  return fs.readdirSync(postsDirectory).filter(dir => {
-    return fs.statSync(path.join(postsDirectory, dir)).isDirectory();
-  });
-}
-
-export function getPostBySlug(slug: string) {
-  const fullPath = path.join(postsDirectory, slug, "README.md");
-  if (!fs.existsSync(fullPath)) return null;
-
-  const fileContents = fs.readFileSync(fullPath, "utf8");
-  const { data, content } = matter(fileContents);
-
-  const meta: PostMetadata = {
-    title: data.title ?? slug,
-    date: data.date ?? "1970-01-01",
-    tags: data.tags ?? [],
-    description: data.description ?? "",
-    readTime: data.readTime ?? Math.max(3, Math.ceil(content.split(/\s+/).length / 200)),
-    slug,
-  };
-
-  return { slug, meta, content };
-}
-
-export function getAllPosts() {
-  const slugs = getPostSlugs();
-  const posts = slugs
-    .map((slug) => getPostBySlug(slug))
-    .filter((post): post is NonNullable<ReturnType<typeof getPostBySlug>> => post !== null)
-    .sort((post1, post2) => (post1.meta.date > post2.meta.date ? -1 : 1));
-  return posts;
+export function getPostBySlug(slug: string): Post | undefined {
+  return genPosts.find((p) => p.slug === slug);
 }

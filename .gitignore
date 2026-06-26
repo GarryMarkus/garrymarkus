@@ -46,3 +46,13 @@ next-env.d.ts
 *.swp
 *.swo
 
+# Windows thumbnail caches
+Thumbs.db
+Thumbs.db:encryptable
+ehthumbs.db
+Desktop.ini
+
+# Next.js / Turbopack / ESLint caches
+.eslintcache
+.turbo/
+

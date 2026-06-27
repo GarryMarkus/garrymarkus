@@ -34,8 +34,8 @@ export function BackgroundEffect() {
       term: string;
 
       constructor() {
-        this.x = Math.random() * canvas.width;
-        this.y = Math.random() * canvas.height;
+        this.x = Math.random() * canvas!.width;
+        this.y = Math.random() * canvas!.height;
         this.vx = (Math.random() - 0.5) * 0.5; // Very slow drift
         this.vy = (Math.random() - 0.5) * 0.5;
         this.term = TERMS[Math.floor(Math.random() * TERMS.length)];
@@ -46,8 +46,8 @@ export function BackgroundEffect() {
         this.y += this.vy;
 
         // Bounce off edges smoothly
-        if (this.x < 0 || this.x > canvas.width) this.vx *= -1;
-        if (this.y < 0 || this.y > canvas.height) this.vy *= -1;
+        if (this.x < 0 || this.x > canvas!.width) this.vx *= -1;
+        if (this.y < 0 || this.y > canvas!.height) this.vy *= -1;
       }
 
       draw(color: string) {

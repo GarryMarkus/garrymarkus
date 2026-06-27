@@ -14,7 +14,7 @@ export const posts: GeneratedPost[] = [
   {
     "slug": "wrap-up-big-plans-website-redesigns-and-an-all-nighter",
     "title": "Day 3: Wrap-Up, Big Plans, Website Redesigns, and an All-Nighter",
-    "date": "June 26, 2026",
+    "date": "June 27, 2026",
     "rawDate": "2026-06-27",
     "readTime": "3 min read",
     "excerpt": "My portfolio is finally live! Read about how my daily targets for cyber and chess got hijacked by an urge for a website redesign.",

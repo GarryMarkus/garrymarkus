@@ -1,9 +1,9 @@
 ---
 title: "Day 3: Wrap-Up, Big Plans, Website Redesigns, and an All-Nighter"
-date: June 26, 2026
-readTime: 3 min read
-excerpt: My portfolio is finally live! Read about how my daily targets for cyber and chess got hijacked by an urge for a website redesign.
-slug: wrap-up-big-plans-website-redesigns-and-an-all-nighter
+date: "June 27, 2026"
+readTime: "3 min read"
+excerpt: "My portfolio is finally live! Read about how my daily targets for cyber and chess got hijacked by an urge for a website redesign."
+slug: "wrap-up-big-plans-website-redesigns-and-an-all-nighter"
 ---
 The portfolio is finally out and running on a website with my alias on it. That is a big win!
 

@@ -6,6 +6,7 @@ export function getAllPosts(): Post[] {
   return genPosts;
 }
 
-export function getPostBySlug(slug: string): Post | undefined {
+// Ensure asynchronous signature as expected by the redesigned frontend
+export async function getPostBySlug(slug: string): Promise<Post | undefined> {
   return genPosts.find((p) => p.slug === slug);
 }

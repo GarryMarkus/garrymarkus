@@ -1,5 +1,5 @@
 ---
-title: "Testing the Markdown Editorial Engine"
+title: "Day 2: Testing the Markdown Editorial Engine"
 date: "June 26, 2026"
 readTime: "3 min read"
 excerpt: "This is a live test of our new date-directory-based Markdown blog compilation system."

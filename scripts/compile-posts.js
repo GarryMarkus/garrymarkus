@@ -2,6 +2,16 @@ const fs = require("fs");
 const path = require("path");
 const matter = require("gray-matter");
 const { marked } = require("marked");
+const { markedHighlight } = require("marked-highlight");
+const hljs = require("highlight.js");
+
+marked.use(markedHighlight({
+  langPrefix: 'hljs language-',
+  highlight(code, lang) {
+    const language = hljs.getLanguage(lang) ? lang : 'plaintext';
+    return hljs.highlight(code, { language }).value;
+  }
+}));
 
 const NOTEBOOK_DIR = path.join(__dirname, "../notebook");
 const PUBLIC_ATTACHMENTS_DIR = path.join(__dirname, "../public/attachments");
@@ -137,7 +147,8 @@ function compilePosts() {
       rawDate: folderName, // keep folderName for sorting
       readTime,
       excerpt,
-      html
+      tags: data.tags || [],
+      contentHtml: html
     });
   }
 
@@ -153,7 +164,8 @@ export interface GeneratedPost {
   rawDate: string;
   readTime: string;
   excerpt: string;
-  html: string;
+  tags: string[];
+  contentHtml: string;
 }
 
 export const posts: GeneratedPost[] = ${JSON.stringify(posts, null, 2)};

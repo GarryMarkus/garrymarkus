@@ -12,6 +12,26 @@ export interface GeneratedPost {
 
 export const posts: GeneratedPost[] = [
   {
+    "slug": "tried-the-best-but-is-not-actually-much",
+    "title": "Day 8: Tried the best, but is not actually much",
+    "date": "July 02, 2026",
+    "rawDate": "2026-07-02",
+    "readTime": "45 sec read",
+    "excerpt": "Actually did a bit of work, but not much.",
+    "tags": [],
+    "contentHtml": "<p>Even Claude got angry\n<img src=\"/attachments/2026-07-02/Pasted%20image%2020260703015530.png\" alt=\"Pasted image 20260703015530.png\"></p>\n"
+  },
+  {
+    "slug": "nothing-at-all",
+    "title": "Day 7: Nothing at all",
+    "date": "July 1, 2026",
+    "rawDate": "2026-07-01",
+    "readTime": "1 min read",
+    "excerpt": "Unproductive, well not at all productive",
+    "tags": [],
+    "contentHtml": "<p>Didn&#39;t got a single thing done today, what a waste of time and energy, the only thing i did was watching anime, some chess content and played some random game of various chess variant. Else i was sleepy the full day, did nothing but sleep and relax.</p>\n"
+  },
+  {
     "slug": "a-structured-day-of-progress",
     "title": "Day 6: A structured day of progress",
     "date": "June 30, 2026",

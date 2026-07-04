@@ -106,12 +106,12 @@ export default function Home() {
                 className="flex flex-col items-center"
               >
                 <div className="relative inline-block">
-                  <span className="font-serif text-[38px] md:text-[62px] lg:text-[76px] font-normal italic text-ink relative z-10">
+                  <span className="font-serif text-[34px] sm:text-[38px] md:text-[62px] lg:text-[76px] font-normal italic text-ink relative z-10">
                     {phrases[index].line1}
                   </span>
                 </div>
                 <div>
-                  <span className="font-mono text-[38px] md:text-[62px] lg:text-[76px] font-bold text-ink">
+                  <span className="font-mono text-[34px] sm:text-[38px] md:text-[62px] lg:text-[76px] font-bold text-ink">
                     {phrases[index].line2}
                   </span>
                 </div>
@@ -121,24 +121,24 @@ export default function Home() {
 
           <motion.p
             variants={subtitleVariants}
-            className="font-serif text-[19px] text-muted text-center max-w-[480px] mt-[28px]"
+            className="font-serif text-[17px] sm:text-[19px] text-muted text-center max-w-[480px] mt-[28px]"
           >
             Cybersecurity engineer. Chess coach. Graphics Designer.
           </motion.p>
 
           <motion.div
             variants={ctAsVariants}
-            className="flex items-center justify-center gap-4 mt-[32px]"
+            className="flex flex-col sm:flex-row items-center justify-center gap-4 mt-[32px] w-full"
           >
             <a
               href="/Prem_Singh_Resume.pdf"
               target="_blank"
               rel="noopener noreferrer"
-              className="btn-primary"
+              className="btn-primary w-full sm:w-auto justify-center"
             >
               View Resume <ArrowUpRight className="w-3.5 h-3.5 ml-1" />
             </a>
-            <Link href="/notebook" className="btn-ghost">
+            <Link href="/notebook" className="btn-ghost w-full sm:w-auto justify-center">
               Open my notebook <ArrowRight className="w-3.5 h-3.5 ml-1" />
             </Link>
           </motion.div>

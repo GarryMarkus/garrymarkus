@@ -119,7 +119,7 @@ export function BackgroundEffect() {
   return (
     <canvas 
       ref={canvasRef} 
-      className="absolute inset-0 z-20 pointer-events-none opacity-100 text-black dark:opacity-[0.25] dark:text-ink"
+      className="fixed inset-0 z-20 pointer-events-none opacity-100 text-black dark:opacity-[0.25] dark:text-ink"
     />
   );
 }

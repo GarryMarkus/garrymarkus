@@ -25,19 +25,19 @@ export function BlogList({
   return (
     <div className="flex flex-col h-full bg-surface border-r border-border">
       <div className="flex-shrink-0 sticky top-0 bg-surface z-10">
-        <div className="py-3 px-5 font-courier text-[11px] uppercase text-faint tracking-[0.07em]">
+        <div className="py-2.5 sm:py-3 px-4 sm:px-5 font-courier text-[11px] uppercase text-faint tracking-[0.07em]">
           {"//"} my notebook
         </div>
         
         {/* Category Tabs */}
         {categories && onSelectCategory && selectedCategory && (
-          <div className="flex px-3 pb-2 gap-2 overflow-x-auto custom-scrollbar border-b border-border">
+          <div className="flex px-2 sm:px-3 pb-1.5 sm:pb-2 gap-1.5 sm:gap-2 overflow-x-auto custom-scrollbar border-b border-border">
             {categories.map((cat) => (
               <button
                 key={cat}
                 onClick={() => onSelectCategory(cat)}
                 className={`
-                  px-3 py-1.5 text-[11px] font-courier tracking-wider rounded-sm transition-colors
+                  px-2 sm:px-3 py-1 sm:py-1.5 text-[10px] sm:text-[11px] font-courier tracking-wider rounded-sm transition-colors
                   ${selectedCategory === cat 
                     ? "bg-gold text-surface-2 font-semibold" 
                     : "text-muted hover:text-ink hover:bg-black/5"
@@ -70,9 +70,9 @@ export function BlogList({
                   onClick={() => onSelect(post.slug)}
                   onDoubleClick={() => router.push(`/notebook/${post.slug}`)}
                   className={`
-                    text-left py-[18px] px-5 border-b border-border transition-all duration-150 ease-out
+                    text-left py-[14px] sm:py-[18px] px-4 sm:px-5 border-b border-border transition-all duration-150 ease-out
                     ${isSelected 
-                      ? "border-l-[3px] border-l-gold bg-surface-2 pl-[17px]" 
+                      ? "border-l-[3px] border-l-gold bg-surface-2 pl-[13px] sm:pl-[17px]" 
                       : "border-l-[3px] border-l-border hover:bg-black/5"
                     }
                   `}
@@ -80,7 +80,7 @@ export function BlogList({
                   <div className="font-courier text-[11px] text-faint uppercase">
                     {post.date}
                   </div>
-                  <h2 className="font-courier text-[16px] text-ink font-semibold leading-[1.4] mt-1">
+                  <h2 className="font-courier text-[14px] sm:text-[16px] text-ink font-semibold leading-[1.4] mt-1">
                     {post.title}
                   </h2>
                   
@@ -95,7 +95,7 @@ export function BlogList({
                   )}
 
                   {post.excerpt && (
-                    <p className="font-courier text-[13px] text-muted mt-1.5 line-clamp-2 leading-[1.5]">
+                    <p className="font-courier text-[12px] sm:text-[13px] text-muted mt-1.5 line-clamp-2 leading-[1.5]">
                       {post.excerpt}
                     </p>
                   )}

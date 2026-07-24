@@ -32,7 +32,7 @@ export default async function BlogPage() {
   return (
     <div className="h-screen w-full flex flex-col overflow-hidden">
       <Nav showLinks={false} />
-      <div className="flex-1 mt-[56px] overflow-hidden">
+      <div className="flex-1 mt-[48px] sm:mt-[56px] overflow-hidden">
         <BlogSplitView posts={fullPosts} />
       </div>
     </div>

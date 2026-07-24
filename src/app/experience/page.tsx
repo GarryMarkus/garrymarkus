@@ -89,9 +89,9 @@ function RoleCard({ item, index, setActiveId }: { item: ExperienceItem, index: n
   return (
     <div className="flex flex-col relative" id={item.id} ref={ref}>
       {item.section && (
-        <div className="flex items-center gap-[16px] mb-[36px] w-full">
+        <div className="flex items-center gap-[16px] mb-[24px] sm:mb-[36px] w-full">
           <div className="border-t border-border w-[40px]" />
-          <div className="font-mono text-[10px] uppercase tracking-[0.1em] text-faint whitespace-nowrap">
+          <div className="font-mono text-[9px] sm:text-[10px] uppercase tracking-[0.1em] text-faint whitespace-nowrap">
             {"//"} {item.section}
           </div>
           <div className="flex-1 border-t border-border" />
@@ -109,14 +109,14 @@ function RoleCard({ item, index, setActiveId }: { item: ExperienceItem, index: n
           whileInView={{ opacity: 1, x: 0 }}
           viewport={{ once: true, margin: "-80px" }}
           transition={{ duration: 0.5, delay: 0.08, ease: 'easeOut' }}
-          className="font-serif text-[42px] md:text-[56px] font-normal italic leading-[1.0] text-ink"
+          className="font-serif text-[28px] sm:text-[36px] md:text-[56px] font-normal italic leading-[1.0] text-ink"
         >
           {item.company}
         </motion.h3>
 
         <div className="flex flex-col md:flex-row justify-between md:items-baseline mt-[10px] gap-2">
           <div 
-            className="font-mono text-[12px] uppercase tracking-[0.07em] text-muted"
+            className="font-mono text-[10px] sm:text-[12px] uppercase tracking-[0.07em] text-muted break-words [overflow-wrap:anywhere]"
             dangerouslySetInnerHTML={{ __html: item.role }}
           />
           <div className="font-mono text-[11px] text-faint whitespace-nowrap">
@@ -143,7 +143,7 @@ function RoleCard({ item, index, setActiveId }: { item: ExperienceItem, index: n
               className="flex items-start gap-[14px]"
             >
               <div className="w-[5px] h-[5px] rounded-full bg-gold mt-[8px] shrink-0" />
-              <div className="font-serif text-[18px] leading-[1.75] text-muted">
+              <div className="font-serif text-[15px] sm:text-[16px] md:text-[18px] leading-[1.75] text-muted">
                 {bullet}
               </div>
             </motion.div>
@@ -158,7 +158,7 @@ function RoleCard({ item, index, setActiveId }: { item: ExperienceItem, index: n
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: "-80px" }}
               transition={{ duration: 0.3, delay: 0.35 + (i * 0.04) }}
-              className="font-mono text-[10px] uppercase px-[9px] py-[3px] rounded-full border border-border text-faint transition-colors duration-150 hover:border-gold hover:text-gold cursor-default"
+              className="font-mono text-[9px] sm:text-[10px] uppercase px-[9px] py-[3px] rounded-full border border-border text-faint transition-colors duration-150 hover:border-gold hover:text-gold cursor-default"
             >
               {skill}
             </motion.div>
@@ -186,7 +186,7 @@ export default function ExperiencePage() {
       <BackgroundEffect />
       <Nav showLinks={false} />
 
-      <main className="max-w-[1000px] mx-auto px-[20px] md:px-[48px] pt-[80px] pb-[120px] relative z-10">
+      <main className="max-w-[1000px] mx-auto px-[20px] md:px-[48px] pt-[72px] sm:pt-[80px] pb-[80px] sm:pb-[120px] relative z-10">
         
         {/* Back Link */}
         <motion.div 
@@ -221,7 +221,7 @@ export default function ExperiencePage() {
                   animate={{ opacity: 1, x: 0 }}
                   transition={{ duration: 0.45, delay: 0.08 }}
                 >
-                  <h1 className="font-serif italic font-normal text-[42px] md:text-[32px] text-ink m-0">
+                  <h1 className="font-serif italic font-normal text-[28px] sm:text-[32px] md:text-[32px] text-ink m-0">
                     The
                   </h1>
                 </motion.div>
@@ -230,7 +230,7 @@ export default function ExperiencePage() {
                   animate={{ opacity: 1, x: 0 }}
                   transition={{ duration: 0.45, delay: 0.18 }}
                 >
-                  <h1 className="font-mono font-bold text-[42px] md:text-[32px] text-ink mb-[8px]">
+                  <h1 className="font-mono font-bold text-[28px] sm:text-[32px] md:text-[32px] text-ink mb-[8px]">
                     Record.
                   </h1>
                 </motion.div>
@@ -306,7 +306,7 @@ export default function ExperiencePage() {
           </motion.div>
 
           {/* RIGHT CARDS */}
-          <div className="flex flex-col gap-[48px] md:gap-[72px]">
+          <div className="flex flex-col gap-[36px] sm:gap-[48px] md:gap-[72px]">
             {experienceData.map((item, index) => (
               <RoleCard 
                 key={item.id} 

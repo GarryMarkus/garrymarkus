@@ -88,14 +88,14 @@ export default function Home() {
       <BackgroundEffect />
       <Nav />
 
-      <main className="flex-1 flex items-center justify-center relative mt-[56px] mb-[40px] px-6">
+      <main className="flex-1 flex items-center justify-center relative mt-[48px] sm:mt-[56px] mb-[44px] sm:mb-[40px] px-4 sm:px-6">
         <motion.div
           className="flex flex-col items-center"
           variants={containerVariants}
           initial="hidden"
           animate="show"
         >
-          <div className="text-center relative leading-[1.05] min-h-[160px] md:min-h-[220px] flex flex-col justify-center">
+          <div className="text-center relative leading-[1.05] min-h-[220px] md:min-h-[220px] flex flex-col justify-center px-0 sm:px-2 w-full">
             <AnimatePresence mode="wait">
               <motion.div
                 key={index}
@@ -103,15 +103,15 @@ export default function Home() {
                 animate={{ opacity: 1, filter: "blur(0px)", y: 0 }}
                 exit={{ opacity: 0, filter: "blur(4px)", y: -8 }}
                 transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
-                className="flex flex-col items-center"
+                className="flex flex-col items-center w-full"
               >
-                <div className="relative inline-block">
-                  <span className="font-serif text-[34px] sm:text-[38px] md:text-[62px] lg:text-[76px] font-normal italic text-ink relative z-10">
+                <div className="relative w-full">
+                  <span className="font-serif text-[42px] sm:text-[52px] md:text-[62px] lg:text-[76px] font-normal italic text-ink relative z-10 block w-full leading-[1.1]">
                     {phrases[index].line1}
                   </span>
                 </div>
-                <div>
-                  <span className="font-mono text-[34px] sm:text-[38px] md:text-[62px] lg:text-[76px] font-bold text-ink">
+                <div className="w-full mt-2 md:mt-0">
+                  <span className="font-mono text-[42px] sm:text-[52px] md:text-[62px] lg:text-[76px] font-bold text-ink block w-full leading-[1.1]">
                     {phrases[index].line2}
                   </span>
                 </div>
@@ -121,24 +121,24 @@ export default function Home() {
 
           <motion.p
             variants={subtitleVariants}
-            className="font-serif text-[17px] sm:text-[19px] text-muted text-center max-w-[480px] mt-[28px]"
+            className="font-serif text-[17px] sm:text-[19px] text-muted text-center max-w-[480px] mt-[20px] sm:mt-[28px] px-2"
           >
             Cybersecurity Engineer. Chess Coach. Graphics Designer.
           </motion.p>
 
           <motion.div
             variants={ctAsVariants}
-            className="flex flex-col sm:flex-row items-center justify-center gap-4 mt-[32px] w-full"
+            className="flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-4 mt-[24px] sm:mt-[32px] w-full"
           >
             <a
               href="/Prem_Singh_Resume.pdf"
               target="_blank"
               rel="noopener noreferrer"
-              className="btn-primary w-full sm:w-auto justify-center"
+              className="btn-primary w-full max-w-[280px] sm:max-w-none sm:w-auto justify-center"
             >
               View Resume <ArrowUpRight className="w-3.5 h-3.5 ml-1" />
             </a>
-            <Link href="/notebook" className="btn-ghost w-full sm:w-auto justify-center">
+            <Link href="/notebook" className="btn-ghost w-full max-w-[280px] sm:max-w-none sm:w-auto justify-center">
               Open my notebook <ArrowRight className="w-3.5 h-3.5 ml-1" />
             </Link>
           </motion.div>
@@ -149,12 +149,23 @@ export default function Home() {
         initial="hidden"
         animate="show"
         variants={bottomBarVariants}
-        className="fixed bottom-0 left-0 right-0 h-[40px] border-t border-border flex items-center justify-between px-6 bg-bg z-50"
+        className="fixed bottom-0 left-0 right-0 h-[44px] sm:h-[40px] border-t border-border flex items-center px-4 sm:px-6 bg-bg z-50"
       >
-        <div className="font-mono text-[11px] text-faint">
+        <div className="font-mono text-[11px] text-faint flex-1">
           @garrymarkus
         </div>
-        <div className="flex items-center gap-4">
+        
+        <div className="flex justify-center flex-1">
+          <Link
+            href="/experience"
+            className="flex md:hidden font-mono text-[10px] uppercase text-muted hover:text-gold transition-colors items-center gap-1"
+          >
+            <span>Experience</span>
+            <ArrowRight className="w-3 h-3" />
+          </Link>
+        </div>
+
+        <div className="flex items-center justify-end gap-5 flex-1">
           <a href="https://github.com/garrymarkus" target="_blank" rel="noopener noreferrer" className="text-faint hover:text-gold transition-colors">
             <GithubIcon className="w-4 h-4" />
           </a>

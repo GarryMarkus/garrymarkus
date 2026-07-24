@@ -89,26 +89,26 @@ export function FullPostClient({ post }: { post: Post }) {
         </motion.div>
 
         {/* Tufte Grid */}
-        <div className="grid grid-cols-1 lg:grid-cols-[minmax(0,640px)_1fr] gap-0 lg:gap-16 mt-12">
+        <div className="grid grid-cols-1 lg:grid-cols-[minmax(0,640px)_1fr] gap-0 lg:gap-16 mt-6 sm:mt-8 md:mt-12">
           
           {/* LEFT: Main content column */}
           <div>
             <motion.h1 
               variants={itemVariants}
-              className="font-serif text-[42px] lg:text-[52px] font-normal italic text-ink leading-[1.1]"
+              className="font-serif text-[28px] sm:text-[36px] md:text-[42px] lg:text-[52px] font-normal italic text-ink leading-[1.1]"
             >
               {post.title}
             </motion.h1>
 
-            <motion.div variants={itemVariants} className="mt-6">
+            <motion.div variants={itemVariants} className="mt-4 sm:mt-6">
               <div className="w-16 border-t-[1.5px] border-gold" />
             </motion.div>
 
-            <motion.div variants={itemVariants} className="mt-10" id="post-body">
+            <motion.div variants={itemVariants} className="mt-6 sm:mt-8 md:mt-10" id="post-body">
               <MarkdownContent html={post.contentHtml || ""} />
             </motion.div>
 
-            <motion.div variants={itemVariants} className="mt-16 mb-20">
+            <motion.div variants={itemVariants} className="mt-10 sm:mt-16 mb-12 sm:mb-20">
               <div className="font-serif italic text-faint mb-4">
                 — ✦ —
               </div>
@@ -201,13 +201,13 @@ export function FullPostClient({ post }: { post: Post }) {
         </div>
 
         {/* Mobile-only metadata */}
-        <div className="lg:hidden mt-[-2rem] mb-8">
+        <div className="lg:hidden mt-4 mb-6 sm:mb-8">
           <div className="font-mono text-[12px] text-faint uppercase">
             {post.date}
             {post.readTime && <span className="ml-3">· {post.readTime}</span>}
           </div>
           {post.tags && post.tags.length > 0 && (
-            <div className="flex gap-2 mt-2">
+            <div className="flex flex-wrap gap-2 mt-2">
               {post.tags.map((tag) => (
                 <span key={tag} className="tag-pill">{tag}</span>
               ))}

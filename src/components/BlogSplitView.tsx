@@ -67,7 +67,7 @@ export function BlogSplitView({ posts }: BlogSplitViewProps) {
         initial={{ x: -20, opacity: 0 }}
         animate={{ x: 0, opacity: 1 }}
         transition={{ duration: 0.2 }}
-        className="h-1/2 md:h-full overflow-hidden flex flex-col"
+        className="h-full md:h-full overflow-hidden flex flex-col"
       >
         <BlogList 
           posts={filteredPosts} 
@@ -83,7 +83,7 @@ export function BlogSplitView({ posts }: BlogSplitViewProps) {
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 0.1, duration: 0.3 }}
-        className="h-1/2 md:h-full overflow-hidden flex flex-col"
+        className="hidden md:flex md:h-full overflow-hidden flex-col"
       >
         <BlogPreview post={selectedPost} />
       </motion.div>

@@ -385,3 +385,69 @@ body>div {
   font-weight: 700;
   color: var(--color-ink);
 }
+
+/* Mobile responsive adjustments */
+@media (max-width: 640px) {
+  .btn-primary {
+    font-size: 11px;
+    padding: 9px 20px;
+  }
+  
+  .btn-ghost {
+    font-size: 11px;
+  }
+  
+  .tag-pill {
+    font-size: 9px;
+    padding: 2px 7px;
+  }
+  
+  .markdown-content {
+    font-size: 13px;
+  }
+  
+  .markdown-content h1 {
+    font-size: 18px;
+  }
+  
+  .markdown-content h2 {
+    font-size: 16px;
+  }
+  
+  .markdown-content h3 {
+    font-size: 14px;
+  }
+  
+  .markdown-content pre {
+    padding: 12px;
+    margin: 16px 0;
+    border-radius: 4px;
+  }
+  
+  .markdown-content blockquote {
+    padding-left: 12px;
+    margin: 14px 0;
+  }
+  
+  .markdown-content ul,
+  .markdown-content ol {
+    padding-left: 18px;
+  }
+  
+  .markdown-content table {
+    font-size: 12px;
+    display: block;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+  
+  .markdown-content th,
+  .markdown-content td {
+    padding: 6px 8px;
+  }
+
+  .max-w-\[1100px\] {
+    padding-left: 16px;
+    padding-right: 16px;
+  }
+}

@@ -31,13 +31,13 @@ export function BlogPreview({ post }: BlogPreviewProps) {
       className="h-full overflow-y-auto bg-bg custom-scrollbar relative"
     >
       <div className="sticky top-0 bg-bg z-10">
-        <div className="flex items-center justify-between px-5 py-[10px]">
-          <div className="font-courier text-[11px] uppercase text-faint tracking-[0.07em]">
+        <div className="flex items-center justify-between px-5 py-[10px] gap-3">
+          <div className="font-courier text-[11px] uppercase text-faint tracking-[0.07em] min-w-0 truncate">
             {"//"} {truncatedTitle}
           </div>
           <button 
             onClick={() => router.push(`/notebook/${post.slug}`)}
-            className="btn-primary !text-[10px] !py-[7px] !px-4"
+            className="btn-primary !text-[10px] !py-[7px] !px-4 shrink-0 whitespace-nowrap"
           >
             Open full post →
           </button>
@@ -45,7 +45,7 @@ export function BlogPreview({ post }: BlogPreviewProps) {
         <div className="border-b border-border w-full" />
       </div>
 
-      <div className="px-10 py-8 relative">
+      <div className="px-4 md:px-10 py-6 md:py-8 relative">
         <AnimatePresence mode="wait">
           <motion.div
             key={post.slug}

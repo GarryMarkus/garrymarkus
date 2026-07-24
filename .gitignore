@@ -59,3 +59,9 @@ Desktop.ini
 # Gemini / Agent config
 .agents/
 AGENTS.md
+
+# Build Artifacts
+src/lib/posts.gen.ts
+
+# Temporary Scripts
+extract_cursor.py

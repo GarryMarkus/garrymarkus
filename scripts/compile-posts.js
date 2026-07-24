@@ -197,8 +197,8 @@ function compilePosts() {
     }
   }
 
-  // Sort by rawDate descending (newest first)
-  posts.sort((a, b) => b.rawDate.localeCompare(a.rawDate));
+  // Sort by rawDate ascending (oldest first)
+  posts.sort((a, b) => a.rawDate.localeCompare(b.rawDate));
 
   // Write generator ts file
   const tsContent = `// This file is auto-generated. Do not edit manually.

@@ -13,14 +13,14 @@ interface BlogSplitViewProps {
 import { categories as CATEGORIES } from "@/lib/posts.gen";
 
 export function BlogSplitView({ posts }: BlogSplitViewProps) {
-  // If the dynamic categories list is empty (e.g. no folders exist yet), fallback to something safe
-  const defaultCategory = CATEGORIES.length > 0 ? CATEGORIES[0] : "CyberSecurity";
+  const allCategories = useMemo(() => ["Latest", ...CATEGORIES], []);
+  const defaultCategory = allCategories[0];
   const [selectedCategory, setSelectedCategory] = useState<string>(defaultCategory);
   const [selectedSlug, setSelectedSlug] = useState<string>("");
 
   useEffect(() => {
     const savedCategory = sessionStorage.getItem("notebook_active_category");
-    if (savedCategory && CATEGORIES.includes(savedCategory)) {
+    if (savedCategory && allCategories.includes(savedCategory)) {
       setSelectedCategory(savedCategory);
     }
     
@@ -28,7 +28,7 @@ export function BlogSplitView({ posts }: BlogSplitViewProps) {
     if (savedSlug) {
       setSelectedSlug(savedSlug);
     }
-  }, []);
+  }, [allCategories]);
 
   useEffect(() => {
     if (selectedCategory) sessionStorage.setItem("notebook_active_category", selectedCategory);
@@ -39,6 +39,11 @@ export function BlogSplitView({ posts }: BlogSplitViewProps) {
   }, [selectedSlug]);
 
   const filteredPosts = useMemo(() => {
+    if (selectedCategory === "Latest") {
+      // Show all posts across categories, sorted descending (newest first)
+      return [...posts].sort((a, b) => b.rawDate.localeCompare(a.rawDate));
+    }
+    // For standard categories, return the posts (which are pre-sorted oldest first)
     return posts.filter(p => p.category === selectedCategory);
   }, [posts, selectedCategory]);
 
@@ -70,7 +75,7 @@ export function BlogSplitView({ posts }: BlogSplitViewProps) {
           onSelect={setSelectedSlug}
           selectedCategory={selectedCategory}
           onSelectCategory={setSelectedCategory}
-          categories={CATEGORIES}
+          categories={allCategories}
         />
       </motion.div>
       

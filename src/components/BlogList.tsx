@@ -55,7 +55,7 @@ export function BlogList({
         )}
       </div>
 
-      <div className="flex-1 overflow-y-auto custom-scrollbar">
+      <div className="flex-1 overflow-y-auto custom-scrollbar bg-surface">
         {posts.length === 0 ? (
           <div className="p-5 text-faint font-courier text-[11px] uppercase text-center mt-10">
             No posts found in this category.

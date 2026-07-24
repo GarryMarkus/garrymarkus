@@ -28,8 +28,8 @@ const experienceData: ExperienceItem[] = [
     shortRole: "Chess Coach",
     shortDate: "JAN 2026 →",
     bullets: [
-      <span key="1"><span className="highlight text-[rgba(255,255,255,0.95)]">Coach</span> students in chess fundamentals and <span className="highlight text-[rgba(255,255,255,0.95)]">advanced strategy</span> with structured, personalized training sessions.</span>,
-      <span key="2"><span className="highlight text-[rgba(255,255,255,0.95)]">Manage</span> scheduling, administrative workflows, and <span className="highlight text-[rgba(255,255,255,0.95)]">operational coordination</span> to ensure smooth day-to-day functioning.</span>
+      <span key="1"><span className="highlight text-ink">Coach</span> students in chess fundamentals and <span className="highlight text-ink">advanced strategy</span> with structured, personalized training sessions.</span>,
+      <span key="2"><span className="highlight text-ink">Manage</span> scheduling, administrative workflows, and <span className="highlight text-ink">operational coordination</span> to ensure smooth day-to-day functioning.</span>
     ],
     skills: ["CHESS PEDAGOGY", "CURRICULUM DESIGN", "OPERATIONS", "SCHEDULING"]
   },
@@ -37,40 +37,40 @@ const experienceData: ExperienceItem[] = [
     id: "chess-com",
     section: "LEADERSHIP & CAMPUS INVOLVEMENT",
     company: "Chess.com",
-    role: 'COLLEGE AMBASSADOR  —  <span class="text-[rgba(255,255,255,0.35)]">ABES ENGINEERING COLLEGE</span>',
+    role: 'COLLEGE AMBASSADOR  —  <span class="text-faint">ABES ENGINEERING COLLEGE</span>',
     dateStr: "JAN 2026 — PRESENT",
     shortRole: "College Ambassador",
     shortDate: "JAN 2026 →",
     bullets: [
-      <span key="1"><span className="highlight text-[rgba(255,255,255,0.95)]">Represent</span> Chess.com officially on campus, <span className="highlight text-[rgba(255,255,255,0.95)]">growing</span> the platform's student user base through peer outreach and campaigns.</span>,
-      <span key="2"><span className="highlight text-[rgba(255,255,255,0.95)]">Organize</span> Chess.com-sponsored online tournaments and community engagement events for the college.</span>
+      <span key="1"><span className="highlight text-ink">Represent</span> Chess.com officially on campus, <span className="highlight text-ink">growing</span> the platform's student user base through peer outreach and campaigns.</span>,
+      <span key="2"><span className="highlight text-ink">Organize</span> Chess.com-sponsored online tournaments and community engagement events for the college.</span>
     ],
     skills: ["COMMUNITY BUILDING", "OUTREACH", "CHESS.COM", "PEER EDUCATION"]
   },
   {
     id: "enpassant",
     company: "EnPassant Chess Forum",
-    role: 'PRESIDENT  —  <span class="text-[rgba(255,255,255,0.35)]">ABES ENGINEERING COLLEGE</span>',
+    role: 'PRESIDENT  —  <span class="text-faint">ABES ENGINEERING COLLEGE</span>',
     dateStr: "AUG 2025 — JUN 2026",
     shortRole: "President",
     shortDate: "AUG 2025 → JUN 2026",
     bullets: [
-      <span key="1"><span className="highlight text-[rgba(255,255,255,0.95)]">Led</span> a chess community of 400+ members, organizing campus-wide tournaments, workshops, and online events.</span>,
-      <span key="2"><span className="highlight text-[rgba(255,255,255,0.95)]">Spearheaded</span> club initiatives and <span className="highlight text-[rgba(255,255,255,0.95)]">directed</span> design efforts, boosting visibility and student participation.</span>,
-      <span key="3"><span className="highlight text-[rgba(255,255,255,0.95)]">Coordinate</span> scheduling, administrative processes, and operational workflows to ensure efficient day-to-day operations.</span>
+      <span key="1"><span className="highlight text-ink">Led</span> a chess community of 400+ members, organizing campus-wide tournaments, workshops, and online events.</span>,
+      <span key="2"><span className="highlight text-ink">Spearheaded</span> club initiatives and <span className="highlight text-ink">directed</span> design efforts, boosting visibility and student participation.</span>,
+      <span key="3"><span className="highlight text-ink">Coordinate</span> scheduling, administrative processes, and operational workflows to ensure efficient day-to-day operations.</span>
     ],
     skills: ["LEADERSHIP", "EVENT PLANNING", "COMMUNITY MANAGEMENT", "CHESS FORUM"]
   },
   {
     id: "acm",
     company: "ACM Student Chapter",
-    role: 'DESIGN LEAD  —  <span class="text-[rgba(255,255,255,0.35)]">ABES ENGINEERING COLLEGE</span>',
+    role: 'DESIGN LEAD  —  <span class="text-faint">ABES ENGINEERING COLLEGE</span>',
     dateStr: "AUG 2025 — JUN 2026",
     shortRole: "Design Lead",
     shortDate: "AUG 2025 → JUN 2026",
     bullets: [
-      <span key="1"><span className="highlight text-[rgba(255,255,255,0.95)]">Directed</span> branding and design for club events and digital content, strengthening audience engagement and outreach.</span>,
-      <span key="2"><span className="highlight text-[rgba(255,255,255,0.95)]">Produced</span> visual assets in collaboration with event teams, supporting seamless event execution.</span>
+      <span key="1"><span className="highlight text-ink">Directed</span> branding and design for club events and digital content, strengthening audience engagement and outreach.</span>,
+      <span key="2"><span className="highlight text-ink">Produced</span> visual assets in collaboration with event teams, supporting seamless event execution.</span>
     ],
     skills: ["BRANDING", "DIGITAL DESIGN", "VISUAL ASSETS", "CROSS-TEAM COLLABORATION"]
   }
@@ -90,11 +90,11 @@ function RoleCard({ item, index, setActiveId }: { item: ExperienceItem, index: n
     <div className="flex flex-col relative" id={item.id} ref={ref}>
       {item.section && (
         <div className="flex items-center gap-[16px] mb-[36px] w-full">
-          <div className="border-t border-[rgba(255,255,255,0.1)] w-[40px]" />
-          <div className="font-mono text-[10px] uppercase tracking-[0.1em] text-[rgba(255,255,255,0.25)] whitespace-nowrap">
+          <div className="border-t border-border w-[40px]" />
+          <div className="font-mono text-[10px] uppercase tracking-[0.1em] text-faint whitespace-nowrap">
             {"//"} {item.section}
           </div>
-          <div className="flex-1 border-t border-[rgba(255,255,255,0.1)]" />
+          <div className="flex-1 border-t border-border" />
         </div>
       )}
 
@@ -109,17 +109,17 @@ function RoleCard({ item, index, setActiveId }: { item: ExperienceItem, index: n
           whileInView={{ opacity: 1, x: 0 }}
           viewport={{ once: true, margin: "-80px" }}
           transition={{ duration: 0.5, delay: 0.08, ease: 'easeOut' }}
-          className="font-serif text-[42px] md:text-[56px] font-normal italic leading-[1.0] text-[rgba(255,255,255,0.92)]"
+          className="font-serif text-[42px] md:text-[56px] font-normal italic leading-[1.0] text-ink"
         >
           {item.company}
         </motion.h3>
 
         <div className="flex flex-col md:flex-row justify-between md:items-baseline mt-[10px] gap-2">
           <div 
-            className="font-mono text-[12px] uppercase tracking-[0.07em] text-[rgba(255,255,255,0.55)]"
+            className="font-mono text-[12px] uppercase tracking-[0.07em] text-muted"
             dangerouslySetInnerHTML={{ __html: item.role }}
           />
-          <div className="font-mono text-[11px] text-[rgba(255,255,255,0.3)] whitespace-nowrap">
+          <div className="font-mono text-[11px] text-faint whitespace-nowrap">
             {item.dateStr}
           </div>
         </div>
@@ -129,7 +129,7 @@ function RoleCard({ item, index, setActiveId }: { item: ExperienceItem, index: n
           whileInView={{ scaleX: 1 }}
           viewport={{ once: true, margin: "-80px" }}
           transition={{ duration: 0.4, delay: 0.2, ease: 'easeOut' }}
-          className="border-t-[1.5px] border-[#C8920A] w-[48px] mt-[16px]"
+          className="border-t-[1.5px] border-gold w-[48px] mt-[16px]"
         />
 
         <div className="mt-[20px] flex flex-col gap-[12px]">
@@ -142,8 +142,8 @@ function RoleCard({ item, index, setActiveId }: { item: ExperienceItem, index: n
               transition={{ duration: 0.35, delay: 0.25 + (i * 0.06) }}
               className="flex items-start gap-[14px]"
             >
-              <div className="w-[5px] h-[5px] rounded-full bg-[#C8920A] mt-[8px] shrink-0" />
-              <div className="font-serif text-[18px] leading-[1.75] text-[rgba(255,255,255,0.72)]">
+              <div className="w-[5px] h-[5px] rounded-full bg-gold mt-[8px] shrink-0" />
+              <div className="font-serif text-[18px] leading-[1.75] text-muted">
                 {bullet}
               </div>
             </motion.div>
@@ -158,7 +158,7 @@ function RoleCard({ item, index, setActiveId }: { item: ExperienceItem, index: n
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: "-80px" }}
               transition={{ duration: 0.3, delay: 0.35 + (i * 0.04) }}
-              className="font-mono text-[10px] uppercase px-[9px] py-[3px] rounded-full border border-[rgba(255,255,255,0.12)] text-[rgba(255,255,255,0.35)] transition-colors duration-150 hover:border-[#C8920A] hover:text-[#C8920A] cursor-default"
+              className="font-mono text-[10px] uppercase px-[9px] py-[3px] rounded-full border border-border text-faint transition-colors duration-150 hover:border-gold hover:text-gold cursor-default"
             >
               {skill}
             </motion.div>
@@ -182,7 +182,7 @@ export default function ExperiencePage() {
   }, [activeId]);
 
   return (
-    <div className="min-h-screen w-full bg-[#141414] relative dark">
+    <div className="min-h-screen w-full bg-bg relative">
       <BackgroundEffect />
       <Nav showLinks={false} />
 
@@ -197,7 +197,7 @@ export default function ExperiencePage() {
         >
           <Link 
             href="/" 
-            className="font-mono text-[12px] text-[rgba(255,255,255,0.35)] hover:text-[rgba(255,255,255,0.85)] transition-colors inline-block"
+            className="font-mono text-[12px] text-faint hover:text-ink transition-colors inline-block"
           >
             ← back to home
           </Link>
@@ -221,7 +221,7 @@ export default function ExperiencePage() {
                   animate={{ opacity: 1, x: 0 }}
                   transition={{ duration: 0.45, delay: 0.08 }}
                 >
-                  <h1 className="font-serif italic font-normal text-[42px] md:text-[32px] text-[rgba(255,255,255,0.92)] m-0">
+                  <h1 className="font-serif italic font-normal text-[42px] md:text-[32px] text-ink m-0">
                     The
                   </h1>
                 </motion.div>
@@ -230,7 +230,7 @@ export default function ExperiencePage() {
                   animate={{ opacity: 1, x: 0 }}
                   transition={{ duration: 0.45, delay: 0.18 }}
                 >
-                  <h1 className="font-mono font-bold text-[42px] md:text-[32px] text-[#FFFFFF] mb-[8px]">
+                  <h1 className="font-mono font-bold text-[42px] md:text-[32px] text-ink mb-[8px]">
                     Record.
                   </h1>
                 </motion.div>
@@ -241,26 +241,26 @@ export default function ExperiencePage() {
                 animate={{ opacity: 1 }}
                 transition={{ duration: 0.35, delay: 0.3 }}
               >
-                <div className="font-mono text-[10px] uppercase tracking-[0.08em] text-[rgba(255,255,255,0.25)] mb-[20px]">
+                <div className="font-mono text-[10px] uppercase tracking-[0.08em] text-faint mb-[20px]">
                   CHESS · SECURITY · CAMPUS
                 </div>
-                <div className="border-t border-[rgba(255,255,255,0.08)] w-full" />
+                <div className="border-t border-border w-full" />
               </motion.div>
             </div>
 
             {/* TIMELINE (Hidden on Mobile) */}
             <div className="hidden md:block">
-              <div className="font-mono text-[11px] uppercase text-[rgba(255,255,255,0.3)] mb-[24px]">
+              <div className="font-mono text-[11px] uppercase text-faint mb-[24px]">
                 {"//"} the record
               </div>
             
             <div className="relative pl-[12px]">
               {/* Single Vertical Track Line */}
-              <div className="absolute left-[3px] top-[6px] bottom-0 w-[1px] bg-[rgba(255,255,255,0.1)]" />
+              <div className="absolute left-[3px] top-[6px] bottom-0 w-[1px] bg-border" />
               
               {/* Progress Line (amber overlay) */}
               <div 
-                className="absolute left-[3px] top-[6px] w-[1px] bg-[#C8920A] transition-all duration-500 ease-out" 
+                className="absolute left-[3px] top-[6px] w-[1px] bg-gold transition-all duration-500 ease-out" 
                 style={{ height: `${progress}%` }} 
               />
 
@@ -284,16 +284,16 @@ export default function ExperiencePage() {
                       className="relative text-left group"
                     >
                       {/* Node Dot */}
-                      <div className={`absolute -left-[13px] top-[6px] w-[7px] h-[7px] rounded-full transition-all duration-300 ${isFilled ? 'bg-[#C8920A] border-[#C8920A] border-[1px]' : 'bg-transparent border border-[rgba(255,255,255,0.2)]'} ${isActive ? 'shadow-[0_0_8px_rgba(200,146,10,0.5)]' : ''}`} />
+                      <div className={`absolute -left-[13px] top-[6px] w-[7px] h-[7px] rounded-full transition-all duration-300 ${isFilled ? 'bg-gold border-gold border-[1px]' : 'bg-transparent border border-border'} ${isActive ? 'shadow-md shadow-gold/50' : ''}`} />
                       
                       <div className="pl-[8px] -ml-[10px]">
-                        <div className="font-mono text-[10px] text-[rgba(255,255,255,0.3)] uppercase">
+                        <div className="font-mono text-[10px] text-faint uppercase">
                           {item.shortDate}
                         </div>
-                        <div className={`font-mono text-[11px] mt-[3px] leading-[1.3] transition-colors duration-300 ${isActive ? 'text-[rgba(255,255,255,0.95)]' : 'text-[rgba(255,255,255,0.7)]'}`}>
+                        <div className={`font-mono text-[11px] mt-[3px] leading-[1.3] transition-colors duration-300 ${isActive ? 'text-ink' : 'text-muted'}`}>
                           {item.shortRole}
                         </div>
-                        <div className="font-serif italic text-[13px] text-[rgba(255,255,255,0.4)] mt-[2px]">
+                        <div className="font-serif italic text-[13px] text-faint mt-[2px]">
                           {item.company}
                         </div>
                       </div>

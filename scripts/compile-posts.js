@@ -149,7 +149,7 @@ function compilePosts() {
 
       // Create a clean excerpt without markdown characters
       let cleanContent = content
-        .replace(/^\s*#+\s+/gm, "") // remove headings
+        .replace(/^\s*#+.*$/gm, "") // remove entire heading lines
         .replace(/[*_~`>\[\]]/g, "") // remove formatting characters
         .replace(/\n+/g, " ")        // replace newlines with spaces
         .replace(/\s+/g, " ")        // collapse spaces

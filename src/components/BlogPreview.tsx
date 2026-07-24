@@ -15,7 +15,7 @@ export function BlogPreview({ post }: BlogPreviewProps) {
   if (!post) {
     return (
       <div className="h-full bg-bg flex items-center justify-center">
-        <span className="font-mono text-[11px] uppercase text-faint tracking-[0.07em]">
+        <span className="font-courier text-[11px] uppercase text-faint tracking-[0.07em]">
           No post selected
         </span>
       </div>
@@ -32,8 +32,8 @@ export function BlogPreview({ post }: BlogPreviewProps) {
     >
       <div className="sticky top-0 bg-bg z-10">
         <div className="flex items-center justify-between px-5 py-[10px]">
-          <div className="font-mono text-[11px] uppercase text-faint tracking-[0.07em]">
-            // {truncatedTitle}
+          <div className="font-courier text-[11px] uppercase text-faint tracking-[0.07em]">
+            {"//"} {truncatedTitle}
           </div>
           <button 
             onClick={() => router.push(`/notebook/${post.slug}`)}
@@ -57,7 +57,7 @@ export function BlogPreview({ post }: BlogPreviewProps) {
             {post.contentHtml ? (
               <MarkdownContent html={post.contentHtml} />
             ) : (
-              <div className="font-mono text-faint text-[13px]">
+              <div className="font-courier text-faint text-[13px]">
                 Loading content...
               </div>
             )}

@@ -123,7 +123,7 @@ export default function Home() {
             variants={subtitleVariants}
             className="font-serif text-[17px] sm:text-[19px] text-muted text-center max-w-[480px] mt-[28px]"
           >
-            Cybersecurity engineer. Chess coach. Graphics Designer.
+            Cybersecurity Engineer. Chess Coach. Graphics Designer.
           </motion.p>
 
           <motion.div

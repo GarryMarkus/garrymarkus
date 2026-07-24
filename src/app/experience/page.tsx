@@ -92,7 +92,7 @@ function RoleCard({ item, index, setActiveId }: { item: ExperienceItem, index: n
         <div className="flex items-center gap-[16px] mb-[36px] w-full">
           <div className="border-t border-[rgba(255,255,255,0.1)] w-[40px]" />
           <div className="font-mono text-[10px] uppercase tracking-[0.1em] text-[rgba(255,255,255,0.25)] whitespace-nowrap">
-            // {item.section}
+            {"//"} {item.section}
           </div>
           <div className="flex-1 border-t border-[rgba(255,255,255,0.1)]" />
         </div>
@@ -109,14 +109,14 @@ function RoleCard({ item, index, setActiveId }: { item: ExperienceItem, index: n
           whileInView={{ opacity: 1, x: 0 }}
           viewport={{ once: true, margin: "-80px" }}
           transition={{ duration: 0.5, delay: 0.08, ease: 'easeOut' }}
-          className="font-serif italic text-[36px] md:text-[48px] font-normal leading-[1.0] text-[rgba(255,255,255,0.92)]"
+          className="font-serif text-[42px] md:text-[56px] font-normal italic leading-[1.0] text-[rgba(255,255,255,0.92)]"
         >
           {item.company}
         </motion.h3>
 
         <div className="flex flex-col md:flex-row justify-between md:items-baseline mt-[10px] gap-2">
           <div 
-            className="font-mono text-[12px] uppercase tracking-[0.07em] text-[rgba(255,255,255,0.6)]"
+            className="font-mono text-[12px] uppercase tracking-[0.07em] text-[rgba(255,255,255,0.55)]"
             dangerouslySetInnerHTML={{ __html: item.role }}
           />
           <div className="font-mono text-[11px] text-[rgba(255,255,255,0.3)] whitespace-nowrap">
@@ -143,7 +143,7 @@ function RoleCard({ item, index, setActiveId }: { item: ExperienceItem, index: n
               className="flex items-start gap-[14px]"
             >
               <div className="w-[5px] h-[5px] rounded-full bg-[#C8920A] mt-[8px] shrink-0" />
-              <div className="font-serif text-[17px] leading-[1.7] text-[rgba(255,255,255,0.72)]">
+              <div className="font-serif text-[18px] leading-[1.75] text-[rgba(255,255,255,0.72)]">
                 {bullet}
               </div>
             </motion.div>
@@ -251,7 +251,7 @@ export default function ExperiencePage() {
             {/* TIMELINE (Hidden on Mobile) */}
             <div className="hidden md:block">
               <div className="font-mono text-[11px] uppercase text-[rgba(255,255,255,0.3)] mb-[24px]">
-                // the record
+                {"//"} the record
               </div>
             
             <div className="relative pl-[12px]">

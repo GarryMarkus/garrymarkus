@@ -21,7 +21,7 @@ export default async function BlogPostPage({ params }: { params: { slug: string 
 
   return (
     <div className="min-h-screen w-full bg-bg">
-      <div className="max-w-[680px] mx-auto px-6 pb-20">
+      <div className="max-w-[1100px] mx-auto px-6 pb-20">
         <FullPostClient post={post} />
       </div>
     </div>

@@ -1,6 +1,6 @@
 import { posts as genPosts, GeneratedPost } from "./posts.gen";
 
-export interface Post extends GeneratedPost {}
+export type Post = GeneratedPost;
 
 export function getAllPosts(): Post[] {
   return genPosts;

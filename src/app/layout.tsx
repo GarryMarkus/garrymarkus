@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { EB_Garamond, Space_Mono } from "next/font/google";
 import { ThemeProvider } from "@/components/ThemeProvider";
+import "katex/dist/katex.min.css";
 import "./globals.css";
 
 const ebGaramond = EB_Garamond({
@@ -19,7 +20,7 @@ const spaceMono = Space_Mono({
 
 export const metadata: Metadata = {
   title: "Garry Markus",
-  description: "Cybersecurity engineer. Chess coach. Graphics Designer",
+  description: "Cybersecurity Engineer. Chess Coach. Graphics Designer",
 };
 
 export const viewport = {

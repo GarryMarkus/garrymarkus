@@ -37,7 +37,7 @@
 
   --font-serif: "EB Garamond", Georgia, serif;
   --font-mono: "Space Mono", monospace;
-  --font-courier: "Courier New", Courier, monospace;
+  --font-courier: var(--font-cousine), "Courier New", Courier, monospace;
   --font-cascadia: "Cascadia Mono", "Cascadia Code", "Fira Code", Consolas, monospace;
 }
 
@@ -60,12 +60,12 @@ a, button, [role="button"], .btn-primary, .btn-ghost, .tag-pill {
 
 /* Ensure children of links/buttons inherit the pointer */
 a *, button *, [role="button"] * {
-  cursor: inherit;
+  cursor: inherit !important;
 }
 
-/* Custom GNOME Cursors for Text Selection */
+/* Override default text cursor to use precision pointer as default */
 p, h1, h2, h3, h4, h5, h6, span, li, blockquote, code, pre, input, textarea {
-  cursor: url('/cursors/text.png') 11 12, text;
+  cursor: url('/cursors/crosshair.png') 11 11, crosshair;
 }
 
 body::after {

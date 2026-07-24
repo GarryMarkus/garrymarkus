@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { EB_Garamond, Space_Mono } from "next/font/google";
+import { EB_Garamond, Space_Mono, Cousine } from "next/font/google";
 import { ThemeProvider } from "@/components/ThemeProvider";
 import "katex/dist/katex.min.css";
 import "./globals.css";
@@ -14,6 +14,13 @@ const ebGaramond = EB_Garamond({
 const spaceMono = Space_Mono({
   subsets: ["latin"],
   variable: "--font-mono",
+  weight: ["400", "700"],
+  style: ["normal", "italic"],
+});
+
+const cousine = Cousine({
+  subsets: ["latin"],
+  variable: "--font-cousine",
   weight: ["400", "700"],
   style: ["normal", "italic"],
 });
@@ -33,7 +40,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={`${ebGaramond.variable} ${spaceMono.variable}`} suppressHydrationWarning>
+    <html lang="en" className={`${ebGaramond.variable} ${spaceMono.variable} ${cousine.variable}`} suppressHydrationWarning>
       <body className="antialiased font-serif">
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
           {children}

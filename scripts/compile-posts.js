@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/no-require-imports */
 const fs = require("fs");
+const crypto = require("crypto");
 const path = require("path");
 const matter = require("gray-matter");
 const { marked } = require("marked");
@@ -38,6 +39,18 @@ const PUBLIC_ATTACHMENTS_DIR = path.join(__dirname, "../public/attachments");
 const OUTPUT_FILE = path.join(__dirname, "../src/lib/posts.gen.ts");
 
 function compilePosts() {
+  // Read old posts to determine newly added or updated posts
+  let oldPosts = [];
+  if (fs.existsSync(OUTPUT_FILE)) {
+    const oldContent = fs.readFileSync(OUTPUT_FILE, "utf8");
+    const match = oldContent.match(/export const posts: GeneratedPost\[\] = (\[.*\]);/s);
+    if (match) {
+      try {
+        oldPosts = JSON.parse(match[1]);
+      } catch (e) {}
+    }
+  }
+
   if (!fs.existsSync(NOTEBOOK_DIR)) {
     fs.mkdirSync(NOTEBOOK_DIR, { recursive: true });
     console.log(`Created directory: ${NOTEBOOK_DIR}`);
@@ -94,6 +107,7 @@ function compilePosts() {
       const fileNameWithoutExt = path.basename(mdFile, ".md");
       const mdPath = path.join(categoryPath, mdFile);
       const mdContent = fs.readFileSync(mdPath, "utf8");
+      const hash = crypto.createHash("md5").update(mdContent).digest("hex");
 
       // Parse frontmatter
       const { data, content } = matter(mdContent);
@@ -161,6 +175,8 @@ function compilePosts() {
       const wordCount = content.trim().split(/\s+/).length;
       const readTime = data.readTime || `${Math.ceil(wordCount / 200)} min read`;
 
+      const oldP = oldPosts.find(op => op.slug === slug);
+
       // Process date into nice format
       let dateObj;
       if (data.date) {
@@ -168,8 +184,12 @@ function compilePosts() {
       }
       
       if (!dateObj || isNaN(dateObj.getTime())) {
-        const stats = fs.statSync(mdPath);
-        dateObj = stats.birthtime || stats.mtime;
+        if (oldP && oldP.rawDate && oldP._hash === hash) {
+          dateObj = new Date(oldP.rawDate);
+        } else {
+          const stats = fs.statSync(mdPath);
+          dateObj = stats.birthtime || stats.mtime;
+        }
       }
 
       const rawDate = dateObj.toISOString();
@@ -193,27 +213,13 @@ function compilePosts() {
         tags: data.tags || [],
         category: categoryName,
         contentHtml: html,
-        _mtime: fs.statSync(mdPath).mtimeMs
+        _hash: hash
       });
     }
   }
 
   // Sort by rawDate ascending (oldest first)
   posts.sort((a, b) => a.rawDate.localeCompare(b.rawDate));
-
-  // Read old posts to determine newly added or updated posts
-  let oldPosts = [];
-  if (fs.existsSync(OUTPUT_FILE)) {
-    const oldContent = fs.readFileSync(OUTPUT_FILE, "utf8");
-    const match = oldContent.match(/export const posts: GeneratedPost\[\] = (\[.*\]);/s);
-    if (match) {
-      try {
-        oldPosts = JSON.parse(match[1]);
-      } catch (e) {
-        // Ignore parse errors, oldPosts stays empty
-      }
-    }
-  }
 
   // 1. Read existing latestSlugs to preserve them initially
   let previousLatestSlugs = [];
@@ -235,7 +241,7 @@ function compilePosts() {
     const oldP = oldPosts.find(op => op.slug === p.slug);
     if (!oldP) {
       currentRunNew.push({ slug: p.slug, status: "new" });
-    } else if (JSON.stringify(oldP) !== JSON.stringify(p)) {
+    } else if (oldP._hash !== p._hash || oldP.category !== p.category || oldP.slug !== p.slug) {
       currentRunUpdated.push({ slug: p.slug, status: "updated" });
     }
   }
@@ -286,7 +292,7 @@ export interface GeneratedPost {
   tags: string[];
   category: string;
   contentHtml: string;
-  _mtime: number;
+  _hash: string;
 }
 
 export interface LatestPostStatus {

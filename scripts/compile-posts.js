@@ -139,9 +139,6 @@ function compilePosts() {
       // Support Obsidian Highlight Syntax: ==highlight== -> <mark>highlight</mark>
       processedContent = processedContent.replace(/==([^=]+)==/g, "<mark>$1</mark>");
 
-      // Compile markdown to HTML
-      const html = marked.parse(processedContent);
-
       // Extract title from frontmatter or first heading
       let extractedTitle = data.title || data.TITLE;
       if (!extractedTitle) {
@@ -152,6 +149,14 @@ function compilePosts() {
       }
       
       const title = extractedTitle || fileNameWithoutExt;
+
+      // Remove the duplicated heading from the content before converting to HTML
+      const escapeRegExp = (string) => string.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+      const titleRegex = new RegExp(`^\\s*#+\\s+${escapeRegExp(title)}\\s*$`, 'm');
+      processedContent = processedContent.replace(titleRegex, "");
+
+      // Compile markdown to HTML
+      const html = marked.parse(processedContent);
       let slug = data.slug || title;
       
       // Sanitize slug to make it safe for filesystems and URLs

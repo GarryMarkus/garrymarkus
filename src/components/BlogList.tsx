@@ -80,8 +80,13 @@ export function BlogList({
                   <div className="font-courier text-[11px] text-faint uppercase">
                     {post.date}
                   </div>
-                  <h2 className="font-courier text-[14px] sm:text-[16px] text-ink font-semibold leading-[1.4] mt-1">
+                  <h2 className="font-courier text-[14px] sm:text-[16px] text-ink font-semibold leading-[1.4] mt-1 flex items-center gap-2">
                     {post.title}
+                    {post.latestStatus && (
+                      <span className={`text-[9px] uppercase tracking-wider px-1.5 py-0.5 rounded-sm font-bold ${post.latestStatus === 'new' ? 'bg-gold text-surface-2' : 'border border-gold text-gold bg-gold/5'}`}>
+                        {post.latestStatus}
+                      </span>
+                    )}
                   </h2>
                   
                   {post.tags && post.tags.length > 0 && (

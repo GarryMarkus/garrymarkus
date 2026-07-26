@@ -7,9 +7,10 @@ import { MarkdownContent } from "./MarkdownContent";
 
 interface BlogPreviewProps {
   post?: Post;
+  selectedCategory?: string;
 }
 
-export function BlogPreview({ post }: BlogPreviewProps) {
+export function BlogPreview({ post, selectedCategory = "default" }: BlogPreviewProps) {
   const router = useRouter();
 
   if (!post) {
@@ -48,7 +49,7 @@ export function BlogPreview({ post }: BlogPreviewProps) {
       <div className="px-4 md:px-10 py-6 md:py-8 relative">
         <AnimatePresence mode="wait">
           <motion.div
-            key={post.slug}
+            key={`${selectedCategory}-${post.slug}`}
             initial={{ opacity: 0, y: 6 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -6, transition: { duration: 0.12 } }}

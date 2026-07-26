@@ -1,4 +1,4 @@
-### Lecture: Hashing Paradigms and Frequency Arrays
+### Lecture 14.2 : Hashing Paradigms and Frequency Arrays
 
 #### 1. The Core Paradigm: Precomputation and Hashing
 

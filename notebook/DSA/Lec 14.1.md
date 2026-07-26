@@ -1,4 +1,4 @@
-### Lecture 14: Advanced Binary Search (Rotated Arrays & Mathematical Search Spaces)
+### Lecture 14.1: Advanced Binary Search (Rotated Arrays & Mathematical Search Spaces)
 
 #### 1. Core Paradigm: Non-Standard Monotonic Spaces
 

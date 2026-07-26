@@ -138,7 +138,14 @@ export default function Home() {
             >
               View Resume <ArrowUpRight className="w-3.5 h-3.5 ml-1" />
             </a>
-            <Link href="/notebook" className="btn-ghost w-full max-w-[280px] sm:max-w-none sm:w-auto justify-center">
+            <Link
+              href="/notebook"
+              className="btn-ghost w-full max-w-[280px] sm:max-w-none sm:w-auto justify-center"
+              onClick={() => {
+                sessionStorage.removeItem("notebook_active_category");
+                sessionStorage.removeItem("notebook_active_slug");
+              }}
+            >
               Open my notebook <ArrowRight className="w-3.5 h-3.5 ml-1" />
             </Link>
           </motion.div>

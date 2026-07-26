@@ -10,7 +10,7 @@ interface BlogSplitViewProps {
   posts: Post[];
 }
 
-import { categories as CATEGORIES } from "@/lib/posts.gen";
+import { categories as CATEGORIES, latestSlugs as LATEST_SLUGS } from "@/lib/posts.gen";
 
 export function BlogSplitView({ posts }: BlogSplitViewProps) {
   const allCategories = useMemo(() => ["Latest", ...CATEGORIES], []);
@@ -39,12 +39,21 @@ export function BlogSplitView({ posts }: BlogSplitViewProps) {
   }, [selectedSlug]);
 
   const filteredPosts = useMemo(() => {
+    let filtered;
     if (selectedCategory === "Latest") {
-      // Show all posts across categories, sorted descending (newest first)
-      return [...posts].sort((a, b) => b.rawDate.localeCompare(a.rawDate));
+      // Show only the posts that were newly added or updated in the most recent compile
+      filtered = posts
+        .filter(p => LATEST_SLUGS.some(ls => ls.slug === p.slug))
+        .sort((a, b) => b.rawDate.localeCompare(a.rawDate));
+    } else {
+      // For standard categories, return the posts (which are pre-sorted oldest first)
+      filtered = posts.filter(p => p.category === selectedCategory);
     }
-    // For standard categories, return the posts (which are pre-sorted oldest first)
-    return posts.filter(p => p.category === selectedCategory);
+    
+    return filtered.map(p => ({
+      ...p,
+      latestStatus: LATEST_SLUGS.find(ls => ls.slug === p.slug)?.status
+    }));
   }, [posts, selectedCategory]);
 
   useEffect(() => {
@@ -85,7 +94,7 @@ export function BlogSplitView({ posts }: BlogSplitViewProps) {
         transition={{ delay: 0.1, duration: 0.3 }}
         className="hidden md:flex md:h-full overflow-hidden flex-col"
       >
-        <BlogPreview post={selectedPost} />
+        <BlogPreview post={selectedPost} selectedCategory={selectedCategory} />
       </motion.div>
     </div>
   );

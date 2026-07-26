@@ -192,13 +192,87 @@ function compilePosts() {
         excerpt,
         tags: data.tags || [],
         category: categoryName,
-        contentHtml: html
+        contentHtml: html,
+        _mtime: fs.statSync(mdPath).mtimeMs
       });
     }
   }
 
   // Sort by rawDate ascending (oldest first)
   posts.sort((a, b) => a.rawDate.localeCompare(b.rawDate));
+
+  // Read old posts to determine newly added or updated posts
+  let oldPosts = [];
+  if (fs.existsSync(OUTPUT_FILE)) {
+    const oldContent = fs.readFileSync(OUTPUT_FILE, "utf8");
+    const match = oldContent.match(/export const posts: GeneratedPost\[\] = (\[.*\]);/s);
+    if (match) {
+      try {
+        oldPosts = JSON.parse(match[1]);
+      } catch (e) {
+        // Ignore parse errors, oldPosts stays empty
+      }
+    }
+  }
+
+  // 1. Read existing latestSlugs to preserve them initially
+  let previousLatestSlugs = [];
+  if (fs.existsSync(OUTPUT_FILE)) {
+    const oldContent = fs.readFileSync(OUTPUT_FILE, "utf8");
+    const latestMatch = oldContent.match(/export const latestSlugs: LatestPostStatus\[\] = (\[.*?\]);\nexport const posts/s);
+    if (latestMatch) {
+      try {
+        previousLatestSlugs = JSON.parse(latestMatch[1]);
+      } catch (e) {}
+    }
+  }
+
+  // 2. Identify changes in the current run
+  const currentRunNew = [];
+  const currentRunUpdated = [];
+
+  for (const p of posts) {
+    const oldP = oldPosts.find(op => op.slug === p.slug);
+    if (!oldP) {
+      currentRunNew.push({ slug: p.slug, status: "new" });
+    } else if (JSON.stringify(oldP) !== JSON.stringify(p)) {
+      currentRunUpdated.push({ slug: p.slug, status: "updated" });
+    }
+  }
+
+  // 3. Merge logic (independent tracking of new and updated)
+  const finalMap = new Map();
+  
+  // Load previous
+  for (const ls of previousLatestSlugs) {
+    finalMap.set(ls.slug, ls);
+  }
+  
+  // If new posts were added, remove ALL previous "new" posts
+  if (currentRunNew.length > 0) {
+    for (const [slug, ls] of finalMap.entries()) {
+      if (ls.status === "new") {
+        finalMap.delete(slug);
+      }
+    }
+    for (const ls of currentRunNew) {
+      finalMap.set(ls.slug, ls);
+    }
+  }
+  
+  // If posts were updated, remove ALL previous "updated" posts
+  if (currentRunUpdated.length > 0) {
+    for (const [slug, ls] of finalMap.entries()) {
+      if (ls.status === "updated") {
+        finalMap.delete(slug);
+      }
+    }
+    for (const ls of currentRunUpdated) {
+      finalMap.set(ls.slug, ls);
+    }
+  }
+
+  const finalLatestSlugs = Array.from(finalMap.values());
 
   // Write generator ts file
   const tsContent = `// This file is auto-generated. Do not edit manually.
@@ -212,9 +286,16 @@ export interface GeneratedPost {
   tags: string[];
   category: string;
   contentHtml: string;
+  _mtime: number;
+}
+
+export interface LatestPostStatus {
+  slug: string;
+  status: "new" | "updated";
 }
 
 export const categories: string[] = ${JSON.stringify(sortedCategories, null, 2)};
+export const latestSlugs: LatestPostStatus[] = ${JSON.stringify(finalLatestSlugs, null, 2)};
 export const posts: GeneratedPost[] = ${JSON.stringify(posts, null, 2)};
 `;
 

@@ -1,6 +1,6 @@
 import { posts as genPosts, GeneratedPost } from "./posts.gen";
 
-export type Post = GeneratedPost;
+export type Post = GeneratedPost & { latestStatus?: "new" | "updated" };
 
 export function getAllPosts(): Post[] {
   return genPosts;

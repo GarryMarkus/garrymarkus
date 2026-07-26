@@ -62,7 +62,7 @@ Desktop.ini
 AGENTS.md
 
 # Build Artifacts
-src/lib/posts.gen.ts
+# src/lib/posts.gen.ts (Removed to allow state syncing on GitHub Pages)
 
 # Temporary Scripts
 extract_cursor.py

@@ -1,4 +1,4 @@
-# NumPy Array Operations
+# Phase 2: NumPy Array Operations
 
 This module focuses on intermediate to advanced array manipulations utilizing the NumPy library. Mastering these operations is essential for efficient data analysis, as they allow for rapid subset extraction, logical filtering, and structural modification of multidimensional datasets without relying on slow, iterative loops.
 

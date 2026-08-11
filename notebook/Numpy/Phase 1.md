@@ -1,4 +1,4 @@
-# Numpy Array and Basics
+# Phase 1: Numpy Array and Basics
 
 This topic covers the fundamental usage of the NumPy library in Python, highlighting its significant performance benefits over standard lists. Understanding these basics is critical for data analysis and machine learning, focusing on array creation, mathematical operations, and dimensional properties.
 

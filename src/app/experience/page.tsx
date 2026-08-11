@@ -3,7 +3,6 @@
 import { useEffect, useState, useRef } from "react";
 import { motion, useInView } from "framer-motion";
 import { Nav } from "@/components/Nav";
-import { BackgroundEffect } from "@/components/BackgroundEffect";
 import Link from "next/link";
 
 interface ExperienceItem {
@@ -183,7 +182,6 @@ export default function ExperiencePage() {
 
   return (
     <div className="min-h-screen w-full bg-bg relative">
-      <BackgroundEffect />
       <Nav showLinks={false} />
 
       <main className="max-w-[1000px] mx-auto px-[20px] md:px-[48px] pt-[72px] sm:pt-[80px] pb-[80px] sm:pb-[120px] relative z-10">

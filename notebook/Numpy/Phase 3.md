@@ -1,4 +1,4 @@
-# Advanced NumPy Operations and Business Analysis
+# Phase 3: Advanced NumPy Operations and Business Analysis
 
 This module explores advanced mathematical manipulations and real-world business data analysis using NumPy and Matplotlib. It demonstrates how to apply aggregate functions across specific multi-dimensional axes to extract actionable business intelligence, such as yearly totals and restaurant averages. Additionally, it covers fundamental vector calculus concepts (dot products and vector angles) alongside string vectorization and scalar broadcasting.
 

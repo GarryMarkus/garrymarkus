@@ -1,4 +1,4 @@
-# NumPy Array I/O and Image Manipulation
+# Phase 4: NumPy Array I/O and Image Manipulation
 
 This section covers the fundamental methods for saving and loading NumPy arrays to and from the local file system using the native `.npy` format. It bridges basic data structure generation with persistent memory storage, ensuring arrays maintain their exact dimensional properties. Furthermore, it demonstrates how NumPy arrays can functionally represent visual image data, allowing for mathematical image manipulation and side-by-side visualization utilizing the Matplotlib library.
 

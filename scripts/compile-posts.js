@@ -46,7 +46,7 @@ renderer.heading = function(token) {
 };
 marked.use({ renderer });
 
-const NOTEBOOK_DIR = path.join(__dirname, "../notebook");
+const NOTEBOOK_DIR = path.join(__dirname, "../src/content/blog");
 const PUBLIC_ATTACHMENTS_DIR = path.join(__dirname, "../public/attachments");
 const OUTPUT_FILE = path.join(__dirname, "../src/lib/posts.gen.ts");
 

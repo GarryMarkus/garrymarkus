@@ -27,11 +27,11 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className={`${courierPrime.variable} ${spaceMono.variable}`}>
-      <body className="antialiased min-h-screen lg:overflow-hidden bg-[var(--color-bg-primary)] text-[var(--color-text-muted)] font-mono selection:bg-[var(--color-text-primary)] selection:text-[var(--color-bg-primary)]">
-        <div className="flex flex-col lg:flex-row min-h-screen lg:h-screen max-w-[1600px] mx-auto">
+      <body className="antialiased min-h-screen bg-[var(--color-bg-primary)] text-[var(--color-text-muted)] font-mono selection:bg-[var(--color-text-primary)] selection:text-[var(--color-bg-primary)]">
+        <div className="flex flex-col lg:flex-row min-h-screen max-w-[1600px] mx-auto">
           
           {/* Left Column - Fixed on Desktop */}
-          <aside className="lg:w-1/2 lg:h-full p-8 md:p-12 lg:p-20 xl:p-24 flex flex-col justify-between shrink-0 overflow-y-auto no-scrollbar">
+          <aside className="lg:w-1/2 lg:h-screen lg:sticky lg:top-0 p-8 md:p-12 lg:p-20 xl:p-24 flex flex-col justify-between shrink-0 overflow-y-auto no-scrollbar">
             <div className="flex flex-col gap-10">
               <Link 
                 href="/" 
@@ -78,10 +78,11 @@ export default function RootLayout({
           </aside>
 
           {/* Right Column - Scrollable Content */}
-          <main className="lg:w-1/2 p-8 md:p-12 lg:p-20 xl:p-24 flex flex-col lg:h-full lg:overflow-y-auto">
-            <div className="w-full">
+          <main className="lg:w-1/2 p-8 md:p-12 lg:p-20 xl:p-24 flex flex-col min-h-screen">
+            <div className="w-full flex-1 flex flex-col">
               {children}
             </div>
+            <div className="bottom-spacer h-16 md:h-24 shrink-0 w-full"></div>
           </main>
 
         </div>

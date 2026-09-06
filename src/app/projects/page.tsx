@@ -1,7 +1,7 @@
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Projects | Prem Singh",
+  title: "Projects | GarryMarkus",
 };
 
 export default function Projects() {

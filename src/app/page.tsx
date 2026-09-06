@@ -2,7 +2,7 @@ import { Metadata } from "next";
 import BackendVisual from "@/components/BackendVisual";
 
 export const metadata: Metadata = {
-  title: "Prem Singh",
+  title: "GarryMarkus",
 };
 
 export default function Home() {

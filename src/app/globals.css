@@ -49,12 +49,11 @@ body {
 }
 
 /* Hide scrollbar for specific elements */
-.no-scrollbar::-webkit-scrollbar {
-  display: none;
-}
-.no-scrollbar {
-  -ms-overflow-style: none;
-  scrollbar-width: none;
+
+
+/* Remove the extra bottom spacer on the homepage so the dashboard centers perfectly */
+main:has(.home-page-marker) .bottom-spacer {
+  display: none !important;
 }
 
 a, button, [role="button"], a *, button *, [role="button"] * {

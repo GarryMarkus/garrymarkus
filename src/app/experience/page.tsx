@@ -1,7 +1,7 @@
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Experience | Prem Singh",
+  title: "Experience | GarryMarkus",
 };
 
 export default function Experience() {

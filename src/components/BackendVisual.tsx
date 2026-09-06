@@ -49,6 +49,8 @@ export default async function BackendVisual() {
   // Lichess Stats
   const lichessRapid = lichessData?.perfs?.rapid?.rating || "1615";
   const lichessBlitz = lichessData?.perfs?.blitz?.rating || "1603";
+  const lichessClassical = lichessData?.perfs?.classical?.rating || "1770";
+  const lichessPuzzle = lichessData?.perfs?.puzzle?.rating || "1742";
 
   // LeetCode Stats
   const lcStats = lcData?.data?.matchedUser?.submitStats?.acSubmissionNum || [];
@@ -165,15 +167,15 @@ export default async function BackendVisual() {
           
           <div className="flex flex-col gap-1">
             <div className="text-3xl font-heading font-bold text-[var(--color-text-primary)] tracking-tight">
-              {lichessRapid}
+              {lichessClassical}
             </div>
-            <span className="text-xs text-[var(--color-text-muted)]">Rapid Rating</span>
+            <span className="text-xs text-[var(--color-text-muted)]">Classical Rating</span>
           </div>
 
           <div className="flex gap-4 mt-2">
             <div className="flex flex-col">
-              <span className="text-[10px] uppercase tracking-wider text-[var(--color-text-primary)] font-bold">Blitz</span>
-              <span className="text-sm font-mono text-[var(--color-text-primary)]">{lichessBlitz}</span>
+              <span className="text-[10px] uppercase tracking-wider text-[var(--color-text-primary)] font-bold">Puzzles</span>
+              <span className="text-sm font-mono text-[var(--color-text-primary)]">{lichessPuzzle}</span>
             </div>
             <div className="flex flex-col">
               <span className="text-[10px] uppercase tracking-wider text-[var(--color-text-primary)] font-bold">Status</span>

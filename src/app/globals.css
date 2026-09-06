@@ -1,12 +1,12 @@
 @import "tailwindcss";
 
 @theme {
-  --color-bg-primary: #050505;
-  --color-surface: #111111;
-  --color-text-primary: #f4f4f5;
-  --color-text-muted: #a1a1aa;
-  --color-border-subtle: #27272a;
-  --color-accent: #3b82f6; /* Blue for links as in the image */
+  --color-bg-primary: #ffffff;
+  --color-surface: #f9fafb;
+  --color-text-primary: #111827;
+  --color-text-muted: #6b7280;
+  --color-border-subtle: #e5e7eb;
+  --color-accent: #2563eb;
   
   --font-mono: "JetBrains Mono", "Fira Code", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
   --font-heading: var(--font-heading);
@@ -22,6 +22,39 @@ body {
   font-size: 13px; /* Smaller font size like the image */
   line-height: 1.6;
   cursor: url('/cursors/default.png') 0 0, default;
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent; 
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--color-border-subtle); 
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-text-muted); 
+}
+
+* {
+  scrollbar-width: thin;
+  scrollbar-color: var(--color-border-subtle) transparent;
+}
+
+/* Hide scrollbar for specific elements */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
 }
 
 a, button, [role="button"], a *, button *, [role="button"] * {

@@ -1,16 +1,14 @@
 @import "tailwindcss";
 
 @theme {
-  --color-bg-primary: #ffffff;
-  --color-surface: #f9fafb;
-  --color-text-primary: #111827;
-  --color-text-muted: #6b7280;
-  --color-border-subtle: #e5e7eb;
-  --color-accent: #2563eb;
+  --color-bg-primary: #000000;
+  --color-surface: #111111;
+  --color-text-primary: #ffffff;
+  --color-text-muted: #9ca3af;
+  --color-border-subtle: #374151;
+  --color-accent: #3b82f6;
   
   --font-mono: "JetBrains Mono", "Fira Code", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
-  --font-heading: var(--font-heading);
-  --font-pixel: "VT323", "Courier New", monospace;
 }
 
 body {
@@ -19,48 +17,6 @@ body {
   font-family: var(--font-mono);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  font-size: 13px; /* Smaller font size like the image */
-  line-height: 1.6;
-  cursor: url('/cursors/default.png') 0 0, default;
-}
-
-/* Custom Scrollbar */
-::-webkit-scrollbar {
-  width: 8px;
-  height: 8px;
-}
-
-::-webkit-scrollbar-track {
-  background: transparent; 
-}
-
-::-webkit-scrollbar-thumb {
-  background: var(--color-border-subtle); 
-  border-radius: 4px;
-}
-
-::-webkit-scrollbar-thumb:hover {
-  background: var(--color-text-muted); 
-}
-
-* {
-  scrollbar-width: thin;
-  scrollbar-color: var(--color-border-subtle) transparent;
-}
-
-
-
-/* Remove the extra bottom spacer on the homepage so the dashboard centers perfectly */
-main:has(.home-page-marker) .bottom-spacer {
-  display: none !important;
-}
-
-a, button, [role="button"], a *, button *, [role="button"] * {
-  cursor: url('/cursors/pointer.png') 7 5, pointer !important;
-}
-
-p, h1, h2, h3, h4, h5, h6, span, li, blockquote, code, pre, input, textarea {
-  cursor: url('/cursors/text.png') 12 12, text;
 }
 
 @keyframes page-enter {
@@ -79,92 +35,4 @@ p, h1, h2, h3, h4, h5, h6, span, li, blockquote, code, pre, input, textarea {
 .animate-page-enter {
   animation: page-enter 0.4s cubic-bezier(0.22, 1, 0.36, 1) forwards;
   will-change: filter, transform, opacity;
-}
-
-::selection {
-  background: var(--color-text-primary);
-  color: var(--color-bg-primary);
-}
-
-a {
-  color: var(--color-accent);
-  text-decoration-color: var(--color-accent);
-  text-underline-offset: 3px;
-  transition: opacity 0.2s ease;
-}
-
-a:hover:not(.no-underline) {
-  text-decoration: underline;
-  opacity: 0.8;
-}
-
-/* Typography Overrides for Markdown/Blog */
-.prose {
-  color: var(--color-text-muted);
-  max-width: 65ch;
-  font-size: 14px;
-}
-
-.prose h1, .prose h2, .prose h3, .prose h4, .prose h5, .prose h6 {
-  color: var(--color-text-primary);
-  font-weight: 500;
-  margin-top: 2em;
-  margin-bottom: 1em;
-}
-
-.prose h1 { font-size: 1.25rem; }
-.prose h2 { font-size: 1.125rem; }
-.prose h3 { font-size: 1rem; }
-
-.prose p {
-  margin-bottom: 1.25em;
-}
-
-.prose a {
-  text-decoration: underline;
-}
-
-.prose code {
-  background-color: var(--color-surface);
-  padding: 0.2em 0.4em;
-  border-radius: 4px;
-  font-family: var(--font-mono);
-  color: var(--color-text-primary);
-}
-
-.prose pre {
-  background-color: var(--color-surface);
-  border: 1px solid var(--color-border-subtle);
-  border-radius: 8px;
-  padding: 16px;
-  overflow: auto;
-}
-
-.prose pre code {
-  background-color: transparent;
-  padding: 0;
-  border-radius: 0;
-}
-
-.prose ul, .prose ol {
-  padding-left: 2em;
-  margin-bottom: 1.25em;
-}
-
-.prose ul { list-style-type: square; }
-.prose ol { list-style-type: decimal; }
-.prose li { margin-bottom: 0.5em; }
-
-.prose blockquote {
-  padding: 0 1em;
-  color: var(--color-text-muted);
-  border-left: 2px solid var(--color-border-subtle);
-  margin-bottom: 1.25em;
-}
-
-.prose hr {
-  height: 1px;
-  background-color: var(--color-border-subtle);
-  border: none;
-  margin: 2em 0;
 }

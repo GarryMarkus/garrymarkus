@@ -55,37 +55,36 @@ export default function TelemetryGrid() {
   const total = lcStats.find((s) => s.difficulty === "All")?.count || (easy + medium + hard);
 
   return (
-    <section className="flex flex-col gap-6 pt-2">
+    <section className="flex flex-col gap-6 pt-2 font-mono">
       
       {/* Section Header */}
-      <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-2 border-b border-[var(--color-border-hairline)] pb-3 font-mono">
+      <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-2 border-b border-[var(--color-border-hairline)] pb-3">
         <div>
           <span className="text-[11px] text-[var(--color-text-muted)] tracking-wider block">
-            INDEX 01 · TELEMETRY & ALGORITHMIC LEDGER
+            VERIFIED BENCHMARKS & TELEMETRY
           </span>
           <h2 className="text-xl sm:text-2xl font-display font-bold text-[var(--color-text-primary)]">
-            Performance Metrics & Verifiable Benchmarks
+            Algorithmic Problem Solving & Ratings
           </h2>
         </div>
-        <div className="text-xs text-[var(--color-text-muted)] flex items-center gap-2">
-          <span className="w-1.5 h-1.5 bg-emerald-400" />
-          <span>DATA_FEED: LIVE API SYNC</span>
+        <div className="text-xs text-[var(--color-text-muted)]">
+          Live API Data Synchronization
         </div>
       </div>
 
-      {/* GitHub Shipping Ledger */}
-      <div className="border border-[var(--color-border-hairline)] bg-[var(--color-bg-surface)] p-5 flex flex-col gap-4 font-mono text-xs">
+      {/* GitHub Shipping Register */}
+      <div className="border border-[var(--color-border-hairline)] bg-[var(--color-bg-surface)] p-5 flex flex-col gap-4 text-xs">
         <div className="flex flex-wrap items-center justify-between gap-3 border-b border-[var(--color-border-hairline)] pb-3">
           <div className="flex items-center gap-3">
             <span className="text-[var(--color-text-primary)] font-semibold">
-              [SOURCE_FEED: GITHUB]
+              GitHub Source Stream
             </span>
             <span className="text-[var(--color-text-muted)]">
-              REPOSITORIES: 16 PUBLIC
+              16 Repositories
             </span>
-            <span className="text-[var(--color-border-strong)] hidden md:inline">|</span>
+            <span className="text-[var(--color-border-strong)] hidden md:inline">·</span>
             <span className="text-[var(--color-text-muted)] hidden md:inline">
-              FOCUS: ZERO RUNTIME DEPENDENCIES
+              Zero-Dependency Architecture
             </span>
           </div>
 
@@ -93,9 +92,10 @@ export default function TelemetryGrid() {
             href="https://github.com/GarryMarkus"
             target="_blank"
             rel="noopener noreferrer"
-            className="text-[var(--color-text-secondary)] hover:text-white transition-colors no-underline"
+            className="text-[var(--color-text-secondary)] hover:text-white transition-colors no-underline flex items-center gap-1"
           >
-            github.com/GarryMarkus ↗
+            <span>@GarryMarkus</span>
+            <span>↗</span>
           </a>
         </div>
 
@@ -111,13 +111,13 @@ export default function TelemetryGrid() {
       </div>
 
       {/* 3-Column Structured Telemetry Registers */}
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 font-mono">
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
         
         {/* Register 01: LeetCode */}
         <div className="border border-[var(--color-border-hairline)] bg-[var(--color-bg-surface)] p-4 flex flex-col justify-between gap-4">
           <div className="flex items-center justify-between border-b border-[var(--color-border-hairline)] pb-2 text-xs">
             <span className="text-[var(--color-text-primary)] font-semibold">
-              [REGISTER: LEETCODE]
+              LeetCode Problem Solving
             </span>
             <a
               href="https://leetcode.com/u/GarryMarkus/"
@@ -125,7 +125,7 @@ export default function TelemetryGrid() {
               rel="noopener noreferrer"
               className="text-[var(--color-text-muted)] hover:text-white no-underline text-[11px]"
             >
-              @GarryMarkus ↗
+              Profile ↗
             </a>
           </div>
 
@@ -134,7 +134,7 @@ export default function TelemetryGrid() {
               {total > 0 ? total : "400+"}
             </div>
             <div className="text-[11px] text-[var(--color-text-muted)]">
-              TOTAL ALGORITHMIC PROBLEMS SOLVED
+              Total Problems Solved
             </div>
           </div>
 
@@ -142,14 +142,14 @@ export default function TelemetryGrid() {
           <table className="w-full text-xs border-collapse">
             <thead>
               <tr className="border-b border-[var(--color-border-hairline)] text-[10px] text-[var(--color-text-muted)] text-left">
-                <th className="py-1 font-normal">DIFFICULTY</th>
-                <th className="py-1 font-normal text-right">SOLVED</th>
+                <th className="py-1 font-normal">TIER</th>
+                <th className="py-1 font-normal text-right">COUNT</th>
                 <th className="py-1 font-normal text-right">DOMAINS</th>
               </tr>
             </thead>
             <tbody className="divide-y divide-[var(--color-border-hairline)] text-[11px]">
               <tr>
-                <td className="py-1 text-emerald-400 font-medium">EASY</td>
+                <td className="py-1 text-emerald-400 font-medium">Easy</td>
                 <td className="py-1 text-right font-tabular text-[var(--color-text-primary)] font-semibold">
                   {easy}
                 </td>
@@ -158,7 +158,7 @@ export default function TelemetryGrid() {
                 </td>
               </tr>
               <tr>
-                <td className="py-1 text-amber-400 font-medium">MEDIUM</td>
+                <td className="py-1 text-amber-400 font-medium">Medium</td>
                 <td className="py-1 text-right font-tabular text-[var(--color-text-primary)] font-semibold">
                   {medium}
                 </td>
@@ -167,7 +167,7 @@ export default function TelemetryGrid() {
                 </td>
               </tr>
               <tr>
-                <td className="py-1 text-rose-400 font-medium">HARD</td>
+                <td className="py-1 text-rose-400 font-medium">Hard</td>
                 <td className="py-1 text-right font-tabular text-[var(--color-text-primary)] font-semibold">
                   {hard}
                 </td>
@@ -183,7 +183,7 @@ export default function TelemetryGrid() {
         <div className="border border-[var(--color-border-hairline)] bg-[var(--color-bg-surface)] p-4 flex flex-col justify-between gap-4">
           <div className="flex items-center justify-between border-b border-[var(--color-border-hairline)] pb-2 text-xs">
             <span className="text-[var(--color-text-primary)] font-semibold">
-              [REGISTER: CHESS.COM]
+              Chess.com Ratings
             </span>
             <a
               href="https://www.chess.com/member/garrymarkus"
@@ -191,7 +191,7 @@ export default function TelemetryGrid() {
               rel="noopener noreferrer"
               className="text-[var(--color-text-muted)] hover:text-white no-underline text-[11px]"
             >
-              @garrymarkus ↗
+              Profile ↗
             </a>
           </div>
 
@@ -200,7 +200,7 @@ export default function TelemetryGrid() {
               {rapid}
             </div>
             <div className="text-[11px] text-[var(--color-text-muted)]">
-              RAPID RATING (PEAK REGULATION)
+              Rapid Rating (Peak Standard)
             </div>
           </div>
 
@@ -209,13 +209,13 @@ export default function TelemetryGrid() {
             <thead>
               <tr className="border-b border-[var(--color-border-hairline)] text-[10px] text-[var(--color-text-muted)] text-left">
                 <th className="py-1 font-normal">FORMAT</th>
-                <th className="py-1 font-normal text-right">METRIC</th>
+                <th className="py-1 font-normal text-right">RATING</th>
                 <th className="py-1 font-normal text-right">BENCHMARK</th>
               </tr>
             </thead>
             <tbody className="divide-y divide-[var(--color-border-hairline)] text-[11px]">
               <tr>
-                <td className="py-1 text-[var(--color-text-secondary)]">RAPID</td>
+                <td className="py-1 text-[var(--color-text-secondary)]">Rapid</td>
                 <td className="py-1 text-right font-tabular text-[var(--color-text-primary)] font-semibold">
                   {rapid}
                 </td>
@@ -224,7 +224,7 @@ export default function TelemetryGrid() {
                 </td>
               </tr>
               <tr>
-                <td className="py-1 text-[var(--color-text-secondary)]">BLITZ</td>
+                <td className="py-1 text-[var(--color-text-secondary)]">Blitz</td>
                 <td className="py-1 text-right font-tabular text-[var(--color-text-primary)] font-semibold">
                   {blitz}
                 </td>
@@ -233,9 +233,9 @@ export default function TelemetryGrid() {
                 </td>
               </tr>
               <tr>
-                <td className="py-1 text-blue-400 font-medium">ROLE</td>
+                <td className="py-1 text-blue-400 font-medium">Role</td>
                 <td className="py-1 text-right font-mono text-[var(--color-text-primary)] font-semibold">
-                  AMBASSADOR
+                  Ambassador
                 </td>
                 <td className="py-1 text-right text-[var(--color-text-muted)] text-[10px]">
                   Collegiate Forum
@@ -249,7 +249,7 @@ export default function TelemetryGrid() {
         <div className="border border-[var(--color-border-hairline)] bg-[var(--color-bg-surface)] p-4 flex flex-col justify-between gap-4">
           <div className="flex items-center justify-between border-b border-[var(--color-border-hairline)] pb-2 text-xs">
             <span className="text-[var(--color-text-primary)] font-semibold">
-              [REGISTER: LICHESS]
+              Lichess Benchmarks
             </span>
             <a
               href="https://lichess.org/@/garrymarkus"
@@ -257,7 +257,7 @@ export default function TelemetryGrid() {
               rel="noopener noreferrer"
               className="text-[var(--color-text-muted)] hover:text-white no-underline text-[11px]"
             >
-              @garrymarkus ↗
+              Profile ↗
             </a>
           </div>
 
@@ -266,7 +266,7 @@ export default function TelemetryGrid() {
               {lichessClassical}
             </div>
             <div className="text-[11px] text-[var(--color-text-muted)]">
-              CLASSICAL EVALUATION RATING
+              Classical Evaluation Rating
             </div>
           </div>
 
@@ -281,7 +281,7 @@ export default function TelemetryGrid() {
             </thead>
             <tbody className="divide-y divide-[var(--color-border-hairline)] text-[11px]">
               <tr>
-                <td className="py-1 text-[var(--color-text-secondary)]">CLASSICAL</td>
+                <td className="py-1 text-[var(--color-text-secondary)]">Classical</td>
                 <td className="py-1 text-right font-tabular text-[var(--color-text-primary)] font-semibold">
                   {lichessClassical}
                 </td>
@@ -290,7 +290,7 @@ export default function TelemetryGrid() {
                 </td>
               </tr>
               <tr>
-                <td className="py-1 text-[var(--color-text-secondary)]">PUZZLES</td>
+                <td className="py-1 text-[var(--color-text-secondary)]">Puzzles</td>
                 <td className="py-1 text-right font-tabular text-[var(--color-text-primary)] font-semibold">
                   {lichessPuzzle}
                 </td>
@@ -299,7 +299,7 @@ export default function TelemetryGrid() {
                 </td>
               </tr>
               <tr>
-                <td className="py-1 text-[var(--color-text-secondary)]">RAPID / BLITZ</td>
+                <td className="py-1 text-[var(--color-text-secondary)]">Rapid / Blitz</td>
                 <td className="py-1 text-right font-tabular text-[var(--color-text-primary)] font-semibold">
                   {lichessRapid} / {lichessBlitz}
                 </td>

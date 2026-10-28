@@ -6,44 +6,45 @@ import { postSummaries } from "@/lib/postSummaries.gen.js";
 
 export default function Home() {
   useEffect(() => {
-    document.title = "Garry Markus · Systems, Algorithms & Engineering Spec";
+    document.title = "Garry Markus · Systems, Algorithms & Engineering Architecture";
   }, []);
 
   const featuredProjects = [
     {
       index: "01",
       title: "ChessReader",
-      category: "DESKTOP_LINUX / UCI",
-      desc: "Linux chess workbench and PGN reader featuring UCI engine communication, multi-chapter game navigation, and high-framerate piece animation.",
-      tags: ["C++ / Python", "UCI Engine", "Linux Desktop"],
+      category: "Systems & Desktop",
+      desc: "Linux chess workbench and PGN reader featuring asynchronous UCI engine communication, multi-chapter game tree navigation, and high-framerate vector piece animation.",
+      stack: ["Python", "UCI Protocol", "Cairo", "Linux POSIX"],
       github: "https://github.com/GarryMarkus/ChessReader",
     },
     {
       index: "02",
       title: "Document-Viewer",
-      category: "DESKTOP_WIN / PDF_CORE",
-      desc: "Distraction-free document and PDF reader for Windows inspired by GNOME aesthetics. Optimized for high-throughput rasterization with zero telemetry.",
-      tags: ["TypeScript", "Desktop UI", "PDF Engine"],
+      category: "Systems & Desktop",
+      desc: "Distraction-free document and PDF reader for Windows inspired by GNOME ergonomics. Optimized for sub-50ms cold starts, virtualized page rendering, and zero telemetry.",
+      stack: ["TypeScript", "Canvas", "Win32 API", "PDF Core"],
       github: "https://github.com/GarryMarkus/Document-Viewer",
     },
     {
       index: "03",
-      title: "SkillForge",
-      category: "WEB_PLATFORM / AI_EVAL",
-      desc: "Skill verification platform evaluating software engineering competencies through intelligent matching and deterministic challenge evaluation.",
-      tags: ["JavaScript", "LLM Integration", "Adaptive Engine"],
-      github: "https://github.com/GarryMarkus/SkillForge",
+      title: "Chess-Tournament-Swiss-Pairing",
+      category: "Algorithms & Chess",
+      desc: "FIDE Dutch Swiss pairing engine utilizing weighted bipartite Blossom graph matching. Computes automated Buchholz and Sonneborn-Berger tiebreaks with strict color parity.",
+      stack: ["Python", "Graph Matching", "Blossom", "FIDE Rules"],
+      github: "https://github.com/EnPassant-Chess-Forum-ABESEC/Chess-Tournament-Swiss-Pairing",
     },
   ];
 
   const recentPosts = postSummaries.slice(0, 3);
 
   return (
-    <div className="flex flex-col gap-12 sm:gap-14 animate-page-enter">
-      {/* Editorial Hero Component */}
+    <div className="flex flex-col gap-10">
+      
+      {/* Editorial Hero Section */}
       <Hero />
 
-      {/* Telemetry & Algorithmic Ledger */}
+      {/* Verified Telemetry Ledger */}
       <TelemetryGrid />
 
       {/* Featured Systems Section */}
@@ -51,18 +52,19 @@ export default function Home() {
         <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-2 font-mono">
           <div>
             <span className="text-[11px] text-[var(--color-text-muted)] tracking-wider block">
-              INDEX 02 · SELECTED SYSTEMS ARCHITECTURE
+              SELECTED SYSTEMS DOSSIERS
             </span>
             <h2 className="text-xl sm:text-2xl font-display font-bold text-[var(--color-text-primary)]">
-              Engineered Applications & Repositories
+              Core Applications & Software Repositories
             </h2>
           </div>
 
           <Link
             to="/projects"
-            className="text-xs text-[var(--color-text-primary)] hover:underline flex items-center gap-1 no-underline font-mono"
+            className="text-xs text-[var(--color-text-secondary)] hover:text-white transition-colors no-underline flex items-center gap-1 font-mono"
           >
-            [ALL PROJECTS INDEX →]
+            <span>All 10 Systems</span>
+            <span>→</span>
           </Link>
         </div>
 
@@ -70,40 +72,32 @@ export default function Home() {
           {featuredProjects.map((p) => (
             <div
               key={p.index}
-              className="border border-[var(--color-border-hairline)] bg-[var(--color-bg-surface)] hover:border-[var(--color-border-medium)] transition-colors p-5 flex flex-col justify-between gap-5 group"
+              className="border border-[var(--color-border-hairline)] bg-[var(--color-bg-surface)] hover:border-[var(--color-border-medium)] transition-colors p-5 flex flex-col justify-between gap-4 group"
             >
-              <div className="flex flex-col gap-3">
+              <div className="flex flex-col gap-2.5">
                 <div className="flex items-center justify-between text-xs font-mono text-[var(--color-text-muted)] border-b border-[var(--color-border-hairline)] pb-2">
-                  <span>SYS_{p.index} · {p.category}</span>
+                  <span>{p.index} · {p.category}</span>
                   <a
                     href={p.github}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="text-[var(--color-text-muted)] hover:text-white transition-colors"
-                    aria-label={`View ${p.title} repository`}
+                    className="text-[var(--color-text-secondary)] hover:text-white transition-colors"
                   >
-                    [REPO ↗]
+                    Source ↗
                   </a>
                 </div>
 
-                <h3 className="font-display font-bold text-lg text-[var(--color-text-primary)] group-hover:text-white transition-colors">
+                <h3 className="font-display font-bold text-base text-[var(--color-text-primary)] group-hover:text-white transition-colors">
                   {p.title}
                 </h3>
 
-                <p className="text-xs text-[var(--color-text-secondary)] leading-relaxed font-sans">
+                <p className="text-xs text-[var(--color-text-secondary)] leading-relaxed font-sans line-clamp-3">
                   {p.desc}
                 </p>
               </div>
 
-              <div className="flex flex-wrap gap-1.5 pt-3 border-t border-[var(--color-border-hairline)] font-mono text-[10px]">
-                {p.tags.map((t, tIdx) => (
-                  <span
-                    key={tIdx}
-                    className="px-1.5 py-0.5 border border-[var(--color-border-hairline)] bg-[var(--color-bg-base)] text-[var(--color-text-muted)]"
-                  >
-                    [{t}]
-                  </span>
-                ))}
+              <div className="pt-3 border-t border-[var(--color-border-hairline)] font-mono text-[11px] text-[var(--color-text-muted)]">
+                {p.stack.join(" · ")}
               </div>
             </div>
           ))}
@@ -111,22 +105,23 @@ export default function Home() {
       </section>
 
       {/* Recent Technical Notes Section */}
-      <section className="flex flex-col gap-6 pt-4 border-t border-[var(--color-border-hairline)] pb-8">
+      <section className="flex flex-col gap-6 pt-4 border-t border-[var(--color-border-hairline)] pb-4">
         <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-2 font-mono">
           <div>
             <span className="text-[11px] text-[var(--color-text-muted)] tracking-wider block">
-              INDEX 03 · WRITTEN SPECIFICATIONS & LOG
+              OBSIDIAN DIGITAL GARDEN
             </span>
             <h2 className="text-xl sm:text-2xl font-display font-bold text-[var(--color-text-primary)]">
-              Technical RFCs & Obsidian Notes
+              Recent Technical Publications
             </h2>
           </div>
 
           <Link
             to="/blog"
-            className="text-xs text-[var(--color-text-primary)] hover:underline flex items-center gap-1 no-underline font-mono"
+            className="text-xs text-[var(--color-text-secondary)] hover:text-white transition-colors no-underline flex items-center gap-1 font-mono"
           >
-            [VIEW ALL 24 NOTES →]
+            <span>All 24 Notes</span>
+            <span>→</span>
           </Link>
         </div>
 
@@ -139,10 +134,10 @@ export default function Home() {
             >
               <div className="flex flex-col gap-2.5">
                 <div className="flex items-center justify-between text-xs font-mono text-[var(--color-text-muted)] border-b border-[var(--color-border-hairline)] pb-2">
-                  <span className="text-[10px] text-[var(--color-text-secondary)] font-semibold">
-                    DOC_{String(idx + 1).padStart(2, "0")} · [{post.category.toUpperCase()}]
+                  <span className="text-[11px] text-[var(--color-text-secondary)] font-semibold">
+                    0{idx + 1} · {post.category}
                   </span>
-                  <span className="text-[10px]">
+                  <span className="text-[11px]">
                     {post.readTime}
                   </span>
                 </div>
@@ -159,13 +154,14 @@ export default function Home() {
               <div className="pt-3 border-t border-[var(--color-border-hairline)] flex items-center justify-between text-[11px] font-mono text-[var(--color-text-muted)]">
                 <span>{post.date}</span>
                 <span className="text-[var(--color-text-primary)] group-hover:translate-x-0.5 transition-transform">
-                  [READ →]
+                  Read Note →
                 </span>
               </div>
             </Link>
           ))}
         </div>
       </section>
+
     </div>
   );
 }

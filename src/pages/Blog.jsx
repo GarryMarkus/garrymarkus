@@ -1,19 +1,21 @@
-import { Metadata } from "next";
-import Link from "next/link";
-import { getAllPosts } from "@/lib/posts";
-
-export const metadata: Metadata = {
-  title: "Blog | GarryMarkus",
-};
+import { useEffect, useMemo } from "react";
+import { Link } from "react-router-dom";
+import { getAllPosts } from "@/lib/posts.js";
 
 export default function Blog() {
-  const posts = getAllPosts();
+  useEffect(() => {
+    document.title = "Blog | GarryMarkus";
+  }, []);
 
-  // Sort posts by date descending
-  posts.sort((a, b) => new Date(b.rawDate).getTime() - new Date(a.rawDate).getTime());
+  const posts = useMemo(() => {
+    const rawPosts = getAllPosts();
+    return [...rawPosts].sort(
+      (a, b) => new Date(b.rawDate).getTime() - new Date(a.rawDate).getTime()
+    );
+  }, []);
 
   return (
-    <div className="flex flex-col gap-12">
+    <div className="flex flex-col gap-12 animate-page-enter">
       <section className="flex flex-col gap-4">
         <h1 className="text-2xl font-semibold">Technical Log</h1>
         <p className="text-[var(--color-text-muted)]">Notes on systems engineering, algorithm design, and software architecture.</p>
@@ -29,7 +31,7 @@ export default function Blog() {
               <time className="font-mono text-sm text-[var(--color-text-muted)] shrink-0 w-20">
                 {yyyyMm}
               </time>
-              <Link href={`/blog/${post.slug}`} className="hover:underline text-lg text-[var(--color-text-primary)] leading-snug">
+              <Link to={`/blog/${post.slug}`} className="hover:underline text-lg text-[var(--color-text-primary)] leading-snug">
                 {post.title}
               </Link>
             </article>

@@ -1,10 +1,10 @@
-import { Metadata } from "next";
-
-export const metadata: Metadata = {
-  title: "Experience | GarryMarkus",
-};
+import { useEffect } from "react";
 
 export default function Experience() {
+  useEffect(() => {
+    document.title = "Experience | GarryMarkus";
+  }, []);
+
   const experiences = [
     {
       role: "Chess Coach & Operations Intern",
@@ -49,7 +49,7 @@ export default function Experience() {
   ];
 
   return (
-    <div className="flex flex-col gap-12">
+    <div className="flex flex-col gap-12 animate-page-enter">
       <section className="flex flex-col gap-4">
         <h1 className="text-2xl font-semibold">Experience & Leadership</h1>
       </section>

@@ -1,10 +1,10 @@
-import { Metadata } from "next";
-
-export const metadata: Metadata = {
-  title: "Projects | GarryMarkus",
-};
+import { useEffect } from "react";
 
 export default function Projects() {
+  useEffect(() => {
+    document.title = "Projects | GarryMarkus";
+  }, []);
+
   const projects = [
     {
       title: "Document-Viewer",

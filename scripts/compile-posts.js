@@ -1,12 +1,15 @@
-/* eslint-disable @typescript-eslint/no-require-imports */
-const fs = require("fs");
-const crypto = require("crypto");
-const path = require("path");
-const matter = require("gray-matter");
-const { marked } = require("marked");
-const { markedHighlight } = require("marked-highlight");
-const markedKatex = require("marked-katex-extension");
-const hljs = require("highlight.js");
+import fs from "fs";
+import crypto from "crypto";
+import path from "path";
+import { fileURLToPath } from "url";
+import matter from "gray-matter";
+import { marked } from "marked";
+import { markedHighlight } from "marked-highlight";
+import markedKatex from "marked-katex-extension";
+import hljs from "highlight.js";
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 marked.use(markedHighlight({
   langPrefix: 'hljs language-',
@@ -48,18 +51,18 @@ marked.use({ renderer });
 
 const NOTEBOOK_DIR = path.join(__dirname, "../src/content/blog");
 const PUBLIC_ATTACHMENTS_DIR = path.join(__dirname, "../public/attachments");
-const OUTPUT_FILE = path.join(__dirname, "../src/lib/posts.gen.ts");
+const OUTPUT_FILE = path.join(__dirname, "../src/lib/posts.gen.js");
 
 function compilePosts() {
   // Read old posts to determine newly added or updated posts
   let oldPosts = [];
   if (fs.existsSync(OUTPUT_FILE)) {
     const oldContent = fs.readFileSync(OUTPUT_FILE, "utf8");
-    const match = oldContent.match(/export const posts: GeneratedPost\[\] = (\[.*\]);/s);
+    const match = oldContent.match(/export const posts(?:.*?) = (\[.*\]);/s);
     if (match) {
       try {
         oldPosts = JSON.parse(match[1]);
-      } catch (e) {}
+      } catch {}
     }
   }
 
@@ -239,26 +242,13 @@ function compilePosts() {
   // Sort naturally by title (so Lec 2 comes before Lec 10)
   posts.sort((a, b) => a.title.localeCompare(b.title, undefined, { numeric: true, sensitivity: 'base' }));
 
-  // Write generator ts file
-  const tsContent = `// This file is auto-generated. Do not edit manually.
-export interface GeneratedPost {
-  slug: string;
-  title: string;
-  date: string;
-  rawDate: string;
-  readTime: string;
-  excerpt: string;
-  tags: string[];
-  category: string;
-  contentHtml: string;
-  _hash: string;
-}
-
-export const categories: string[] = ${JSON.stringify(sortedCategories, null, 2)};
-export const posts: GeneratedPost[] = ${JSON.stringify(posts, null, 2)};
+  // Write generator js file
+  const jsContent = `// This file is auto-generated. Do not edit manually.
+export const categories = ${JSON.stringify(sortedCategories, null, 2)};
+export const posts = ${JSON.stringify(posts, null, 2)};
 `;
 
-  fs.writeFileSync(OUTPUT_FILE, tsContent, "utf8");
+  fs.writeFileSync(OUTPUT_FILE, jsContent, "utf8");
   console.log(`[Success] Compiled ${posts.length} posts to ${OUTPUT_FILE}`);
 }
 

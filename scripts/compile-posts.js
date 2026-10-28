@@ -1,12 +1,15 @@
-/* eslint-disable @typescript-eslint/no-require-imports */
-const fs = require("fs");
-const crypto = require("crypto");
-const path = require("path");
-const matter = require("gray-matter");
-const { marked } = require("marked");
-const { markedHighlight } = require("marked-highlight");
-const markedKatex = require("marked-katex-extension");
-const hljs = require("highlight.js");
+import fs from "fs";
+import crypto from "crypto";
+import path from "path";
+import { fileURLToPath } from "url";
+import matter from "gray-matter";
+import { marked } from "marked";
+import { markedHighlight } from "marked-highlight";
+import markedKatex from "marked-katex-extension";
+import hljs from "highlight.js";
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 marked.use(markedHighlight({
   langPrefix: 'hljs language-',
@@ -58,10 +61,6 @@ function compilePosts() {
     const match = oldContent.match(/export const posts(?:.*?) = (\[.*\]);/s);
     if (match) {
       try {
-        oldPosts = JSON.parse(match[1]);
-      } catch (e) {}
-    }
-  }
         oldPosts = JSON.parse(match[1]);
       } catch (e) {}
     }

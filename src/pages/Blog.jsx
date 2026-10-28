@@ -7,7 +7,7 @@ export default function Blog() {
   const [searchQuery, setSearchQuery] = useState("");
 
   useEffect(() => {
-    document.title = "RFC & Technical Publication Index · Garry Markus";
+    document.title = "Technical Deep Dives · Garry Markus";
   }, []);
 
   const categories = useMemo(() => {
@@ -34,75 +34,56 @@ export default function Blog() {
   }, [selectedCategory, searchQuery]);
 
   return (
-    <div className="flex flex-col gap-8 animate-page-enter">
+    <div className="flex flex-col gap-8">
       
       {/* Editorial Header */}
       <section className="flex flex-col gap-3 border-b border-[var(--color-border-hairline)] pb-6 font-mono">
-        <div className="flex flex-wrap items-center justify-between gap-3 text-xs text-[var(--color-text-muted)]">
-          <div className="flex items-center gap-2">
-            <span className="w-2 h-2 bg-emerald-500 inline-block" />
-            <span className="text-[var(--color-text-primary)] font-semibold">
-              INDEX 03 · OBSIDIAN REPOSITORY & TECHNICAL RFC ARCHIVE
-            </span>
-          </div>
-          <div>
-            <span>FORMAT: MARKDOWN + KATEX</span>
-          </div>
+        <div className="flex items-center justify-between text-xs text-[var(--color-text-muted)]">
+          <span>03 / TECHNICAL DEEP DIVES</span>
+          <span>{postSummaries.length} COMPILED NOTES</span>
         </div>
 
-        <h1 className="text-3xl sm:text-4xl lg:text-5xl font-display font-bold text-[var(--color-text-primary)] tracking-tight">
-          RFC & Technical Publication Index
+        <h1 className="font-display font-bold text-3xl sm:text-4xl text-[var(--color-text-primary)] tracking-tight">
+          Publications & Engineering Notes
         </h1>
 
-        <p className="text-sm text-[var(--color-text-secondary)] max-w-3xl leading-relaxed font-sans">
-          Algorithmic analyses, runtime mechanics, and system specifications compiled directly from personal Obsidian engineering vaults.
+        <p className="text-xs sm:text-sm text-[var(--color-text-secondary)] font-sans leading-relaxed max-w-2xl">
+          Algorithmic analyses, runtime mechanics, memory models, and systems specifications authored in Obsidian and compiled to static delivery.
         </p>
-
-        {/* Telemetry Metrics */}
-        <div className="flex flex-wrap items-center gap-x-6 gap-y-1 pt-2 text-xs text-[var(--color-text-muted)]">
-          <div>
-            PUBLICATIONS: <span className="text-[var(--color-text-primary)] font-semibold">{postSummaries.length} COMPILED</span>
-          </div>
-          <span>·</span>
-          <div>
-            DISCIPLINES: <span className="text-[var(--color-text-primary)] font-semibold">{categories.length - 1} ACTIVE</span>
-          </div>
-          <span>·</span>
-          <div>
-            INTEGRITY: <span className="text-emerald-400 font-semibold">STATIC CLIENT DELIVERY</span>
-          </div>
-        </div>
       </section>
 
       {/* Filter and Search Controls */}
       <section className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 font-mono text-xs">
-        {/* Category Filter Matrix */}
-        <div className="flex flex-wrap items-center gap-1.5">
-          <span className="text-[var(--color-text-muted)] mr-1 hidden sm:inline">DISCIPLINE:</span>
-          {categories.map((cat) => (
-            <button
-              key={cat}
-              type="button"
-              onClick={() => setSelectedCategory(cat)}
-              className={`px-2.5 py-1 border transition-all ${
-                selectedCategory === cat
-                  ? "border-[var(--color-border-strong)] bg-[var(--color-bg-surface-elevated)] text-[var(--color-text-primary)] font-medium"
-                  : "border-[var(--color-border-hairline)] bg-[var(--color-bg-surface)] text-[var(--color-text-muted)] hover:text-white hover:border-[var(--color-border-medium)]"
-              }`}
-            >
-              [{cat.toUpperCase()}]
-            </button>
+        {/* Plain Text Delimited Filter */}
+        <div className="flex flex-wrap items-center gap-2">
+          {categories.map((cat, idx) => (
+            <div key={cat} className="flex items-center gap-2">
+              <button
+                type="button"
+                onClick={() => setSelectedCategory(cat)}
+                className={`transition-colors ${
+                  selectedCategory === cat
+                    ? "text-[var(--color-text-primary)] font-semibold underline underline-offset-4"
+                    : "text-[var(--color-text-muted)] hover:text-[var(--color-text-secondary)]"
+                }`}
+              >
+                {cat}
+              </button>
+              {idx < categories.length - 1 && (
+                <span className="text-[var(--color-text-dim)]">·</span>
+              )}
+            </div>
           ))}
         </div>
 
         {/* Search Input */}
-        <div className="relative min-w-[240px]">
+        <div className="relative min-w-[200px]">
           <input
             type="text"
-            placeholder="FILTER_KEYWORDS..."
+            placeholder="Search keywords..."
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            className="w-full bg-[var(--color-bg-surface)] border border-[var(--color-border-hairline)] focus:border-[var(--color-border-strong)] px-3 py-1 text-xs font-mono text-[var(--color-text-primary)] placeholder-[var(--color-text-muted)] focus:outline-none transition-colors"
+            className="w-full bg-[var(--color-bg-surface)] border border-[var(--color-border-hairline)] focus:border-[var(--color-border-strong)] px-3 py-1.5 text-xs font-mono text-[var(--color-text-primary)] placeholder-[var(--color-text-muted)] focus:outline-none transition-colors"
           />
           {searchQuery && (
             <button
@@ -110,7 +91,7 @@ export default function Blog() {
               onClick={() => setSearchQuery("")}
               className="absolute right-2 top-1/2 -translate-y-1/2 text-xs font-mono text-[var(--color-text-muted)] hover:text-white"
             >
-              [×]
+              ×
             </button>
           )}
         </div>
@@ -118,9 +99,9 @@ export default function Blog() {
 
       {/* Publications Table Ledger */}
       {filteredPosts.length === 0 ? (
-        <div className="border border-[var(--color-border-hairline)] bg-[var(--color-bg-surface)] p-12 text-center flex flex-col items-center justify-center gap-3 font-mono">
-          <p className="text-xs text-[var(--color-text-muted)]">
-            NO TECHNICAL PUBLICATIONS FOUND MATCHING THE QUERY.
+        <div className="border border-[var(--color-border-hairline)] bg-[var(--color-bg-surface)] p-10 text-center flex flex-col items-center justify-center gap-2 font-mono text-xs">
+          <p className="text-[var(--color-text-muted)]">
+            No technical publications match the specified filter query.
           </p>
           <button
             type="button"
@@ -128,9 +109,9 @@ export default function Blog() {
               setSelectedCategory("All");
               setSearchQuery("");
             }}
-            className="text-xs text-[var(--color-text-primary)] underline hover:text-white"
+            className="text-[var(--color-text-primary)] underline hover:text-white"
           >
-            [RESET ALL FILTERS]
+            Reset filter
           </button>
         </div>
       ) : (
@@ -138,10 +119,10 @@ export default function Blog() {
           <table className="w-full text-left text-xs border-collapse">
             <thead>
               <tr className="border-b border-[var(--color-border-hairline)] bg-[var(--color-bg-subtle)] text-[10px] text-[var(--color-text-muted)] tracking-wider">
-                <th className="py-2.5 px-4 font-normal">DOC_ID</th>
+                <th className="py-2.5 px-4 font-normal">#</th>
                 <th className="py-2.5 px-4 font-normal">DATE</th>
                 <th className="py-2.5 px-4 font-normal">DISCIPLINE</th>
-                <th className="py-2.5 px-4 font-normal">SPECIFICATION TITLE & EXCERPT</th>
+                <th className="py-2.5 px-4 font-normal">TITLE & SUMMARY</th>
                 <th className="py-2.5 px-4 font-normal">READ TIME</th>
                 <th className="py-2.5 px-4 font-normal text-right">DISPATCH</th>
               </tr>
@@ -153,13 +134,13 @@ export default function Blog() {
                   className="hover:bg-[var(--color-bg-surface-elevated)] transition-colors group"
                 >
                   <td className="py-3 px-4 font-tabular text-[var(--color-text-muted)] text-[11px] whitespace-nowrap">
-                    RFC_{String(idx + 1).padStart(2, "0")}
+                    {String(idx + 1).padStart(2, "0")}
                   </td>
                   <td className="py-3 px-4 text-[11px] text-[var(--color-text-muted)] whitespace-nowrap">
                     {post.date}
                   </td>
                   <td className="py-3 px-4 text-[11px] text-[var(--color-text-secondary)] whitespace-nowrap">
-                    [{post.category.toUpperCase()}]
+                    {post.category}
                   </td>
                   <td className="py-3 px-4">
                     <Link
@@ -178,9 +159,10 @@ export default function Blog() {
                   <td className="py-3 px-4 text-right whitespace-nowrap">
                     <Link
                       to={`/blog/${post.slug}`}
-                      className="px-2.5 py-1 border border-[var(--color-border-hairline)] group-hover:border-[var(--color-border-strong)] text-[11px] text-[var(--color-text-primary)] hover:bg-[var(--color-bg-subtle)] no-underline transition-colors"
+                      className="text-[11px] text-[var(--color-text-secondary)] group-hover:text-white no-underline transition-colors flex items-center justify-end gap-1"
                     >
-                      [READ →]
+                      <span>Read</span>
+                      <span>→</span>
                     </Link>
                   </td>
                 </tr>

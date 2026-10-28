@@ -11,7 +11,7 @@ export default function BlogPost() {
 
   useEffect(() => {
     if (post) {
-      document.title = `${post.title} · Technical RFC · Garry Markus`;
+      document.title = `${post.title} · Technical Notes · Garry Markus`;
     } else {
       document.title = "Document Not Found · Garry Markus";
     }
@@ -43,17 +43,17 @@ export default function BlogPost() {
 
       const btn = document.createElement("button");
       btn.className = "copy-code-btn";
-      btn.innerText = "[COPY]";
+      btn.innerText = "Copy";
       btn.style.cssText = `
         position: absolute;
         top: 8px;
         right: 8px;
-        background: #12151b;
-        border: 1px solid #2a313d;
-        color: #9ba3af;
+        background: #14171d;
+        border: 1px solid #282f3b;
+        color: #9ca3af;
         font-family: monospace;
-        font-size: 10px;
-        padding: 2px 6px;
+        font-size: 11px;
+        padding: 3px 8px;
         border-radius: 0px;
         cursor: pointer;
         transition: all 0.1s ease;
@@ -63,13 +63,13 @@ export default function BlogPost() {
         const code = pre.querySelector("code");
         const text = code ? code.innerText : pre.innerText;
         navigator.clipboard.writeText(text).then(() => {
-          btn.innerText = "[COPIED]";
+          btn.innerText = "Copied";
           btn.style.color = "#10b981";
           btn.style.borderColor = "#10b981";
           setTimeout(() => {
-            btn.innerText = "[COPY]";
-            btn.style.color = "#9ba3af";
-            btn.style.borderColor = "#2a313d";
+            btn.innerText = "Copy";
+            btn.style.color = "#9ca3af";
+            btn.style.borderColor = "#282f3b";
           }, 2000);
         });
       });
@@ -80,18 +80,18 @@ export default function BlogPost() {
 
   if (!post) {
     return (
-      <div className="border border-[var(--color-border-hairline)] bg-[var(--color-bg-surface)] p-10 text-center flex flex-col items-center justify-center gap-4 animate-page-enter max-w-lg mx-auto font-mono text-xs">
-        <div className="text-rose-400 font-bold text-sm tracking-wider">
-          DIAGNOSTIC_ERR 404: SPECIFICATION_NOT_FOUND
+      <div className="border border-[var(--color-border-hairline)] bg-[var(--color-bg-surface)] p-10 text-center flex flex-col items-center justify-center gap-4 max-w-lg mx-auto font-mono text-xs">
+        <div className="text-rose-400 font-semibold tracking-wider">
+          DOCUMENT NOT FOUND
         </div>
-        <p className="text-[var(--color-text-muted)] leading-relaxed">
-          The requested document identifier &quot;{slug}&quot; could not be resolved in the static compiled Obsidian knowledge vault.
+        <p className="text-[var(--color-text-muted)] font-sans leading-relaxed">
+          The requested technical note &quot;{slug}&quot; could not be resolved in the static compiled Obsidian knowledge vault.
         </p>
         <Link
           to="/blog"
-          className="mt-2 px-3 py-1.5 border border-[var(--color-border-medium)] bg-[var(--color-bg-surface-elevated)] text-[var(--color-text-primary)] hover:border-white transition-colors no-underline"
+          className="mt-2 px-4 py-2 border border-[var(--color-border-medium)] bg-[var(--color-bg-surface-elevated)] text-[var(--color-text-primary)] hover:border-white transition-colors no-underline"
         >
-          [RETURN TO RFC INDEX]
+          Return to Publications Index →
         </Link>
       </div>
     );
@@ -109,14 +109,14 @@ export default function BlogPost() {
   const nextPost = currentIndex >= 0 && currentIndex < allPosts.length - 1 ? allPosts[currentIndex + 1] : null;
 
   return (
-    <div className="relative animate-page-enter">
+    <div className="relative">
       {/* Hairline Reading Progress Line */}
       <div
         style={{ width: `${scrollProgress}%` }}
         className="fixed top-0 left-0 h-[2px] bg-white z-[60] transition-all duration-75"
       />
 
-      <article className="flex flex-col gap-8 max-w-3xl mx-auto">
+      <article className="flex flex-col gap-8 max-w-3xl">
         
         {/* Navigation Breadcrumb */}
         <div className="flex items-center gap-2 font-mono text-xs text-[var(--color-text-muted)] border-b border-[var(--color-border-hairline)] pb-3">
@@ -124,24 +124,21 @@ export default function BlogPost() {
             to="/blog"
             className="text-[var(--color-text-primary)] hover:underline no-underline"
           >
-            [RFC_INDEX]
+            Publications
           </Link>
           <span>/</span>
-          <span className="text-[var(--color-text-secondary)]">[{post.category.toUpperCase()}]</span>
+          <span className="text-[var(--color-text-secondary)]">{post.category}</span>
           <span>/</span>
-          <span className="text-[var(--color-text-muted)] truncate">RFC-{post.slug.toUpperCase()}</span>
+          <span className="text-[var(--color-text-muted)] truncate">{post.slug}</span>
         </div>
 
         {/* Structured Document Header Ledger */}
-        <header className="border border-[var(--color-border-hairline)] bg-[var(--color-bg-surface)] p-5 sm:p-6 flex flex-col gap-5 font-mono text-xs">
+        <header className="border border-[var(--color-border-hairline)] bg-[var(--color-bg-surface)] p-6 sm:p-7 flex flex-col gap-5 font-mono text-xs">
           <div className="flex flex-wrap items-center justify-between gap-2 border-b border-[var(--color-border-hairline)] pb-3 text-[11px] text-[var(--color-text-muted)]">
-            <div className="flex items-center gap-2">
-              <span className="w-2 h-2 bg-emerald-500 inline-block" />
-              <span className="text-[var(--color-text-primary)] font-semibold">
-                DOCUMENT SPECIFICATION
-              </span>
-            </div>
-            <div>STATUS: VERIFIED OPEN SPEC</div>
+            <span className="text-[var(--color-text-primary)] font-semibold">
+              Technical Document Specification
+            </span>
+            <span>Static Client Delivery</span>
           </div>
 
           <div className="space-y-2">
@@ -154,19 +151,19 @@ export default function BlogPost() {
           <table className="w-full text-[11px] border-collapse">
             <tbody className="divide-y divide-[var(--color-border-hairline)] border-y border-[var(--color-border-hairline)]">
               <tr>
-                <td className="py-1.5 text-[var(--color-text-muted)] w-1/3">DISCIPLINE</td>
-                <td className="py-1.5 text-[var(--color-text-primary)]">[{post.category.toUpperCase()}]</td>
+                <td className="py-1.5 text-[var(--color-text-muted)] w-1/3">Discipline</td>
+                <td className="py-1.5 text-[var(--color-text-primary)]">{post.category}</td>
               </tr>
               <tr>
-                <td className="py-1.5 text-[var(--color-text-muted)]">PUBLICATION DATE</td>
+                <td className="py-1.5 text-[var(--color-text-muted)]">Publication Date</td>
                 <td className="py-1.5 text-[var(--color-text-primary)]">{formattedDate}</td>
               </tr>
               <tr>
-                <td className="py-1.5 text-[var(--color-text-muted)]">READING ESTIMATE</td>
+                <td className="py-1.5 text-[var(--color-text-muted)]">Reading Estimate</td>
                 <td className="py-1.5 text-[var(--color-text-primary)]">{post.readTime}</td>
               </tr>
               <tr>
-                <td className="py-1.5 text-[var(--color-text-muted)]">AUTHOR SPEC</td>
+                <td className="py-1.5 text-[var(--color-text-muted)]">Author</td>
                 <td className="py-1.5 text-[var(--color-text-primary)]">Prem Singh (@GarryMarkus)</td>
               </tr>
             </tbody>
@@ -186,15 +183,15 @@ export default function BlogPost() {
           dangerouslySetInnerHTML={{ __html: post.contentHtml }}
         />
 
-        {/* Adjacent Publication Ledger Navigation */}
+        {/* Adjacent Publication Navigation */}
         <footer className="pt-6 border-t border-[var(--color-border-hairline)] mt-6 flex flex-col gap-4 font-mono text-xs">
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
             {prevPost ? (
               <Link
                 to={`/blog/${prevPost.slug}`}
-                className="p-3 border border-[var(--color-border-hairline)] bg-[var(--color-bg-surface)] hover:border-[var(--color-border-strong)] transition-colors no-underline flex flex-col gap-1"
+                className="p-4 border border-[var(--color-border-hairline)] bg-[var(--color-bg-surface)] hover:border-[var(--color-border-strong)] transition-colors no-underline flex flex-col gap-1"
               >
-                <span className="text-[10px] text-[var(--color-text-muted)]">← PREVIOUS RFC</span>
+                <span className="text-[10px] text-[var(--color-text-muted)]">← Previous Publication</span>
                 <span className="font-display font-semibold text-xs text-[var(--color-text-primary)] truncate">
                   {prevPost.title}
                 </span>
@@ -204,9 +201,9 @@ export default function BlogPost() {
             {nextPost ? (
               <Link
                 to={`/blog/${nextPost.slug}`}
-                className="p-3 border border-[var(--color-border-hairline)] bg-[var(--color-bg-surface)] hover:border-[var(--color-border-strong)] transition-colors no-underline flex flex-col gap-1 sm:text-right"
+                className="p-4 border border-[var(--color-border-hairline)] bg-[var(--color-bg-surface)] hover:border-[var(--color-border-strong)] transition-colors no-underline flex flex-col gap-1 sm:text-right"
               >
-                <span className="text-[10px] text-[var(--color-text-muted)]">NEXT RFC →</span>
+                <span className="text-[10px] text-[var(--color-text-muted)]">Next Publication →</span>
                 <span className="font-display font-semibold text-xs text-[var(--color-text-primary)] truncate">
                   {nextPost.title}
                 </span>
@@ -219,10 +216,10 @@ export default function BlogPost() {
               to="/blog"
               className="text-[var(--color-text-primary)] hover:underline no-underline"
             >
-              [← RETURN TO RFC INDEX]
+              ← Back to All Publications
             </Link>
 
-            <span>COMPILED WITH OBSIDIAN & KATEX</span>
+            <span>Compiled with Obsidian & KaTeX</span>
           </div>
         </footer>
 

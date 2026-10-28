@@ -62,7 +62,7 @@ function compilePosts() {
     if (match) {
       try {
         oldPosts = JSON.parse(match[1]);
-      } catch (e) {}
+      } catch {}
     }
   }
 

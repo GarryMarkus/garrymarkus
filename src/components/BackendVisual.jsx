@@ -42,8 +42,8 @@ export default function BackendVisual() {
   const blitz = chessData?.chess_blitz?.last?.rating || "1334";
 
   // Lichess Stats
-  const lichessRapid = lichessData?.perfs?.rapid?.rating || "1615";
-  const lichessBlitz = lichessData?.perfs?.blitz?.rating || "1603";
+  const _lichessRapid = lichessData?.perfs?.rapid?.rating || "1615";
+  const _lichessBlitz = lichessData?.perfs?.blitz?.rating || "1603";
   const lichessClassical = lichessData?.perfs?.classical?.rating || "1770";
   const lichessPuzzle = lichessData?.perfs?.puzzle?.rating || "1742";
 

@@ -189,7 +189,7 @@ export default function Layout() {
             {/* System Coordinates & Identity */}
             <div className="space-y-1">
               <div className="text-[var(--color-text-primary)] font-semibold text-xs tracking-wider">
-                SPECIFICATION LEDGER // GM-2026
+                SPECIFICATION LEDGER · GM-2026
               </div>
               <p className="text-[11px] leading-relaxed text-[var(--color-text-secondary)]">
                 ENGINEER: Prem Singh (Garry Markus)

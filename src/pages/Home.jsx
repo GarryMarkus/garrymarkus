@@ -6,26 +6,32 @@ import { postSummaries } from "@/lib/postSummaries.gen.js";
 
 export default function Home() {
   useEffect(() => {
-    document.title = "Garry Markus · Systems & Algorithms";
+    document.title = "Garry Markus · Systems, Algorithms & Engineering Spec";
   }, []);
 
   const featuredProjects = [
     {
+      index: "01",
       title: "ChessReader",
-      desc: "A sleek Linux chess workbench and PGN reader featuring UCI engine analysis, multi-game chapter navigation, and customizable piece themes.",
-      tags: ["Python", "UCI Engine", "Linux"],
+      category: "DESKTOP_LINUX / UCI",
+      desc: "Linux chess workbench and PGN reader featuring UCI engine communication, multi-chapter game navigation, and high-framerate piece animation.",
+      tags: ["C++ / Python", "UCI Engine", "Linux Desktop"],
       github: "https://github.com/GarryMarkus/ChessReader",
     },
     {
+      index: "02",
       title: "Document-Viewer",
-      desc: "Clean, distraction-free document and PDF reader for Windows inspired by GNOME's minimalist aesthetics. Built for high rendering speed.",
-      tags: ["TypeScript", "Desktop UI", "Minimalist"],
+      category: "DESKTOP_WIN / PDF_CORE",
+      desc: "Distraction-free document and PDF reader for Windows inspired by GNOME aesthetics. Optimized for high-throughput rasterization with zero telemetry.",
+      tags: ["TypeScript", "Desktop UI", "PDF Engine"],
       github: "https://github.com/GarryMarkus/Document-Viewer",
     },
     {
+      index: "03",
       title: "SkillForge",
-      desc: "Comprehensive platform transforming learners into verified, job-ready professionals through AI-powered skill verification and intelligent matching.",
-      tags: ["JavaScript", "AI", "Adaptive Learning"],
+      category: "WEB_PLATFORM / AI_EVAL",
+      desc: "Skill verification platform evaluating software engineering competencies through intelligent matching and deterministic challenge evaluation.",
+      tags: ["JavaScript", "LLM Integration", "Adaptive Engine"],
       github: "https://github.com/GarryMarkus/SkillForge",
     },
   ];
@@ -33,70 +39,69 @@ export default function Home() {
   const recentPosts = postSummaries.slice(0, 3);
 
   return (
-    <div className="flex flex-col gap-12 sm:gap-16 animate-page-enter">
-      {/* Hero Section */}
+    <div className="flex flex-col gap-12 sm:gap-14 animate-page-enter">
+      {/* Editorial Hero Component */}
       <Hero />
 
-      {/* Live Telemetry Grid */}
+      {/* Telemetry & Algorithmic Ledger */}
       <TelemetryGrid />
 
-      {/* Featured Projects Preview Section */}
-      <section className="flex flex-col gap-6 pt-4 border-t border-[var(--color-border-subtle)]">
-        <div className="flex items-center justify-between">
+      {/* Featured Systems Section */}
+      <section className="flex flex-col gap-6 pt-4 border-t border-[var(--color-border-hairline)]">
+        <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-2 font-mono">
           <div>
-            <span className="text-xs font-mono uppercase tracking-wider text-blue-400 font-semibold">
-              Selected Work
+            <span className="text-[11px] text-[var(--color-text-muted)] tracking-wider block">
+              INDEX 02 · SELECTED SYSTEMS ARCHITECTURE
             </span>
             <h2 className="text-xl sm:text-2xl font-display font-bold text-[var(--color-text-primary)]">
-              Featured Systems & Applications
+              Engineered Applications & Repositories
             </h2>
           </div>
 
           <Link
             to="/projects"
-            className="text-xs font-mono text-blue-400 hover:text-blue-300 flex items-center gap-1 no-underline"
+            className="text-xs text-[var(--color-text-primary)] hover:underline flex items-center gap-1 no-underline font-mono"
           >
-            <span>All Projects</span>
-            <span>→</span>
+            [ALL PROJECTS INDEX →]
           </Link>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
-          {featuredProjects.map((p, idx) => (
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+          {featuredProjects.map((p) => (
             <div
-              key={idx}
-              className="glass-card rounded-xl p-5 flex flex-col justify-between gap-4 group"
+              key={p.index}
+              className="border border-[var(--color-border-hairline)] bg-[var(--color-bg-surface)] hover:border-[var(--color-border-medium)] transition-colors p-5 flex flex-col justify-between gap-5 group"
             >
-              <div className="flex flex-col gap-2.5">
-                <div className="flex items-center justify-between">
-                  <h3 className="font-display font-semibold text-base text-[var(--color-text-primary)] group-hover:text-blue-400 transition-colors">
-                    {p.title}
-                  </h3>
+              <div className="flex flex-col gap-3">
+                <div className="flex items-center justify-between text-xs font-mono text-[var(--color-text-muted)] border-b border-[var(--color-border-hairline)] pb-2">
+                  <span>SYS_{p.index} · {p.category}</span>
                   <a
                     href={p.github}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="text-[var(--color-text-muted)] hover:text-white transition-colors"
-                    aria-label={`View ${p.title} on GitHub`}
+                    aria-label={`View ${p.title} repository`}
                   >
-                    <svg className="w-4 h-4 fill-current" viewBox="0 0 24 24">
-                      <path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/>
-                    </svg>
+                    [REPO ↗]
                   </a>
                 </div>
 
-                <p className="text-xs text-[var(--color-text-secondary)] leading-relaxed">
+                <h3 className="font-display font-bold text-lg text-[var(--color-text-primary)] group-hover:text-white transition-colors">
+                  {p.title}
+                </h3>
+
+                <p className="text-xs text-[var(--color-text-secondary)] leading-relaxed font-sans">
                   {p.desc}
                 </p>
               </div>
 
-              <div className="flex flex-wrap gap-1.5 pt-2 border-t border-[var(--color-border-subtle)]">
+              <div className="flex flex-wrap gap-1.5 pt-3 border-t border-[var(--color-border-hairline)] font-mono text-[10px]">
                 {p.tags.map((t, tIdx) => (
                   <span
                     key={tIdx}
-                    className="px-2 py-0.5 rounded bg-white/[0.03] text-[10px] font-mono text-[var(--color-text-muted)] border border-white/[0.05]"
+                    className="px-1.5 py-0.5 border border-[var(--color-border-hairline)] bg-[var(--color-bg-base)] text-[var(--color-text-muted)]"
                   >
-                    {t}
+                    [{t}]
                   </span>
                 ))}
               </div>
@@ -106,55 +111,56 @@ export default function Home() {
       </section>
 
       {/* Recent Technical Notes Section */}
-      <section className="flex flex-col gap-6 pt-4 border-t border-[var(--color-border-subtle)] pb-8">
-        <div className="flex items-center justify-between">
+      <section className="flex flex-col gap-6 pt-4 border-t border-[var(--color-border-hairline)] pb-8">
+        <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-2 font-mono">
           <div>
-            <span className="text-xs font-mono uppercase tracking-wider text-cyan-400 font-semibold">
-              Digital Garden
+            <span className="text-[11px] text-[var(--color-text-muted)] tracking-wider block">
+              INDEX 03 · WRITTEN SPECIFICATIONS & LOG
             </span>
             <h2 className="text-xl sm:text-2xl font-display font-bold text-[var(--color-text-primary)]">
-              Latest Technical Notes
+              Technical RFCs & Obsidian Notes
             </h2>
           </div>
 
           <Link
             to="/blog"
-            className="text-xs font-mono text-cyan-400 hover:text-cyan-300 flex items-center gap-1 no-underline"
+            className="text-xs text-[var(--color-text-primary)] hover:underline flex items-center gap-1 no-underline font-mono"
           >
-            <span>Read All Notes</span>
-            <span>→</span>
+            [VIEW ALL 24 NOTES →]
           </Link>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
-          {recentPosts.map((post) => (
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+          {recentPosts.map((post, idx) => (
             <Link
               key={post.slug}
               to={`/blog/${post.slug}`}
-              className="glass-card rounded-xl p-5 flex flex-col justify-between gap-4 no-underline group"
+              className="border border-[var(--color-border-hairline)] bg-[var(--color-bg-surface)] hover:border-[var(--color-border-medium)] transition-colors p-5 flex flex-col justify-between gap-4 no-underline group"
             >
               <div className="flex flex-col gap-2.5">
-                <div className="flex items-center justify-between text-xs font-mono">
-                  <span className="px-2 py-0.5 rounded bg-blue-500/10 text-blue-400 border border-blue-500/20 text-[10px]">
-                    {post.category}
+                <div className="flex items-center justify-between text-xs font-mono text-[var(--color-text-muted)] border-b border-[var(--color-border-hairline)] pb-2">
+                  <span className="text-[10px] text-[var(--color-text-secondary)] font-semibold">
+                    DOC_{String(idx + 1).padStart(2, "0")} · [{post.category.toUpperCase()}]
                   </span>
-                  <span className="text-[var(--color-text-muted)] text-[11px]">
+                  <span className="text-[10px]">
                     {post.readTime}
                   </span>
                 </div>
 
-                <h3 className="font-display font-semibold text-sm text-[var(--color-text-primary)] group-hover:text-blue-400 transition-colors leading-snug">
+                <h3 className="font-display font-semibold text-sm text-[var(--color-text-primary)] group-hover:text-white transition-colors leading-snug">
                   {post.title}
                 </h3>
 
-                <p className="text-xs text-[var(--color-text-muted)] line-clamp-2 leading-relaxed">
+                <p className="text-xs text-[var(--color-text-muted)] line-clamp-2 leading-relaxed font-sans">
                   {post.excerpt}
                 </p>
               </div>
 
-              <div className="pt-2 border-t border-[var(--color-border-subtle)] flex items-center justify-between text-xs font-mono text-[var(--color-text-muted)]">
+              <div className="pt-3 border-t border-[var(--color-border-hairline)] flex items-center justify-between text-[11px] font-mono text-[var(--color-text-muted)]">
                 <span>{post.date}</span>
-                <span className="group-hover:translate-x-1 transition-transform text-blue-400">→</span>
+                <span className="text-[var(--color-text-primary)] group-hover:translate-x-0.5 transition-transform">
+                  [READ →]
+                </span>
               </div>
             </Link>
           ))}

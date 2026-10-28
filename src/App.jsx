@@ -1,6 +1,6 @@
 import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
 import { useEffect, lazy, Suspense } from "react";
-import Layout from "./components/Layout.jsx";
+import SplitLayout from "./components/SplitLayout.jsx";
 import Home from "./pages/Home.jsx";
 
 const Projects = lazy(() => import("./pages/Projects.jsx"));
@@ -25,7 +25,7 @@ export default function App() {
       <ScrollToTop />
       <Suspense fallback={null}>
         <Routes>
-          <Route element={<Layout />}>
+          <Route element={<SplitLayout />}>
             <Route path="/" element={<Home />} />
             <Route path="/projects" element={<Projects />} />
             <Route path="/experience" element={<Experience />} />

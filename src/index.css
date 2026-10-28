@@ -1,22 +1,23 @@
 @import "tailwindcss";
 
 @theme {
-  --color-bg-base: #090a0d;
-  --color-bg-subtle: #0e1014;
-  --color-bg-surface: #12151b;
-  --color-bg-surface-elevated: #171b22;
-  --color-bg-hover: #1c212a;
+  --color-bg-base: #0c0d10;
+  --color-bg-subtle: #101216;
+  --color-bg-surface: #14171d;
+  --color-bg-surface-elevated: #1a1e26;
+  --color-bg-hover: #202530;
 
-  --color-border-hairline: #1e232b;
-  --color-border-medium: #2a313d;
-  --color-border-strong: #3d4656;
+  --color-border-hairline: #20242c;
+  --color-border-medium: #2c333f;
+  --color-border-strong: #3f495a;
 
-  --color-text-primary: #ededed;
-  --color-text-secondary: #9ba3af;
-  --color-text-muted: #606875;
-  --color-text-dim: #434a55;
+  --color-text-primary: #f3f4f6;
+  --color-text-secondary: #9ca3af;
+  --color-text-muted: #5e6676;
+  --color-text-dim: #3f4553;
 
-  --color-accent-amber: #f59e0b;
+  --color-accent: #f59e0b;
+  --color-accent-subtle: rgba(245, 158, 11, 0.12);
   --color-accent-blue: #3b82f6;
   --color-accent-emerald: #10b981;
 
@@ -40,15 +41,15 @@ body {
   cursor: url('/cursors/default.png') 0 0, default;
 }
 
-/* Tabular figures for telemetry & data */
+/* Tabular figures for data & numbers */
 .font-tabular {
   font-variant-numeric: tabular-nums;
 }
 
-/* Custom Scrollbar - Minimal Hairline Track */
+/* Custom Minimal Scrollbar */
 ::-webkit-scrollbar {
-  width: 5px;
-  height: 5px;
+  width: 4px;
+  height: 4px;
 }
 
 ::-webkit-scrollbar-track {
@@ -56,16 +57,16 @@ body {
 }
 
 ::-webkit-scrollbar-thumb {
-  background: var(--color-border-medium);
+  background: var(--color-border-hairline);
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: var(--color-border-strong);
+  background: var(--color-border-medium);
 }
 
 * {
   scrollbar-width: thin;
-  scrollbar-color: var(--color-border-medium) transparent;
+  scrollbar-color: var(--color-border-hairline) transparent;
 }
 
 a, button, [role="button"], a *, button *, [role="button"] * {
@@ -81,28 +82,11 @@ p, h1, h2, h3, h4, h5, h6, span, li, blockquote, code, pre, input, textarea {
   color: #ffffff;
 }
 
-/* Sharp Structural Surface Utilities (Zero Bubbly Glassmorphism) */
-.panel-solid {
-  background-color: var(--color-bg-surface);
-  border: 1px solid var(--color-border-hairline);
-}
-
-.panel-interactive {
-  background-color: var(--color-bg-surface);
-  border: 1px solid var(--color-border-hairline);
-  transition: border-color 0.12s ease, background-color 0.12s ease;
-}
-
-.panel-interactive:hover {
-  border-color: var(--color-border-medium);
-  background-color: var(--color-bg-surface-elevated);
-}
-
-/* Snappy Page Enter (No Sluggish Parallax) */
-@keyframes page-enter {
+/* Snappy Page Enter (Zero Sluggish Parallax) */
+@keyframes stage-enter {
   0% {
     opacity: 0;
-    transform: translateY(4px);
+    transform: translateY(3px);
   }
   100% {
     opacity: 1;
@@ -110,11 +94,11 @@ p, h1, h2, h3, h4, h5, h6, span, li, blockquote, code, pre, input, textarea {
   }
 }
 
-.animate-page-enter {
-  animation: page-enter 0.18s ease-out forwards;
+.animate-stage-enter {
+  animation: stage-enter 0.15s ease-out forwards;
 }
 
-/* Strict Typography for Technical Log & Articles */
+/* Strict Typography for Technical Dossiers & Articles */
 .prose {
   color: var(--color-text-secondary);
   max-width: 68ch;
@@ -126,7 +110,7 @@ p, h1, h2, h3, h4, h5, h6, span, li, blockquote, code, pre, input, textarea {
   color: var(--color-text-primary);
   font-family: var(--font-display);
   font-weight: 600;
-  letter-spacing: -0.01em;
+  letter-spacing: -0.015em;
   margin-top: 2rem;
   margin-bottom: 0.75rem;
 }

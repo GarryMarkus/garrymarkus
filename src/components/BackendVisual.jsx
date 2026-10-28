@@ -1,46 +1,41 @@
-import { Suspense } from "react";
+import { useState, useEffect } from "react";
 
-async function getChessStats() {
-  try {
-    const res = await fetch("https://api.chess.com/pub/player/garrymarkus/stats", { next: { revalidate: 3600 } });
-    if (!res.ok) return null;
-    return await res.json();
-  } catch (e) {
-    return null;
-  }
-}
+export default function BackendVisual() {
+  const [chessData, setChessData] = useState(null);
+  const [lichessData, setLichessData] = useState(null);
+  const [lcData, setLcData] = useState(null);
 
-async function getLichessStats() {
-  try {
-    const res = await fetch("https://lichess.org/api/user/garrymarkus", { next: { revalidate: 3600 } });
-    if (!res.ok) return null;
-    return await res.json();
-  } catch (e) {
-    return null;
-  }
-}
+  useEffect(() => {
+    // Fetch Chess.com stats
+    fetch("https://api.chess.com/pub/player/garrymarkus/stats")
+      .then((res) => (res.ok ? res.json() : null))
+      .then((data) => {
+        if (data) setChessData(data);
+      })
+      .catch(() => {});
 
-async function getLeetCodeStats() {
-  try {
-    const res = await fetch("https://leetcode.com/graphql", {
+    // Fetch Lichess stats
+    fetch("https://lichess.org/api/user/garrymarkus")
+      .then((res) => (res.ok ? res.json() : null))
+      .then((data) => {
+        if (data) setLichessData(data);
+      })
+      .catch(() => {});
+
+    // Fetch LeetCode stats
+    fetch("https://leetcode.com/graphql", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
         query: `{ matchedUser(username: "GarryMarkus") { submitStats { acSubmissionNum { difficulty count } } } }`
       }),
-      next: { revalidate: 3600 }
-    });
-    if (!res.ok) return null;
-    return await res.json();
-  } catch (e) {
-    return null;
-  }
-}
-
-export default async function BackendVisual() {
-  const chessData = await getChessStats();
-  const lichessData = await getLichessStats();
-  const lcData = await getLeetCodeStats();
+    })
+      .then((res) => (res.ok ? res.json() : null))
+      .then((data) => {
+        if (data) setLcData(data);
+      })
+      .catch(() => {});
+  }, []);
 
   // Chess.com Stats
   const rapid = chessData?.chess_rapid?.last?.rating || "1338";
@@ -54,10 +49,10 @@ export default async function BackendVisual() {
 
   // LeetCode Stats
   const lcStats = lcData?.data?.matchedUser?.submitStats?.acSubmissionNum || [];
-  const easy = lcStats.find((s: any) => s.difficulty === "Easy")?.count || 35;
-  const medium = lcStats.find((s: any) => s.difficulty === "Medium")?.count || 11;
-  const hard = lcStats.find((s: any) => s.difficulty === "Hard")?.count || 0;
-  const total = lcStats.find((s: any) => s.difficulty === "All")?.count || (easy + medium + hard);
+  const easy = lcStats.find((s) => s.difficulty === "Easy")?.count || 35;
+  const medium = lcStats.find((s) => s.difficulty === "Medium")?.count || 11;
+  const hard = lcStats.find((s) => s.difficulty === "Hard")?.count || 0;
+  const total = lcStats.find((s) => s.difficulty === "All")?.count || (easy + medium + hard);
 
   return (
     <div className="home-page-marker w-full h-full flex flex-col justify-center gap-6 animate-page-enter p-8 lg:p-0">

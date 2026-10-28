@@ -28,11 +28,14 @@ export default function Anchor() {
       if (e.key === "2") navigate("/projects");
       if (e.key === "3") navigate("/blog");
       if (e.key === "4") navigate("/experience");
+      if (e.key === "Escape" && location.pathname.startsWith("/blog/")) {
+        navigate("/blog");
+      }
     };
 
     window.addEventListener("keydown", handleKeyDown);
     return () => window.removeEventListener("keydown", handleKeyDown);
-  }, [navigate]);
+  }, [navigate, location.pathname]);
 
   return (
     <aside className="w-full lg:w-[38%] lg:h-screen lg:sticky lg:top-0 lg:overflow-y-auto border-b lg:border-b-0 lg:border-r border-[var(--color-border-hairline)] p-6 sm:p-8 lg:p-12 flex flex-col justify-between gap-8 bg-[var(--color-bg-base)] shrink-0 z-30">

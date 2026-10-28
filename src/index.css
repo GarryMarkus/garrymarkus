@@ -1,27 +1,24 @@
 @import "tailwindcss";
 
 @theme {
-  --color-bg-base: #090a10;
-  --color-bg-subtle: #0d1017;
-  --color-bg-surface: #121622;
-  --color-bg-surface-elevated: #181e2e;
-  --color-bg-surface-active: #1f273b;
+  --color-bg-base: #090a0d;
+  --color-bg-subtle: #0e1014;
+  --color-bg-surface: #12151b;
+  --color-bg-surface-elevated: #171b22;
+  --color-bg-hover: #1c212a;
 
-  --color-border-subtle: rgba(255, 255, 255, 0.08);
-  --color-border-medium: rgba(255, 255, 255, 0.16);
-  --color-border-strong: rgba(255, 255, 255, 0.28);
-  --color-border-accent: rgba(59, 130, 246, 0.4);
+  --color-border-hairline: #1e232b;
+  --color-border-medium: #2a313d;
+  --color-border-strong: #3d4656;
 
-  --color-text-primary: #f8fafc;
-  --color-text-secondary: #94a3b8;
-  --color-text-muted: #64748b;
-  --color-text-dim: #475569;
+  --color-text-primary: #ededed;
+  --color-text-secondary: #9ba3af;
+  --color-text-muted: #606875;
+  --color-text-dim: #434a55;
 
-  --color-accent-primary: #3b82f6;
-  --color-accent-cyan: #06b6d4;
-  --color-accent-emerald: #10b981;
   --color-accent-amber: #f59e0b;
-  --color-accent-purple: #8b5cf6;
+  --color-accent-blue: #3b82f6;
+  --color-accent-emerald: #10b981;
 
   --font-display: "Space Grotesk", sans-serif;
   --font-mono: "JetBrains Mono", "Space Mono", monospace;
@@ -38,15 +35,20 @@ body {
   font-family: var(--font-sans);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  line-height: 1.6;
+  line-height: 1.55;
   overflow-x: hidden;
   cursor: url('/cursors/default.png') 0 0, default;
 }
 
-/* Custom Scrollbar */
+/* Tabular figures for telemetry & data */
+.font-tabular {
+  font-variant-numeric: tabular-nums;
+}
+
+/* Custom Scrollbar - Minimal Hairline Track */
 ::-webkit-scrollbar {
-  width: 6px;
-  height: 6px;
+  width: 5px;
+  height: 5px;
 }
 
 ::-webkit-scrollbar-track {
@@ -55,11 +57,10 @@ body {
 
 ::-webkit-scrollbar-thumb {
   background: var(--color-border-medium);
-  border-radius: 9999px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: var(--color-text-muted);
+  background: var(--color-border-strong);
 }
 
 * {
@@ -76,42 +77,32 @@ p, h1, h2, h3, h4, h5, h6, span, li, blockquote, code, pre, input, textarea {
 }
 
 ::selection {
-  background: rgba(59, 130, 246, 0.35);
+  background: #2563eb;
   color: #ffffff;
 }
 
-/* Background grid utility */
-.bg-grid-pattern {
-  background-size: 32px 32px;
-  background-image: radial-gradient(rgba(255, 255, 255, 0.08) 1px, transparent 1px);
+/* Sharp Structural Surface Utilities (Zero Bubbly Glassmorphism) */
+.panel-solid {
+  background-color: var(--color-bg-surface);
+  border: 1px solid var(--color-border-hairline);
 }
 
-/* Glass Surface Styles */
-.glass-panel {
-  background: rgba(18, 22, 34, 0.65);
-  backdrop-filter: blur(14px);
-  -webkit-backdrop-filter: blur(14px);
-  border: 1px solid var(--color-border-subtle);
+.panel-interactive {
+  background-color: var(--color-bg-surface);
+  border: 1px solid var(--color-border-hairline);
+  transition: border-color 0.12s ease, background-color 0.12s ease;
 }
 
-.glass-card {
-  background: rgba(18, 22, 34, 0.7);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  border: 1px solid var(--color-border-subtle);
-  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
-}
-
-.glass-card:hover {
+.panel-interactive:hover {
   border-color: var(--color-border-medium);
-  box-shadow: 0 12px 30px -10px rgba(0, 0, 0, 0.5);
+  background-color: var(--color-bg-surface-elevated);
 }
 
-/* Page enter animation */
+/* Snappy Page Enter (No Sluggish Parallax) */
 @keyframes page-enter {
   0% {
     opacity: 0;
-    transform: translateY(8px);
+    transform: translateY(4px);
   }
   100% {
     opacity: 1;
@@ -120,69 +111,58 @@ p, h1, h2, h3, h4, h5, h6, span, li, blockquote, code, pre, input, textarea {
 }
 
 .animate-page-enter {
-  animation: page-enter 0.35s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-  will-change: transform, opacity;
+  animation: page-enter 0.18s ease-out forwards;
 }
 
-/* Glow Utilities */
-.glow-primary {
-  box-shadow: 0 0 25px -4px rgba(59, 130, 246, 0.25);
-}
-
-.glow-emerald {
-  box-shadow: 0 0 25px -4px rgba(16, 185, 129, 0.25);
-}
-
-/* Markdown Prose Styling */
+/* Strict Typography for Technical Log & Articles */
 .prose {
   color: var(--color-text-secondary);
-  max-width: 72ch;
+  max-width: 68ch;
   font-size: 0.9375rem;
-  line-height: 1.75;
+  line-height: 1.7;
 }
 
 .prose h1, .prose h2, .prose h3, .prose h4, .prose h5, .prose h6 {
   color: var(--color-text-primary);
   font-family: var(--font-display);
   font-weight: 600;
-  letter-spacing: -0.015em;
+  letter-spacing: -0.01em;
   margin-top: 2rem;
   margin-bottom: 0.75rem;
 }
 
 .prose h1 { font-size: 1.5rem; }
 .prose h2 { font-size: 1.25rem; }
-.prose h3 { font-size: 1.125rem; }
+.prose h3 { font-size: 1.1rem; }
 
 .prose p {
   margin-bottom: 1.25rem;
 }
 
 .prose a {
-  color: var(--color-accent-primary);
+  color: var(--color-text-primary);
   text-decoration: underline;
   text-underline-offset: 3px;
-  transition: opacity 0.2s ease;
+  text-decoration-color: var(--color-border-strong);
+  transition: text-decoration-color 0.12s ease;
 }
 
 .prose a:hover {
-  opacity: 0.8;
+  text-decoration-color: var(--color-text-primary);
 }
 
 .prose code {
-  background-color: var(--color-bg-surface-elevated);
-  padding: 0.2em 0.4em;
-  border-radius: 4px;
+  background-color: var(--color-bg-subtle);
+  padding: 0.15em 0.4em;
   font-family: var(--font-mono);
   font-size: 0.85em;
-  color: var(--color-accent-cyan);
-  border: 1px solid var(--color-border-subtle);
+  color: var(--color-text-primary);
+  border: 1px solid var(--color-border-hairline);
 }
 
 .prose pre {
-  background-color: #0b0e14;
-  border: 1px solid var(--color-border-subtle);
-  border-radius: 8px;
+  background-color: #07080a;
+  border: 1px solid var(--color-border-hairline);
   padding: 1.25rem;
   overflow-x: auto;
   margin-top: 1.25rem;
@@ -193,8 +173,8 @@ p, h1, h2, h3, h4, h5, h6, span, li, blockquote, code, pre, input, textarea {
   background-color: transparent;
   padding: 0;
   border: none;
-  font-size: 0.85rem;
-  color: #e2e8f0;
+  font-size: 0.825rem;
+  color: #d1d5db;
 }
 
 .prose ul, .prose ol {
@@ -202,16 +182,15 @@ p, h1, h2, h3, h4, h5, h6, span, li, blockquote, code, pre, input, textarea {
   margin-bottom: 1.25rem;
 }
 
-.prose ul { list-style-type: disc; }
+.prose ul { list-style-type: square; }
 .prose ol { list-style-type: decimal; }
 .prose li { margin-bottom: 0.35rem; }
 
 .prose blockquote {
-  padding: 0.5rem 1.25rem;
-  color: var(--color-text-muted);
-  border-left: 3px solid var(--color-accent-primary);
-  background: rgba(59, 130, 246, 0.05);
-  border-radius: 0 6px 6px 0;
+  padding: 0.5rem 1rem;
+  color: var(--color-text-secondary);
+  border-left: 2px solid var(--color-border-strong);
+  background: var(--color-bg-subtle);
   margin-top: 1.25rem;
   margin-bottom: 1.25rem;
 }
@@ -221,31 +200,32 @@ p, h1, h2, h3, h4, h5, h6, span, li, blockquote, code, pre, input, textarea {
   border-collapse: collapse;
   margin-top: 1.25rem;
   margin-bottom: 1.25rem;
-  font-size: 0.875rem;
+  font-size: 0.85rem;
+  font-family: var(--font-mono);
 }
 
 .prose th, .prose td {
-  padding: 0.6rem 0.85rem;
-  border: 1px solid var(--color-border-subtle);
+  padding: 0.5rem 0.75rem;
+  border: 1px solid var(--color-border-hairline);
   text-align: left;
 }
 
 .prose th {
-  background-color: var(--color-bg-surface);
+  background-color: var(--color-bg-subtle);
   color: var(--color-text-primary);
   font-weight: 600;
 }
 
 .prose hr {
   height: 1px;
-  background-color: var(--color-border-subtle);
+  background-color: var(--color-border-hairline);
   border: none;
   margin: 2.5rem 0;
 }
 
 .prose mark {
-  background-color: rgba(245, 158, 11, 0.2);
-  color: #fde68a;
+  background-color: rgba(245, 158, 11, 0.15);
+  color: #fbbf24;
   padding: 0.1em 0.3em;
-  border-radius: 3px;
+  border: 1px solid rgba(245, 158, 11, 0.3);
 }

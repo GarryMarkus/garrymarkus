@@ -2,7 +2,7 @@ import { useEffect } from "react";
 import { Link } from "react-router-dom";
 import Hero from "@/components/Hero.jsx";
 import TelemetryGrid from "@/components/TelemetryGrid.jsx";
-import { getAllPosts } from "@/lib/posts.js";
+import { postSummaries } from "@/lib/postSummaries.gen.js";
 
 export default function Home() {
   useEffect(() => {
@@ -30,7 +30,7 @@ export default function Home() {
     },
   ];
 
-  const recentPosts = getAllPosts().slice(0, 3);
+  const recentPosts = postSummaries.slice(0, 3);
 
   return (
     <div className="flex flex-col gap-12 sm:gap-16 animate-page-enter">

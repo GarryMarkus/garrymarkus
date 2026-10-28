@@ -7,6 +7,7 @@ export default [
       "dist/**",
       "node_modules/**",
       "src/lib/posts.gen.js",
+      "src/lib/postSummaries.gen.js",
     ],
   },
   {

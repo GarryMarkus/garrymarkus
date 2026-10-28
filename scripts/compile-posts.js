@@ -249,7 +249,16 @@ export const posts = ${JSON.stringify(posts, null, 2)};
 `;
 
   fs.writeFileSync(OUTPUT_FILE, jsContent, "utf8");
-  console.log(`[Success] Compiled ${posts.length} posts to ${OUTPUT_FILE}`);
+
+  // Write lightweight summaries for fast overview listing without large HTML blobs
+  const summariesFile = path.join(__dirname, "../src/lib/postSummaries.gen.js");
+  const summaries = posts.map(({ contentHtml: _contentHtml, _hash, ...rest }) => rest);
+  const summariesContent = `// This file is auto-generated. Do not edit manually.
+export const postSummaries = ${JSON.stringify(summaries, null, 2)};
+`;
+  fs.writeFileSync(summariesFile, summariesContent, "utf8");
+
+  console.log(`[Success] Compiled ${posts.length} posts to ${OUTPUT_FILE} and ${summariesFile}`);
 }
 
 compilePosts();

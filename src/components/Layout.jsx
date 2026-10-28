@@ -1,0 +1,64 @@
+import { Link, Outlet } from "react-router-dom";
+
+export default function Layout() {
+  return (
+    <div className="flex flex-col lg:flex-row min-h-screen max-w-[1600px] mx-auto">
+      
+      {/* Left Column - Fixed on Desktop */}
+      <aside className="lg:w-1/2 lg:h-screen lg:sticky lg:top-0 p-8 md:p-12 lg:p-20 xl:p-24 flex flex-col justify-between shrink-0 overflow-y-auto no-scrollbar">
+        <div className="flex flex-col gap-10">
+          <Link 
+            to="/" 
+            className="font-heading font-bold text-3xl md:text-4xl text-[var(--color-text-primary)] transition-opacity w-fit tracking-tight no-underline"
+          >
+            GARRY MARKUS
+          </Link>
+          
+          <div className="flex flex-col gap-6 text-sm max-w-lg pr-4">
+            <p>
+              I build robust systems from first principles.
+            </p>
+            <p>
+              I am passionate about writing clean, modular code, and crafting elegant client-side architectures as well as highly concurrent algorithms.
+            </p>
+            <p>
+              Focus areas include:<br/>
+              <span className="text-[var(--color-text-primary)]">Distributed Systems, Web Tooling, Core Algorithms.</span>
+            </p>
+          </div>
+
+          <div className="flex flex-col gap-4">
+            <span className="text-xs text-[var(--color-text-muted)] opacity-60">Navigation:</span>
+            <nav className="flex flex-col gap-2">
+              <Link to="/projects" className="w-fit">Projects</Link>
+              <Link to="/experience" className="w-fit">Experience</Link>
+              <Link to="/blog" className="w-fit">Technical Log</Link>
+            </nav>
+          </div>
+        </div>
+
+        <div className="mt-16 flex flex-col gap-6">
+          <div className="flex flex-col gap-2">
+            <span className="text-xs text-[var(--color-text-muted)] opacity-60">Connect:</span>
+            <a href="mailto:premsinghiitjee@gmail.com" className="w-fit">premsinghiitjee@gmail.com</a>
+            <a href="https://github.com/GarryMarkus" target="_blank" rel="noopener noreferrer" className="w-fit text-[var(--color-text-muted)] hover:text-[var(--color-accent)] no-underline">github</a>
+            <a href="https://linkedin.com/in/prem-singh-88662130a" target="_blank" rel="noopener noreferrer" className="w-fit text-[var(--color-text-muted)] hover:text-[var(--color-accent)] no-underline">linkedin</a>
+            <a href="/Prem_Singh_Resume.pdf" target="_blank" rel="noopener noreferrer" className="w-fit text-[var(--color-text-muted)] hover:text-[var(--color-accent)] no-underline">resume.pdf</a>
+          </div>
+          <div className="text-xs opacity-60">
+            © 2026 Garry Markus.
+          </div>
+        </div>
+      </aside>
+
+      {/* Right Column - Scrollable Content */}
+      <main className="lg:w-1/2 p-8 md:p-12 lg:p-20 xl:p-24 flex flex-col min-h-screen">
+        <div className="w-full flex-1 flex flex-col">
+          <Outlet />
+        </div>
+        <div className="bottom-spacer h-16 md:h-24 shrink-0 w-full"></div>
+      </main>
+
+    </div>
+  );
+}

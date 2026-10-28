@@ -4,9 +4,11 @@ import { projects, projectCategories } from "@/data/projects.js";
 export default function Projects() {
   const [selectedCategory, setSelectedCategory] = useState("All");
   const [searchQuery, setSearchQuery] = useState("");
+  const [viewMode, setViewMode] = useState("table"); // "table" | "dossier"
+  const [activeDossierId, setActiveDossierId] = useState(projects[0]?.id || null);
 
   useEffect(() => {
-    document.title = "Projects & Systems · Garry Markus";
+    document.title = "Technical Project Index · Garry Markus";
   }, []);
 
   const filteredProjects = useMemo(() => {
@@ -27,114 +29,125 @@ export default function Projects() {
     });
   }, [selectedCategory, searchQuery]);
 
-  const getCategoryBadgeClass = (category) => {
-    switch (category) {
-      case "Systems & Desktop":
-        return "bg-blue-500/10 text-blue-400 border-blue-500/25";
-      case "Algorithms & Chess":
-        return "bg-emerald-500/10 text-emerald-400 border-emerald-500/25";
-      case "AI & Web":
-        return "bg-amber-500/10 text-amber-400 border-amber-500/25";
-      case "Web & Extensions":
-        return "bg-cyan-500/10 text-cyan-400 border-cyan-500/25";
-      default:
-        return "bg-white/5 text-[var(--color-text-secondary)] border-white/10";
-    }
-  };
-
   return (
-    <div className="flex flex-col gap-10 animate-page-enter">
+    <div className="flex flex-col gap-8 animate-page-enter">
       
-      {/* Header */}
-      <section className="flex flex-col gap-3 border-b border-[var(--color-border-subtle)] pb-8">
-        <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-500/10 border border-blue-500/25 text-blue-400 text-xs font-mono w-fit">
-          <span className="w-1.5 h-1.5 rounded-full bg-blue-400" />
-          <span>Engineering Portfolio · 10 Active Projects</span>
+      {/* Editorial Header */}
+      <section className="flex flex-col gap-3 border-b border-[var(--color-border-hairline)] pb-6 font-mono">
+        <div className="flex flex-wrap items-center justify-between gap-3 text-xs text-[var(--color-text-muted)]">
+          <div className="flex items-center gap-2">
+            <span className="w-2 h-2 bg-emerald-500 inline-block" />
+            <span className="text-[var(--color-text-primary)] font-semibold">
+              INDEX 02 · SYSTEM CATALOG & ARCHITECTURE SPECIFICATION
+            </span>
+          </div>
+          <div>
+            <span>VERIFIED REPOSITORIES: 10 AUDITED</span>
+          </div>
         </div>
 
         <h1 className="text-3xl sm:text-4xl lg:text-5xl font-display font-bold text-[var(--color-text-primary)] tracking-tight">
-          Projects & Core Systems
+          Technical Project Index
         </h1>
 
-        <p className="text-sm sm:text-base text-[var(--color-text-secondary)] max-w-2xl leading-relaxed">
-          A collection of open-source desktop clients, tournament arbiters, browser tooling, and distributed systems architecture built from first principles.
+        <p className="text-sm text-[var(--color-text-secondary)] max-w-3xl leading-relaxed font-sans">
+          Curated index of open-source desktop clients, tournament arbiters, browser tooling, and distributed platforms engineered with a zero-dependency philosophy.
         </p>
 
-        {/* Quick Stats Chips */}
-        <div className="flex flex-wrap gap-4 pt-2 font-mono text-xs text-[var(--color-text-muted)]">
-          <div className="flex items-center gap-1.5">
-            <span className="text-[var(--color-text-primary)] font-semibold">{projects.length}</span>
-            <span>Total Projects</span>
+        {/* Telemetry Metrics */}
+        <div className="flex flex-wrap items-center gap-x-6 gap-y-1 pt-2 text-xs text-[var(--color-text-muted)]">
+          <div>
+            REPOSITORIES: <span className="text-[var(--color-text-primary)] font-semibold">{projects.length}</span>
           </div>
           <span>·</span>
-          <div className="flex items-center gap-1.5">
-            <span className="text-[var(--color-text-primary)] font-semibold">100%</span>
-            <span>Open Source</span>
+          <div>
+            DOMAINS: <span className="text-[var(--color-text-primary)] font-semibold">4 SYSTEMS</span>
           </div>
           <span>·</span>
-          <div className="flex items-center gap-1.5">
-            <span className="text-[var(--color-text-primary)] font-semibold">4</span>
-            <span>Technical Domains</span>
+          <div>
+            DISTRIBUTION: <span className="text-[var(--color-text-primary)] font-semibold">100% OPEN SOURCE</span>
           </div>
         </div>
       </section>
 
-      {/* Filter and Search Controls */}
-      <section className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-        {/* Category Filter Pills */}
-        <div className="flex flex-wrap gap-1.5 font-mono text-xs">
+      {/* Control Bar: Categories, Search, View Mode */}
+      <section className="flex flex-col lg:flex-row lg:items-center justify-between gap-4 font-mono text-xs">
+        
+        {/* Category Filter Matrix */}
+        <div className="flex flex-wrap items-center gap-1.5">
+          <span className="text-[var(--color-text-muted)] mr-1 hidden sm:inline">FILTER:</span>
           {projectCategories.map((cat) => (
             <button
               key={cat}
               type="button"
               onClick={() => setSelectedCategory(cat)}
-              className={`px-3 py-1.5 rounded-lg border transition-all ${
+              className={`px-2.5 py-1 border transition-all ${
                 selectedCategory === cat
-                  ? "bg-blue-600/15 border-blue-500/40 text-blue-300 font-medium shadow-sm"
-                  : "bg-white/[0.02] border-[var(--color-border-subtle)] text-[var(--color-text-muted)] hover:text-white hover:border-[var(--color-border-medium)]"
+                  ? "border-[var(--color-border-strong)] bg-[var(--color-bg-surface-elevated)] text-[var(--color-text-primary)] font-medium"
+                  : "border-[var(--color-border-hairline)] bg-[var(--color-bg-surface)] text-[var(--color-text-muted)] hover:text-white hover:border-[var(--color-border-medium)]"
               }`}
             >
-              {cat}
+              [{cat.toUpperCase()}]
             </button>
           ))}
         </div>
 
-        {/* Search Input */}
-        <div className="relative min-w-[240px]">
-          <input
-            type="text"
-            placeholder="Search projects by tech, title..."
-            value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)}
-            className="w-full bg-[var(--color-bg-surface)] border border-[var(--color-border-subtle)] focus:border-blue-500/50 rounded-lg px-3 py-1.5 pl-8 text-xs font-mono text-[var(--color-text-primary)] placeholder-[var(--color-text-muted)] focus:outline-none transition-colors"
-          />
-          <svg
-            className="w-3.5 h-3.5 text-[var(--color-text-muted)] absolute left-2.5 top-1/2 -translate-y-1/2 pointer-events-none"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth="2"
-          >
-            <circle cx="11" cy="11" r="8" />
-            <path d="M21 21l-4.35-4.35" />
-          </svg>
-          {searchQuery && (
+        {/* Search & View Mode Switcher */}
+        <div className="flex flex-wrap items-center gap-3">
+          {/* Search Box */}
+          <div className="relative flex-1 sm:w-60">
+            <input
+              type="text"
+              placeholder="FILTER_QUERY..."
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              className="w-full bg-[var(--color-bg-surface)] border border-[var(--color-border-hairline)] focus:border-[var(--color-border-strong)] px-3 py-1 text-xs font-mono text-[var(--color-text-primary)] placeholder-[var(--color-text-muted)] focus:outline-none transition-colors"
+            />
+            {searchQuery && (
+              <button
+                type="button"
+                onClick={() => setSearchQuery("")}
+                className="absolute right-2 top-1/2 -translate-y-1/2 text-xs font-mono text-[var(--color-text-muted)] hover:text-white"
+              >
+                [×]
+              </button>
+            )}
+          </div>
+
+          {/* View Toggle */}
+          <div className="flex items-center border border-[var(--color-border-hairline)] bg-[var(--color-bg-surface)]">
             <button
               type="button"
-              onClick={() => setSearchQuery("")}
-              className="absolute right-2.5 top-1/2 -translate-y-1/2 text-xs font-mono text-[var(--color-text-muted)] hover:text-white"
+              onClick={() => setViewMode("table")}
+              className={`px-3 py-1 transition-colors ${
+                viewMode === "table"
+                  ? "bg-[var(--color-bg-surface-elevated)] text-[var(--color-text-primary)] font-semibold"
+                  : "text-[var(--color-text-muted)] hover:text-white"
+              }`}
             >
-              ×
+              [TABLE]
             </button>
-          )}
+            <span className="text-[var(--color-border-hairline)]">|</span>
+            <button
+              type="button"
+              onClick={() => setViewMode("dossier")}
+              className={`px-3 py-1 transition-colors ${
+                viewMode === "dossier"
+                  ? "bg-[var(--color-bg-surface-elevated)] text-[var(--color-text-primary)] font-semibold"
+                  : "text-[var(--color-text-muted)] hover:text-white"
+              }`}
+            >
+              [DOSSIER]
+            </button>
+          </div>
         </div>
       </section>
 
-      {/* Projects Grid */}
+      {/* Main Content Area: Table View vs Dossier View */}
       {filteredProjects.length === 0 ? (
-        <div className="glass-card rounded-xl p-12 text-center flex flex-col items-center justify-center gap-3">
-          <p className="text-sm font-mono text-[var(--color-text-muted)]">
-            No projects found matching the criteria.
+        <div className="border border-[var(--color-border-hairline)] bg-[var(--color-bg-surface)] p-12 text-center flex flex-col items-center justify-center gap-3 font-mono">
+          <p className="text-xs text-[var(--color-text-muted)]">
+            NO SYSTEMS FOUND MATCHING SPECIFIED FILTER CRITERIA.
           </p>
           <button
             type="button"
@@ -142,124 +155,225 @@ export default function Projects() {
               setSelectedCategory("All");
               setSearchQuery("");
             }}
-            className="text-xs font-mono text-blue-400 hover:underline"
+            className="text-xs text-[var(--color-text-primary)] underline hover:text-white"
           >
-            Reset filters
+            [RESET ALL FILTERS]
           </button>
         </div>
-      ) : (
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          {filteredProjects.map((project) => (
-            <article
-              key={project.id}
-              className="glass-card rounded-xl p-6 flex flex-col justify-between gap-5 group hover:border-[var(--color-border-medium)] transition-all"
-            >
-              {/* Card Top: Category and Links */}
-              <div className="flex flex-col gap-3">
-                <div className="flex items-center justify-between">
-                  <span
-                    className={`px-2.5 py-0.5 rounded-full border text-[11px] font-mono font-medium ${getCategoryBadgeClass(
-                      project.category
-                    )}`}
-                  >
-                    {project.category}
-                  </span>
-
-                  <div className="flex items-center gap-2">
-                    {project.live && (
-                      <a
-                        href={project.live}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="p-1.5 text-[var(--color-text-muted)] hover:text-white transition-colors rounded hover:bg-white/5"
-                        title="Live Demo"
-                        aria-label={`Live demo for ${project.title}`}
-                      >
-                        <svg
-                          className="w-4 h-4"
-                          viewBox="0 0 24 24"
-                          fill="none"
-                          stroke="currentColor"
-                          strokeWidth="2"
+      ) : viewMode === "table" ? (
+        /* TABLE / LEDGER VIEW */
+        <div className="border border-[var(--color-border-hairline)] bg-[var(--color-bg-surface)] overflow-x-auto">
+          <table className="w-full text-left font-mono text-xs border-collapse">
+            <thead>
+              <tr className="border-b border-[var(--color-border-hairline)] bg-[var(--color-bg-subtle)] text-[10px] text-[var(--color-text-muted)] tracking-wider">
+                <th className="py-2.5 px-4 font-normal">INDEX</th>
+                <th className="py-2.5 px-4 font-normal">SYSTEM IDENTIFIER</th>
+                <th className="py-2.5 px-4 font-normal">DOMAIN</th>
+                <th className="py-2.5 px-4 font-normal">TECH SPECIFICATION</th>
+                <th className="py-2.5 px-4 font-normal">ARCHITECTURE HIGHLIGHT</th>
+                <th className="py-2.5 px-4 font-normal text-right">DISPATCH</th>
+              </tr>
+            </thead>
+            <tbody className="divide-y divide-[var(--color-border-hairline)]">
+              {filteredProjects.map((project, idx) => (
+                <tr
+                  key={project.id}
+                  className="hover:bg-[var(--color-bg-surface-elevated)] transition-colors group"
+                >
+                  <td className="py-3 px-4 font-tabular text-[var(--color-text-muted)] text-[11px]">
+                    SYS_{String(idx + 1).padStart(2, "0")}
+                  </td>
+                  <td className="py-3 px-4">
+                    <div className="font-display font-semibold text-sm text-[var(--color-text-primary)] group-hover:text-white transition-colors">
+                      {project.title}
+                    </div>
+                    <div className="text-[11px] text-[var(--color-text-muted)] font-mono truncate max-w-xs">
+                      {project.tagline}
+                    </div>
+                  </td>
+                  <td className="py-3 px-4 text-[11px] text-[var(--color-text-secondary)] whitespace-nowrap">
+                    [{project.category.toUpperCase()}]
+                  </td>
+                  <td className="py-3 px-4 text-[11px] text-[var(--color-text-muted)] whitespace-nowrap">
+                    {project.tags.join(" · ")}
+                  </td>
+                  <td className="py-3 px-4 text-[11px] text-[var(--color-text-secondary)] font-sans">
+                    {project.stats
+                      ? Object.entries(project.stats)
+                          .map(([k, v]) => `${k.toUpperCase()}: ${v}`)
+                          .join(" | ")
+                      : "Open Spec"}
+                  </td>
+                  <td className="py-3 px-4 text-right whitespace-nowrap">
+                    <div className="flex items-center justify-end gap-2">
+                      {project.live && (
+                        <a
+                          href={project.live}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="px-2 py-0.5 border border-[var(--color-border-hairline)] hover:border-[var(--color-border-strong)] text-[10px] text-emerald-400 no-underline"
                         >
-                          <path
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            d="M13.5 6H5.25A2.25 2.25 0 003 8.25v10.5A2.25 2.25 0 005.25 21h10.5A2.25 2.25 0 0018 18.75V10.5m-10.5 6L21 3m0 0h-5.25M21 3v5.25"
-                          />
-                        </svg>
-                      </a>
-                    )}
-
-                    {project.github && (
-                      <a
-                        href={project.github}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="p-1.5 text-[var(--color-text-muted)] hover:text-white transition-colors rounded hover:bg-white/5"
-                        title="GitHub Repository"
-                        aria-label={`GitHub repository for ${project.title}`}
-                      >
-                        <svg className="w-4 h-4 fill-current" viewBox="0 0 24 24">
-                          <path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/>
-                        </svg>
-                      </a>
-                    )}
-                  </div>
-                </div>
-
-                <div>
-                  <h2 className="text-xl font-display font-semibold text-[var(--color-text-primary)] group-hover:text-blue-400 transition-colors">
-                    {project.title}
-                  </h2>
-                  <p className="text-xs font-mono text-cyan-400/80 mt-0.5">
-                    {project.tagline}
-                  </p>
-                </div>
-
-                <p className="text-xs sm:text-sm text-[var(--color-text-secondary)] leading-relaxed mt-1">
-                  {project.description}
-                </p>
-              </div>
-
-              {/* Card Bottom: Tags & Specs */}
-              <div className="flex flex-col gap-3 pt-4 border-t border-[var(--color-border-subtle)]">
-                {/* Tech Pills */}
-                <div className="flex flex-wrap gap-1.5">
-                  {project.tags.map((tag, tIdx) => (
-                    <span
-                      key={tIdx}
-                      className="px-2 py-0.5 rounded bg-white/[0.03] text-[11px] font-mono text-[var(--color-text-muted)] border border-white/[0.05]"
-                    >
-                      {tag}
+                          [LIVE ↗]
+                        </a>
+                      )}
+                      {project.github && (
+                        <a
+                          href={project.github}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="px-2 py-0.5 border border-[var(--color-border-hairline)] hover:border-[var(--color-border-strong)] text-[10px] text-[var(--color-text-primary)] hover:bg-[var(--color-bg-subtle)] no-underline"
+                        >
+                          [CODE ↗]
+                        </a>
+                      )}
+                    </div>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      ) : (
+        /* DOSSIER / SPEC VIEW (Interactive Split / Detailed Specs) */
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
+          {/* Left Column: Dossier Index List */}
+          <div className="lg:col-span-5 flex flex-col gap-2 font-mono text-xs">
+            <span className="text-[10px] text-[var(--color-text-muted)] tracking-wider">
+              SYSTEM SELECTION REGISTER:
+            </span>
+            {filteredProjects.map((project, idx) => {
+              const isSelected = activeDossierId === project.id;
+              return (
+                <button
+                  key={project.id}
+                  type="button"
+                  onClick={() => setActiveDossierId(project.id)}
+                  className={`text-left p-3 border transition-colors ${
+                    isSelected
+                      ? "border-[var(--color-border-strong)] bg-[var(--color-bg-surface-elevated)] text-[var(--color-text-primary)]"
+                      : "border-[var(--color-border-hairline)] bg-[var(--color-bg-surface)] text-[var(--color-text-muted)] hover:text-white hover:border-[var(--color-border-medium)]"
+                  }`}
+                >
+                  <div className="flex items-center justify-between">
+                    <span className="text-[10px] font-tabular">
+                      SYS_{String(idx + 1).padStart(2, "0")}
                     </span>
-                  ))}
-                </div>
-
-                {/* Mini Spec Telemetry */}
-                {project.stats && (
-                  <div className="flex items-center justify-between text-[10px] font-mono text-[var(--color-text-dim)] pt-1">
-                    {Object.entries(project.stats).map(([k, v], sIdx) => (
-                      <span key={sIdx} className="capitalize">
-                        <span className="text-[var(--color-text-muted)]">{k}:</span> {v}
-                      </span>
-                    ))}
-                    {project.github && (
-                      <a
-                        href={project.github}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="text-blue-400 hover:text-blue-300 font-mono no-underline ml-auto flex items-center gap-1"
-                      >
-                        <span>source</span>
-                        <span>→</span>
-                      </a>
-                    )}
+                    <span className="text-[10px]">
+                      [{project.category.toUpperCase()}]
+                    </span>
                   </div>
-                )}
-              </div>
-            </article>
-          ))}
+                  <div className="font-display font-semibold text-sm text-[var(--color-text-primary)] mt-0.5">
+                    {project.title}
+                  </div>
+                  <div className="text-[11px] text-[var(--color-text-muted)] truncate">
+                    {project.tagline}
+                  </div>
+                </button>
+              );
+            })}
+          </div>
+
+          {/* Right Column: Selected Dossier Detail Spec Sheet */}
+          <div className="lg:col-span-7">
+            {(() => {
+              const active =
+                filteredProjects.find((p) => p.id === activeDossierId) ||
+                filteredProjects[0];
+              if (!active) return null;
+
+              return (
+                <div className="border border-[var(--color-border-hairline)] bg-[var(--color-bg-surface)] p-6 flex flex-col gap-6 font-mono text-xs">
+                  {/* Dossier Header */}
+                  <div className="flex flex-wrap items-center justify-between gap-3 border-b border-[var(--color-border-hairline)] pb-3">
+                    <div>
+                      <span className="text-[10px] text-[var(--color-text-muted)] tracking-wider block">
+                        TECHNICAL SPEC SHEET · ID: {active.id.toUpperCase()}
+                      </span>
+                      <h2 className="font-display font-bold text-2xl text-[var(--color-text-primary)]">
+                        {active.title}
+                      </h2>
+                    </div>
+
+                    <div className="flex items-center gap-2">
+                      {active.live && (
+                        <a
+                          href={active.live}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="px-2.5 py-1 border border-emerald-500/30 bg-emerald-500/10 text-emerald-400 text-xs no-underline hover:border-emerald-500"
+                        >
+                          [LIVE DEMO ↗]
+                        </a>
+                      )}
+                      {active.github && (
+                        <a
+                          href={active.github}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="px-2.5 py-1 border border-[var(--color-border-medium)] bg-[var(--color-bg-surface-elevated)] text-[var(--color-text-primary)] text-xs no-underline hover:border-white"
+                        >
+                          [SOURCE REPOSITORY ↗]
+                        </a>
+                      )}
+                    </div>
+                  </div>
+
+                  {/* Summary & Tagline */}
+                  <div className="space-y-2">
+                    <div className="text-[11px] text-cyan-400/90 font-mono">
+                      {"// "}{active.tagline}
+                    </div>
+                    <p className="text-sm font-sans text-[var(--color-text-secondary)] leading-relaxed">
+                      {active.description}
+                    </p>
+                  </div>
+
+                  {/* Architecture & Constraint Specifications Table */}
+                  <div className="space-y-2">
+                    <span className="text-[10px] text-[var(--color-text-muted)] tracking-wider block">
+                      SYSTEM METADATA & CONSTRAINTS:
+                    </span>
+                    <table className="w-full text-xs border-collapse">
+                      <tbody className="divide-y divide-[var(--color-border-hairline)] border-y border-[var(--color-border-hairline)]">
+                        <tr>
+                          <td className="py-2 text-[var(--color-text-muted)] w-1/3">DOMAIN</td>
+                          <td className="py-2 text-[var(--color-text-primary)]">{active.category}</td>
+                        </tr>
+                        <tr>
+                          <td className="py-2 text-[var(--color-text-muted)]">STACK MATRIX</td>
+                          <td className="py-2 text-[var(--color-text-primary)]">{active.tags.join(" · ")}</td>
+                        </tr>
+                        {active.stats &&
+                          Object.entries(active.stats).map(([key, val]) => (
+                            <tr key={key}>
+                              <td className="py-2 text-[var(--color-text-muted)] uppercase">{key}</td>
+                              <td className="py-2 text-[var(--color-text-primary)]">{val}</td>
+                            </tr>
+                          ))}
+                        <tr>
+                          <td className="py-2 text-[var(--color-text-muted)]">LICENSE</td>
+                          <td className="py-2 text-[var(--color-text-primary)]">MIT Open Source</td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+
+                  {/* Direct Link Banner */}
+                  <div className="pt-2 flex items-center justify-between text-[11px] text-[var(--color-text-muted)] border-t border-[var(--color-border-hairline)]">
+                    <span>HOSTED VIA GITHUB REPOSITORIES</span>
+                    <a
+                      href={active.github}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-[var(--color-text-primary)] hover:underline no-underline"
+                    >
+                      Inspect Source Code →
+                    </a>
+                  </div>
+                </div>
+              );
+            })()}
+          </div>
         </div>
       )}
     </div>

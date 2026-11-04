@@ -72,10 +72,6 @@ export default function App() {
       {/* Header Telemetry */}
       <header className="relative z-10 w-full max-w-4xl mx-auto flex items-center justify-between text-xs font-[Consolas,monospace] text-zinc-500">
         <span className="tracking-widest uppercase text-[11px] text-zinc-400">Prem Singh</span>
-        <div className="flex items-center gap-2 text-[11px] text-zinc-400">
-          <span className="w-1.5 h-1.5 rounded-full bg-emerald-500/80" />
-          <span>building</span>
-        </div>
       </header>
 
       {/* Central Hero Composition */}

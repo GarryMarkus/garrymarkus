@@ -1,13 +1,13 @@
 @import "tailwindcss";
 
 @theme {
-  --color-bg-base: #0c0d10;
-  --color-bg-subtle: #101216;
+  --color-bg-base: #090a0d;
+  --color-bg-subtle: #0e1015;
   --color-bg-surface: #14171d;
   --color-bg-surface-elevated: #1a1e26;
   --color-bg-hover: #202530;
 
-  --color-border-hairline: #20242c;
+  --color-border-hairline: #1c2027;
   --color-border-medium: #2c333f;
   --color-border-strong: #3f495a;
 
@@ -24,8 +24,6 @@
   --font-display: "Space Grotesk", sans-serif;
   --font-mono: "JetBrains Mono", "Space Mono", monospace;
   --font-sans: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-  --font-serif: "Instrument Serif", Georgia, serif;
-  --font-syne: "Syne", sans-serif;
 }
 
 :root {

@@ -55,7 +55,7 @@ export default function App() {
   ];
 
   return (
-    <main className="relative min-h-screen w-full flex flex-col justify-between p-6 sm:p-12 bg-[#090a0d] text-[#f3f4f6] font-sans antialiased selection:bg-zinc-800 selection:text-white">
+    <main className="relative min-h-screen w-full flex flex-col justify-between p-6 sm:p-12 bg-[#090a0d] text-[#f3f4f6] font-['Courier_Prime',Consolas,monospace] antialiased selection:bg-zinc-800 selection:text-white">
       
       {/* Subtle Duotone Ambient Atmosphere (Ultra-soft Deep Navy / Slate) */}
       <div
@@ -64,7 +64,7 @@ export default function App() {
       />
 
       {/* Header Telemetry */}
-      <header className="relative z-10 w-full max-w-4xl mx-auto flex items-center justify-between text-xs font-mono text-zinc-500">
+      <header className="relative z-10 w-full max-w-4xl mx-auto flex items-center justify-between text-xs font-[Consolas,monospace] text-zinc-500">
         <span className="tracking-widest uppercase text-[11px] text-zinc-400">Prem Singh</span>
         <div className="flex items-center gap-2 text-[11px] text-zinc-400">
           <span className="w-1.5 h-1.5 rounded-full bg-emerald-500/80" />
@@ -75,17 +75,17 @@ export default function App() {
       {/* Central Hero Composition */}
       <div className="relative z-10 flex flex-col items-center text-center my-auto px-4 max-w-xl mx-auto">
         
-        {/* Crisp, unified typography with refined duotone hierarchy */}
-        <h1 className="text-3xl sm:text-5xl font-semibold tracking-tight text-white flex flex-wrap items-center justify-center gap-x-3.5 gap-y-1">
-          <span className="font-display">GarryMarkus</span>
+        {/* Crisp Courier Prime headline with refined duotone hierarchy */}
+        <h1 className="text-3xl sm:text-5xl font-['Courier_Prime',monospace] font-bold tracking-tight text-white flex flex-wrap items-center justify-center gap-x-3.5 gap-y-1">
+          <span>GarryMarkus</span>
           <span className="text-zinc-500 font-normal">is building</span>
         </h1>
 
-        <p className="mt-4 text-xs sm:text-sm text-zinc-400 font-mono leading-relaxed max-w-md">
+        <p className="mt-4 text-xs sm:text-sm text-zinc-400 font-[Consolas,monospace] leading-relaxed max-w-md">
           Systems & algorithmic software. Low-latency tools and deterministic architectures.
         </p>
 
-        {/* Clean, restrained social action pills */}
+        {/* Clean, restrained social action pills in Consolas */}
         <nav
           aria-label="Social Profiles"
           className="mt-8 flex flex-wrap items-center justify-center gap-2.5 sm:gap-3"
@@ -97,7 +97,7 @@ export default function App() {
               target={social.href.startsWith("mailto:") ? undefined : "_blank"}
               rel={social.href.startsWith("mailto:") ? undefined : "noopener noreferrer"}
               aria-label={social.name}
-              className="group flex items-center gap-2 px-3.5 py-1.5 rounded-md border border-white/[0.08] bg-white/[0.02] hover:bg-white/[0.05] hover:border-white/20 text-zinc-300 hover:text-white transition-all font-mono text-xs no-underline"
+              className="group flex items-center gap-2 px-3.5 py-1.5 rounded-md border border-white/[0.08] bg-white/[0.02] hover:bg-white/[0.05] hover:border-white/20 text-zinc-300 hover:text-white transition-all font-[Consolas,monospace] text-xs no-underline"
             >
               {social.icon}
               <span>{social.name}</span>
@@ -114,7 +114,7 @@ export default function App() {
       </div>
 
       {/* Footer */}
-      <footer className="relative z-10 w-full max-w-4xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-2 text-[11px] font-mono text-zinc-400 border-t border-white/[0.05] pt-4">
+      <footer className="relative z-10 w-full max-w-4xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-2 text-[11px] font-[Consolas,monospace] text-zinc-400 border-t border-white/[0.05] pt-4">
         <span>© {new Date().getFullYear()} GarryMarkus</span>
         <span>Delhi NCR (UTC+5:30)</span>
       </footer>

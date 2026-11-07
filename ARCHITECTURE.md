@@ -1,12 +1,85 @@
 # System Architecture & Technical Specifications
 
-This document provides the exhaustive architectural specification of the **garrymarkus.xyz** platform. It details the system and infrastructure architecture, object-oriented system design (OOSD), component hierarchies, data persistence models, build pipelines, and end-to-end data flow lifecycles.
+This document provides the exhaustive architectural specification of the **garrymarkus.xyz** platform. It details the high-level system context, the detailed infrastructure architecture, object-oriented system design (OOSD), component hierarchies, data persistence models, build pipelines, and end-to-end data flow lifecycles.
 
 ---
 
-## 1. Unified Architecture Canvas
+## 1. High-Level System Overview
 
-The entire platform is mapped below within a single, unified Mermaid flowchart. It encapsulates:
+The high-level architecture diagram below conveys the overarching topology of **garrymarkus.xyz** in under two minutes. Following the C4 Container model, it groups the platform into five clean conceptual tiers: Presentation Clients, Gateway & Routing, Core Application & Build Services, Persistence & Static Data Stores, and External Integrations.
+
+```mermaid
+flowchart TB
+%% ============================================================================
+%% HIGH-LEVEL SYSTEM OVERVIEW (C4 CONTAINER CONTEXT)
+%% ============================================================================
+
+    subgraph CLIENTS ["1. Presentation & Client Tier"]
+        USER_CLIENT["Web & Mobile Clients<br/><code>Modern Browsers (V8 / WebKit / Blink)</code><br/>Responsive Asymmetric UI & Hotkey Navigation"]
+        DEV_CLIENT["Developer / Operator Terminal<br/><code>Git CLI / Obsidian IDE</code><br/>Markdown Authoring & Local Build Verification"]
+    end
+
+    subgraph GATEWAY ["2. Gateway & Routing Tier"]
+        DNS_ROUTER["DNS & Domain Gateway<br/><code>garrymarkus.xyz</code><br/>Apex Domain & CNAME Resolution"]
+        EDGE_CDN["Edge CDN & Web Server<br/><code>GitHub Pages (TLS 1.3 / Brotli)</code><br/>Static Asset Delivery & HTTPS Termination"]
+        SPA_ROUTER["Client Routing Gateway<br/><code>React Router v7 / Browser History</code><br/>Client-Side Route Dispatch & 404 Fallback"]
+    end
+
+    subgraph SERVICES ["3. Core Application & Build Services"]
+        SPA_CORE["Single Page Application Core<br/><code>React 19 / Tailwind CSS v4 / Vite 6</code><br/>Asymmetric Split-Stage Layout & Reactive State"]
+        BUILD_COMPILER["AOT Markdown & LaTeX Compiler<br/><code>Node.js / Marked / KaTeX / Gray-Matter</code><br/>Static Site Generation & MD5 Content Hashing"]
+        CICD_PIPELINE["CI/CD Automation & Test Runner<br/><code>GitHub Actions / Node 20 Runner</code><br/>Automated Testing, Build & Pages Deployment"]
+    end
+
+    subgraph PERSISTENCE ["4. Persistence & Caching Tier"]
+        VAULT_STORE["Knowledge Vault<br/><code>src/content/blog/* (.md)</code><br/>24 Version-Controlled Technical Notes"]
+        GEN_STORES["Compiled In-Memory Datastores<br/><code>posts.gen.js / postSummaries.gen.js</code><br/>Precompiled HTML Bodies & Structured Metadata"]
+        STATIC_ASSETS["Static Documents & Media Assets<br/><code>public/* (PDF, Cursors, SVGs)</code><br/>Resume, Custom Cursors & Attachment Images"]
+    end
+
+    subgraph EXTERNAL ["5. External Services & Third-Party APIs"]
+        CHESS_APIS["Chess Rating APIs<br/><code>Chess.com & Lichess REST APIs</code><br/>Live Rapid, Blitz, Classical & Puzzle Ratings"]
+        LEETCODE_API["LeetCode GraphQL Gateway<br/><code>leetcode.com/graphql</code><br/>Live Solved Problem Metrics across Tiers"]
+        ASSET_CDNS["External Typography & Asset CDNs<br/><code>Google Fonts / KaTeX CDN / GitHub Charts</code><br/>Web Fonts, KaTeX CSS & Contribution Heatmap"]
+        EXT_PROJECTS["Open-Source Repositories<br/><code>GitHub.com / GarryMarkus</code><br/>External Projects (ChessReader, Swiss-Pairing, etc.)"]
+    end
+
+    %% Client and Gateway Connections
+    USER_CLIENT -->|"HTTPS / Requests"| DNS_ROUTER
+    DNS_ROUTER -->|"CNAME Resolution"| EDGE_CDN
+    EDGE_CDN -->|"HTTPS / HTML & Assets"| SPA_ROUTER
+    SPA_ROUTER -->|"Client Navigation"| SPA_CORE
+
+    %% Developer / Authoring Flow
+    DEV_CLIENT -->|"Markdown Authoring"| VAULT_STORE
+    DEV_CLIENT -->|"Git Push (main / future)"| CICD_PIPELINE
+    CICD_PIPELINE -->|"Triggers Build"| BUILD_COMPILER
+    BUILD_COMPILER -->|"Vault Ingestion"| VAULT_STORE
+    BUILD_COMPILER -->|"AOT Code Generation"| GEN_STORES
+    CICD_PIPELINE -->|"Deploys Static dist/"| EDGE_CDN
+
+    %% Core Application Interactions
+    SPA_CORE -->|"ESM In-Memory Imports"| GEN_STORES
+    SPA_CORE -->|"Direct Asset Requests"| STATIC_ASSETS
+    SPA_CORE -->|"Async HTTPS / REST JSON"| CHESS_APIS
+    SPA_CORE -->|"Async HTTPS / GraphQL JSON"| LEETCODE_API
+    SPA_CORE -->|"HTTP / SVG & CSS"| ASSET_CDNS
+    SPA_CORE -->|"Outbound HTTPS Links"| EXT_PROJECTS
+```
+
+### Executive Architectural Summary
+
+The **garrymarkus.xyz** platform implements an ultra-lean, **zero-runtime-backend JAMstack architecture** (JavaScript, APIs, Markup) centered on **Ahead-of-Time (AOT) static compilation and edge delivery**. Rather than relying on traditional monolithic web servers, microservice clusters, or persistent relational database runtimes, all publication content, KaTeX mathematical typesetting, and code syntax tokenization are pre-evaluated at build time. The resulting production artifact is an entirely static, deterministic Single Page Application (SPA) delivered through globally distributed Content Delivery Network (CDN) edge nodes, yielding sub-100ms first contentful paint (FCP) and eliminating server maintenance overhead, database connection bottlenecks, and server-side attack surfaces.
+
+When a user accesses the platform, the apex domain DNS routes incoming traffic to GitHub Pages edge servers, which terminate TLS 1.3 and serve the immutable static bundle (`index.html`, vendor-chunked JavaScript, and CSS). A custom Vite 404 fallback generator (`copy-404-html`) guarantees seamless client-side routing on hard refreshes or deep links by mirroring the root entry point to `404.html`. Upon client hydration, the React 19 engine instantiates an asymmetric split-screen layout: a sticky anchor sidebar providing hotkey-driven keyboard navigation (`1`–`4`, `Escape`), coupled with a dynamic stage container that reacts to route updates. Heavy technical publications and project catalogues are loaded directly into memory from pre-compiled static stores, allowing instantaneous transitions with zero network latency.
+
+The technology choices prioritize deterministic execution, type safety, minimal bundle overhead, and first-principles systems ergonomics. **React 19** and **Tailwind CSS v4** power the presentation layer without legacy PostCSS wrappers, utilizing modern CSS `@theme` tokens and snappy hardware-accelerated animations. The offline compilation pipeline leverages **Node.js**, **Marked**, **Marked-KaTeX-Extension**, and **Highlight.js** to compile Obsidian markdown vaults into static modules while preserving creation timestamps through MD5 content checksums. For live verified performance benchmarks, the client asynchronously queries public REST and GraphQL APIs (Chess.com, Lichess, LeetCode, GitHub) directly from the browser, incorporating defensive fallbacks to ensure full offline and rate-limited resilience.
+
+---
+
+## 2. Detailed Unified Architecture Canvas
+
+The entire platform is exhaustively mapped below within a single, unified Mermaid flowchart. It encapsulates:
 1. **System & Infrastructure Architecture**: Client runtime, CDN edge hosting, gateway routing, build runners, data persistence, and external APIs.
 2. **Object-Oriented System Design (OOSD) & Core Components**: Domain entities, repositories, controllers, view handlers, and explicit structural relationships.
 3. **Data Flow & State Management**: Static compilation lifecycles, client SPA hydration, telemetry ingestion, search/filter engines, and DOM manipulation.
@@ -252,17 +325,17 @@ flowchart TB
 
 ---
 
-## 2. System & Infrastructure Architecture
+## 3. System & Infrastructure Architecture
 
 The platform architecture follows an ultra-clean, **zero-runtime-backend** philosophy. All dynamic rendering, cryptographic hashing, and markdown tokenization are completed ahead-of-time (AOT) during the offline compilation phase, resulting in a 100% static client delivery that requires zero servers, database processes, or container clusters at runtime.
 
-### 2.1 Client Application & Asset Delivery Layer
+### 3.1 Client Application & Asset Delivery Layer
 - **SPA Host Document (`index.html`)**: The root HTML5 container (`<div id="root"></div>`) that configures preconnect headers for Google Fonts, links external KaTeX CDN stylesheets, and defines strict OpenGraph and Twitter card metadata for SEO indexing.
 - **Tailwind CSS v4 & Styling Engine (`src/index.css`)**: Built directly with `@tailwindcss/vite`. Replaces legacy PostCSS configurations with native CSS `@theme` variables (`--color-bg-base: #090a0d`, `--color-border-hairline: #1c2027`, `--font-mono: JetBrains Mono, Space Mono`, etc.), hardware-accelerated entry transitions (`@keyframes stage-enter`), and typographic rules for technical prose (`.prose`).
 - **Custom Cursor Layer (`public/cursors/*`)**: Bitmap cursor assets (`default.png`, `pointer.png`, `text.png`, `crosshair.png`) bound through CSS cursor rules with explicit coordinate hotspots.
 - **KaTeX CDN Integration (`cdn.jsdelivr.net`)**: Injects KaTeX CSS (`v0.17.0`) and WOFF2 math font files to render complex equations natively in client browsers without layout shift.
 
-### 2.2 Edge Hosting, Routing & Gateway Tier
+### 3.2 Edge Hosting, Routing & Gateway Tier
 - **Apex DNS Routing (`public/CNAME`)**: Routes the apex domain `garrymarkus.xyz` directly to GitHub Pages CDN edges via custom ALIAS/CNAME DNS records.
 - **GitHub Pages CDN Edge (`public/.nojekyll`)**: Serves immutable static artifacts globally over HTTP/2 with TLS 1.3 termination, Brotli compression, and automatic asset caching. The `.nojekyll` marker instructs GitHub's backend to bypass Jekyll processing, preventing directory filtering on folders prefixed with underscores or numbers.
 - **SPA Routing Gateway Plugin (`vite.config.js`)**: Single Page Applications deployed on static hosts normally fail on deep routes (e.g., `garrymarkus.xyz/projects` or `garrymarkus.xyz/blog/:slug`) with HTTP 404 errors when users refresh. The project solves this cleanly via a custom Vite build plugin:
@@ -281,7 +354,7 @@ The platform architecture follows an ultra-clean, **zero-runtime-backend** philo
   ```
   GitHub Pages automatically serves `404.html` on unresolved paths with HTTP status 200/404, allowing the client-side `BrowserRouter` to seamlessly take over URL dispatch.
 
-### 2.3 Build, Compilation & CI/CD Pipeline
+### 3.3 Build, Compilation & CI/CD Pipeline
 - **Continuous Integration & Deployment (`.github/workflows/deploy.yml`)**: Automated GitHub Actions workflow configured with `pages: write` and `id-token: write` permissions. Triggers on every push to `main` and `future` branches:
   1. Checks out repository via `actions/checkout@v4`.
   2. Sets up Node.js 20 with npm caching via `actions/setup-node@v4`.
@@ -289,11 +362,11 @@ The platform architecture follows an ultra-clean, **zero-runtime-backend** philo
   4. Runs `npm run build` (which compiles Obsidian notes and bundles assets via Vite).
   5. Uploads `./dist` artifact via `actions/upload-pages-artifact@v3`.
   6. Deploys artifact to GitHub Pages production environment via `actions/deploy-pages@v5`.
-- **Offline Markdown & LaTeX Compiler (`scripts/compile-posts.js`)**: An automated Node.js compilation engine that transforms raw Obsidian notes into high-performance JavaScript modules. See Section 4.1 for the complete pipeline.
+- **Offline Markdown & LaTeX Compiler (`scripts/compile-posts.js`)**: An automated Node.js compilation engine that transforms raw Obsidian notes into high-performance JavaScript modules. See Section 5.1 for the complete pipeline.
 - **Preview & Route Verification Suite (`scripts/test-preview.js`)**: Production preview regression test runner. Spawns an isolated `npx vite preview` server on port 4173 and issues HTTP client requests across all critical client routes (`/`, `/projects`, `/experience`, `/blog`, `/blog/learning-dsa-the-hard-way`, `/404.html`, and PDF/cursor assets), verifying HTTP 200 OK status codes before production deployment.
 - **Code Quality Engine (`eslint.config.mjs`)**: Configured with ESLint 9 flat configuration syntax, integrating `eslint-plugin-react`, browser/node globals, and explicit exclusion of auto-generated artifacts (`*.gen.js`).
 
-### 2.4 External Telemetry APIs
+### 3.4 External Telemetry APIs
 - **Chess.com Public API**: `https://api.chess.com/pub/player/garrymarkus/stats` (fetches rapid and blitz ratings).
 - **Lichess Open API**: `https://lichess.org/api/user/garrymarkus` (fetches classical, rapid, blitz, and tactical puzzle ratings).
 - **LeetCode GraphQL API**: `https://leetcode.com/graphql` (queries total problem solving statistics across Easy, Medium, and Hard tiers).
@@ -301,11 +374,11 @@ The platform architecture follows an ultra-clean, **zero-runtime-backend** philo
 
 ---
 
-## 3. Object-Oriented System Design (OOSD) & Core Components
+## 4. Object-Oriented System Design (OOSD) & Core Components
 
 The application follows strict component modularity, clear separation of concerns, and structural patterns (Facade, Repository, Adapter, Composition, and Dependency Injection).
 
-### 3.1 Domain Entity Models & Schemas
+### 4.1 Domain Entity Models & Schemas
 
 | Entity Name | Source File | Type / Schema Specification | Description |
 | :--- | :--- | :--- | :--- |
@@ -317,7 +390,7 @@ The application follows strict component modularity, clear separation of concern
 | `CapabilityEntity` | `src/pages/Experience.jsx` | `{ domain: string, spec: string }` | Production engineering capability matrix entry. |
 | `TelemetryState` | `src/components/TelemetryGrid.jsx` | `{ chessData: Object, lichessData: Object, lcData: Object }` | Reactive state container for third-party platform ratings. |
 
-### 3.2 Repositories & Data Access Layer (DAOs)
+### 4.2 Repositories & Data Access Layer (DAOs)
 
 #### `PostsRepository` (`src/lib/posts.js`)
 Acts as a unified **Data Access Facade** decoupling UI view handlers from auto-generated dataset files:
@@ -331,7 +404,7 @@ Provides immutable datasets for open-source systems:
 - `projects: ProjectEntity[]`: 10 audited engineering projects (e.g., `ChessReader`, `Chess-Tournament-Swiss-Pairing`, `Document-Viewer`, `Skip-The-Scroll`, `SkillForge`, `zuno`, `En-Passant-Client`, etc.).
 - `projectCategories: string[]`: Taxonomy array (`All`, `Systems & Desktop`, `Algorithms & Chess`, `AI & Web`, `Web & Extensions`).
 
-### 3.3 Component Hierarchy & Structural Relationships
+### 4.3 Component Hierarchy & Structural Relationships
 
 ```
 ApplicationRoot (src/main.jsx)
@@ -374,9 +447,9 @@ ApplicationRoot (src/main.jsx)
 
 ---
 
-## 4. Data Flow & Execution Lifecycles
+## 5. Data Flow & Execution Lifecycles
 
-### 4.1 Static Site Generation (SSG) Compilation Pipeline
+### 5.1 Static Site Generation (SSG) Compilation Pipeline
 ```
 [src/content/blog/**/*.md]
        │
@@ -405,7 +478,7 @@ ApplicationRoot (src/main.jsx)
  [fs.writeFileSync] ──> Emit src/lib/posts.gen.js & src/lib/postSummaries.gen.js
 ```
 
-### 4.2 Client Boot & SPA Navigation Lifecycle
+### 5.2 Client Boot & SPA Navigation Lifecycle
 1. **Initial Edge Fetch**: Browser requests `https://garrymarkus.xyz/`. GitHub Pages delivers `index.html`, which requests `vendor-*.js`, `index-*.js`, and `index-*.css`.
 2. **React StrictMode Mount**: `src/main.jsx` invokes `ReactDOM.createRoot(document.getElementById("root")).render(<React.StrictMode><App /></React.StrictMode>)`.
 3. **Asymmetric Frame Mount**: `SplitLayout` mounts:
@@ -419,7 +492,7 @@ ApplicationRoot (src/main.jsx)
    - Key `Escape` $\rightarrow$ Return from `/blog/:slug` to `/blog`
 5. **Stage Enter Animation**: Every route switch triggers `.animate-stage-enter` (`opacity: 0, translateY: 3px` to `opacity: 1, translateY: 0` in `0.15s ease-out`), ensuring snappy navigation with zero sluggish parallax.
 
-### 4.3 Asynchronous Telemetry Ingestion Flow
+### 5.3 Asynchronous Telemetry Ingestion Flow
 ```
 Component Mount (TelemetryGrid.jsx)
        │
@@ -436,7 +509,7 @@ Component Mount (TelemetryGrid.jsx)
                  └──> Deserializes JSON ──> setLcData(data) [Fallback: 400+ Solved]
 ```
 
-### 4.4 Real-Time Search & Filtering Engine
+### 5.4 Real-Time Search & Filtering Engine
 In `Projects.jsx` and `Blog.jsx`, user keystrokes update local query states:
 ```
 User Keystroke / Category Click
@@ -457,7 +530,7 @@ useMemo(() => {
 React Virtual DOM Reconciliation ──> Renders Filtered Cards (or Empty Fallback State)
 ```
 
-### 4.5 Document Reading & Dynamic Clipboard Flow
+### 5.5 Document Reading & Dynamic Clipboard Flow
 1. **Slug Resolution**: `BlogPost.jsx` reads `:slug` via `useParams()`.
 2. **Data Fetch**: Calls `getPostBySlug(slug)` on `PostsRepository`. If not found, renders clean 404 document diagnostic.
 3. **Scroll Tracking**: Passive window scroll listener computes reading progress:
@@ -467,7 +540,7 @@ React Virtual DOM Reconciliation ──> Renders Filtered Cards (or Empty Fallba
 
 ---
 
-## 5. Exhaustive Module & Component Inventory
+## 6. Exhaustive Module & Component Inventory
 
 | File Path | Functional Role | Exports / Key Members | Dependencies / Consumers |
 | :--- | :--- | :--- | :--- |
@@ -501,7 +574,7 @@ React Virtual DOM Reconciliation ──> Renders Filtered Cards (or Empty Fallba
 
 ---
 
-## 6. Architectural Invariants & Guarantees
+## 7. Architectural Invariants & Guarantees
 
 1. **Deterministic Execution**: All publication HTML and math formatting are precompiled at build time. No runtime markdown parsers, heavy bundler runtimes, or client-side compilers execute in the user browser.
 2. **Zero-Telemetry Client Delivery**: The application contains no tracking beacons, third-party analytics pixels, or commercial telemetry agents.
